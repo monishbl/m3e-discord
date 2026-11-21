@@ -4,13 +4,13 @@
 
 <p align="center">
 Rounded panels, shapes that change when you click them, and chat bubbles that put you on the right. Literally.<br>
-Inspired by Google's newest Material design, the playful one on new Android phones. Four looks, one install.
+Inspired by Google's newest Material design, the playful one on new Android phones. Five looks, one install.
 </p>
 
 <p align="center">
 <a href="#install-in-under-a-minute"><b>Install</b></a> &nbsp;·&nbsp;
 <a href="https://monishbl.github.io/m3e-discord/"><b>Setup page</b></a> &nbsp;·&nbsp;
-<a href="#four-looks-pick-a-mood"><b>The looks</b></a> &nbsp;·&nbsp;
+<a href="#five-looks-pick-a-mood"><b>The looks</b></a> &nbsp;·&nbsp;
 <a href="#questions"><b>Questions</b></a>
 </p>
 
@@ -21,18 +21,22 @@ Inspired by Google's newest Material design, the playful one on new Android phon
 
 <br>
 
-## Four looks. Pick a mood.
+## Five looks. Pick a mood.
 
-Same theme, four moods. Choose the one that matches your room's lighting.
+Same theme, five moods. Choose the one that matches your room's lighting.
 
 <table>
 <tr>
 <td width="50%"><img src="docs/img/midnight.png" alt="Midnight look"><br><b>Midnight.</b> The default. Deep blue-grey with a cyan glow.</td>
-<td width="50%"><img src="docs/img/amoled.png" alt="AMOLED look"><br><b>AMOLED.</b> True black. Your OLED screen says thanks.</td>
+<td width="50%"><img src="docs/img/nord.png" alt="Nord look"><br><b>Nord.</b> Midnight's Nord colours, exactly. Frosty, calm, a little Scandinavian.</td>
 </tr>
 <tr>
+<td width="50%"><img src="docs/img/amoled.png" alt="AMOLED look"><br><b>AMOLED.</b> True black. Your OLED screen says thanks.</td>
 <td width="50%"><img src="docs/img/light.png" alt="Light look"><br><b>Light.</b> For sunny rooms and brave souls.</td>
+</tr>
+<tr>
 <td width="50%"><img src="docs/img/classic.png" alt="Classic look"><br><b>Classic.</b> Discord's familiar layout, just better dressed.</td>
+<td width="50%"></td>
 </tr>
 </table>
 
@@ -48,6 +52,7 @@ You'll need [Vencord](https://vencord.dev) (or Vesktop).
    | Look | Link |
    |---|---|
    | Midnight | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-midnight.theme.css` |
+   | Nord | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-nord.theme.css` |
    | AMOLED | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-amoled.theme.css` |
    | Light | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-light.theme.css` |
    | Classic | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-classic.theme.css` |
