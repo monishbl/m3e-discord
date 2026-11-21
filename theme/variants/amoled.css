@@ -1,0 +1,15 @@
+/**
+ * @name M3E Discord AMOLED
+ * @description M3E Discord on pure black: the canvas is #000 and every surface steps down, for OLED screens.
+ */
+body {
+  --m3e-canvas: #000000;
+  --m3e-s-low: #0a0b0e;
+  --m3e-s: #101217;
+  --m3e-s-high: #16191f;
+  --m3e-s-highest: #1d2027;
+  --m3e-s-bright: #262a32;
+  --m3e-outline-var: #2a2f39;
+  --m3e-code-bg: #000000;
+  --m3e-inline-code-bg: rgb(255 255 255 / 0.06);
+}

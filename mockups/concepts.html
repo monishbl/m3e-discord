@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Midnight Expressive — Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MIDNIGHT × MATERIAL 3 EXPRESSIVE — token layer
+   Midnight = near-black surfaces, cool blue-grey neutrals, blurple accent.
+   M3 tonal roles generated around blurple seed #5865F2.
+   ============================================================ */
+:root{
+  --seed:#5865F2;
+  --bg:#000000;
+  --surface-lowest:#050508;
+  --surface-low:#0c0c11;
+  --surface:#121218;
+  --surface-high:#1a1a22;
+  --surface-highest:#24242e;
+
+  --primary:#bfc3ff;
+  --on-primary:#18207a;
+  --primary-container:#3b45c2;
+  --on-primary-container:#e1e0ff;
+  --secondary:#c5c5df;
+  --secondary-container:#2b2d45;
+  --on-secondary-container:#e1e1fb;
+  --tertiary:#f3b6dc;
+  --tertiary-container:#5f2c55;
+  --on-tertiary-container:#ffd7ef;
+
+  --text:#e5e4ee;
+  --text-variant:#a4a5ba;
+  --text-muted:#6d6e82;
+  --outline:#353646;
+  --outline-variant:#24252f;
+
+  --online:#7ddca7;
+  --idle:#f5c26b;
+  --dnd:#ffb4ab;
+
+  /* M3E springs */
+  --spring-fast: linear(0, 0.06 2%, 0.24 5%, 0.83 13%, 1.07 18%, 1.13 22%, 1.12 26%, 1.04 33%, 0.99 41%, 0.98 48%, 1 62%, 1);
+  --spring-slow: linear(0, 0.03 3%, 0.13 7%, 0.6 18%, 0.92 27%, 1.05 34%, 1.08 40%, 1.05 49%, 1.01 59%, 0.99 70%, 1);
+  --dur-fast: 380ms;
+  --dur-slow: 620ms;
+
+  --font: "Roboto Flex", "Google Sans Flex", system-ui, sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:var(--font); font-size:14px; line-height:1.45;
+  display:flex; flex-direction:column; overflow:hidden;
+  font-variation-settings:"wdth" 100;
+}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+.ms{font-family:"Material Symbols Rounded";font-weight:normal;font-style:normal;font-size:20px;line-height:1;
+  display:inline-block;white-space:nowrap;font-variation-settings:"FILL" 0,"wght" 450,"GRAD" 0,"opsz" 24;
+  transition:font-variation-settings var(--dur-fast) var(--spring-fast)}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 24}
+
+/* ---------------- concept switcher (outside the mock) ---------------- */
+.switcher{
+  display:flex; align-items:center; gap:20px; padding:14px 20px;
+  background:var(--surface-lowest); border-bottom:1px solid var(--outline-variant);
+  flex-wrap:wrap;
+}
+.switcher h1{margin:0;font-size:18px;font-weight:800;font-variation-settings:"wdth" 125;letter-spacing:-.01em}
+.switcher h1 span{color:var(--primary)}
+.btn-group{display:flex;gap:2px;background:transparent}
+.btn-group button{
+  padding:10px 18px; background:var(--surface-high); color:var(--text-variant);
+  font-weight:600; border-radius:8px;
+  transition:border-radius var(--dur-fast) var(--spring-fast), background .2s, color .2s, transform var(--dur-fast) var(--spring-fast);
+}
+.btn-group button:first-child{border-radius:999px 8px 8px 999px}
+.btn-group button:last-child{border-radius:8px 999px 999px 8px}
+.btn-group button:hover{background:var(--surface-highest);color:var(--text)}
+.btn-group button:active{transform:scale(.94)}
+.btn-group button.on{background:var(--primary);color:var(--on-primary);border-radius:999px}
+.concept-desc{flex:1;min-width:260px;color:var(--text-variant);font-size:13px}
+.concept-desc b{color:var(--text)}
+
+/* ---------------- app shell ---------------- */
+.app{
+  flex:1; min-height:0;
+  display:grid; grid-template-columns:72px 260px 1fr 248px;
+  background:var(--bg);
+  transition:gap var(--dur-slow) var(--spring-slow), padding var(--dur-slow) var(--spring-slow);
+}
+.panel{min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.scroll{overflow-y:auto;min-height:0;flex:1;scrollbar-width:thin;scrollbar-color:var(--surface-highest) transparent}
+
+/* rail */
+.rail{background:var(--bg);align-items:center;padding:12px 0;gap:8px}
+.rail .sep{width:32px;height:2px;border-radius:2px;background:var(--surface-highest);margin:2px 0}
+.srv{position:relative;width:48px;height:48px;flex:none}
+.srv .shape{
+  width:48px;height:48px;display:grid;place-items:center;
+  font-weight:800;font-size:15px;font-variation-settings:"wdth" 110;
+  background:var(--surface-high);color:var(--text);
+  clip-path:var(--rest);
+  transition:clip-path var(--dur-slow) var(--spring-slow), background .25s, color .25s, transform var(--dur-slow) var(--spring-slow);
+}
+.srv:hover .shape{clip-path:var(--hover);background:var(--primary-container);color:var(--on-primary-container)}
+.srv.active .shape{clip-path:var(--hover);background:var(--primary);color:var(--on-primary)}
+.srv .pip{position:absolute;left:-12px;top:50%;width:4px;height:8px;margin-top:-4px;border-radius:0 4px 4px 0;background:var(--text);
+  transition:height var(--dur-fast) var(--spring-fast), margin var(--dur-fast) var(--spring-fast);opacity:0}
+.srv.unread .pip{opacity:1}
+.srv:hover .pip{height:20px;margin-top:-10px;opacity:1}
+.srv.active .pip{height:36px;margin-top:-18px;opacity:1;background:var(--primary)}
+.srv .badge{position:absolute;right:-4px;bottom:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;
+  background:var(--dnd);color:#410002;font-size:11px;font-weight:800;display:grid;place-items:center;
+  box-shadow:0 0 0 3px var(--bg)}
+.srv.add .shape{background:var(--surface);color:var(--online)}
+.srv.add:hover .shape{background:var(--online);color:#00391f}
+
+/* channels */
+.channels{background:var(--surface-low)}
+.srv-head{padding:14px 16px;display:flex;align-items:center;gap:8px;font-weight:750;font-size:15px}
+.srv-head .ms{margin-left:auto;color:var(--text-variant)}
+.banner{display:none}
+.cat{display:flex;align-items:center;gap:4px;padding:16px 16px 4px 10px;font-size:11.5px;font-weight:750;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--text-muted)}
+.cat .ms{font-size:16px}
+.ch{
+  display:flex;align-items:center;gap:8px;margin:1px 8px;padding:7px 10px;border-radius:10px;color:var(--text-muted);
+  font-weight:500;cursor:pointer;position:relative;
+  transition:background .2s, color .2s, border-radius var(--dur-fast) var(--spring-fast), transform var(--dur-fast) var(--spring-fast);
+}
+.ch .ms{font-size:20px}
+.ch:hover{background:var(--surface-high);color:var(--text)}
+.ch:active{transform:scale(.97)}
+.ch.unread{color:var(--text);font-weight:700}
+.ch.unread::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--text);margin-left:auto}
+.ch.active{background:var(--secondary-container);color:var(--on-secondary-container);font-weight:700}
+.ch.active .ms{font-variation-settings:"FILL" 1,"wght" 600,"GRAD" 0,"opsz" 24}
+.vc-users{margin:2px 8px 6px 38px;display:flex;flex-direction:column;gap:2px}
+.vc-user{display:flex;align-items:center;gap:8px;padding:3px 6px;border-radius:8px;color:var(--text-variant);font-size:13px}
+.vc-user .av{width:22px;height:22px;font-size:10px}
+.vc-user.speaking .av{box-shadow:0 0 0 2px var(--online)}
+
+/* voice + user panel */
+.voice{margin:8px;padding:12px;border-radius:16px;background:var(--surface);display:flex;flex-direction:column;gap:8px}
+.voice-top{display:flex;align-items:center;gap:10px}
+.voice-top .t{font-weight:750;color:var(--online);font-size:13px}
+.voice-top .s{font-size:12px;color:var(--text-variant)}
+.voice-top .ibtn{margin-left:auto}
+.wave{height:14px;width:100%;overflow:hidden}
+.wave svg{display:block;animation:wave 1.2s linear infinite}
+@keyframes wave{to{transform:translateX(-24px)}}
+.me{display:flex;align-items:center;gap:10px;padding:10px 10px 12px;background:var(--surface-lowest)}
+.me .who{line-height:1.2;min-width:0}
+.me .who b{display:block;font-size:13.5px}
+.me .who small{color:var(--text-variant);font-size:12px}
+.me .tools{margin-left:auto;display:flex;gap:2px}
+.ibtn{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;color:var(--text-variant);
+  transition:background .2s,color .2s,border-radius var(--dur-fast) var(--spring-fast),transform var(--dur-fast) var(--spring-fast)}
+.ibtn:hover{background:var(--surface-highest);color:var(--text);border-radius:17px}
+.ibtn:active{transform:scale(.88)}
+.ibtn.toggled{background:var(--tertiary-container);color:var(--on-tertiary-container);border-radius:17px}
+.ibtn.toggled .ms{font-variation-settings:"FILL" 1,"wght" 600,"GRAD" 0,"opsz" 24}
+
+/* avatars */
+.av{width:40px;height:40px;flex:none;display:grid;place-items:center;font-weight:800;font-size:15px;color:#0b0b10;
+  border-radius:50%;position:relative;font-variation-settings:"wdth" 110}
+.av-wrap{position:relative;flex:none}
+.status{position:absolute;right:-2px;bottom:-2px;width:14px;height:14px;border-radius:50%;border:3px solid var(--surface-low)}
+.status.on{background:var(--online)}.status.idle{background:var(--idle)}.status.dnd{background:var(--dnd)}.status.off{background:var(--text-muted)}
+
+/* chat */
+.chat{background:var(--surface)}
+.chat-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--outline-variant);flex:none}
+.chat-head .title{display:flex;align-items:center;gap:6px;font-weight:750;font-size:15px}
+.chat-head .title .ms{color:var(--text-muted)}
+.chat-head .topic{color:var(--text-variant);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  border-left:1px solid var(--outline);padding-left:10px}
+.chat-head .tools{margin-left:auto;display:flex;gap:2px;align-items:center}
+.search{height:32px;width:150px;border-radius:999px;background:var(--surface-lowest);color:var(--text-muted);display:flex;align-items:center;
+  padding:0 12px;gap:6px;font-size:13px;transition:width var(--dur-slow) var(--spring-slow)}
+.search:hover{width:200px}
+.hero{display:none}
+.tabs{display:none}
+
+.msgs{padding:16px 0 8px}
+.day{display:flex;align-items:center;gap:10px;margin:14px 16px;color:var(--text-muted);font-size:12px;font-weight:700}
+.day::before,.day::after{content:"";flex:1;height:1px;background:var(--outline-variant)}
+.msg{display:flex;gap:14px;padding:4px 16px;position:relative;transition:background .15s}
+.msg:hover{background:rgba(255,255,255,.025)}
+.msg.cont{padding-top:1px}
+.msg.cont .av-wrap{visibility:hidden;height:0}
+.msg .body{min-width:0;flex:1}
+.meta{display:flex;align-items:baseline;gap:8px}
+.meta b{font-weight:700;font-size:15px}
+.meta time{font-size:11.5px;color:var(--text-muted)}
+.role-tag{font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;background:var(--primary-container);color:var(--on-primary-container);letter-spacing:.03em}
+.content{color:var(--text);max-width:720px}
+.content code{font-family:ui-monospace,monospace;background:var(--surface-lowest);padding:1px 5px;border-radius:6px;font-size:12.5px}
+.mention{background:rgba(88,101,242,.28);color:var(--on-primary-container);padding:0 4px;border-radius:6px;font-weight:600}
+.msg.mentioned{background:rgba(88,101,242,.08)}
+.msg.mentioned::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--primary);border-radius:0 3px 3px 0}
+.reply{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-variant);margin:0 0 2px 54px;position:relative}
+.reply::before{content:"";position:absolute;left:-34px;top:9px;width:28px;height:10px;border:2px solid var(--outline);border-right:0;border-bottom:0;border-radius:8px 0 0 0}
+.reply .av{width:16px;height:16px;font-size:8px}
+.reacts{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.react{display:flex;align-items:center;gap:5px;padding:3px 10px 3px 8px;border-radius:999px;background:var(--surface-high);
+  font-size:13px;font-weight:700;color:var(--text-variant);border:1px solid transparent;
+  transition:transform var(--dur-fast) var(--spring-fast),border-radius var(--dur-fast) var(--spring-fast),background .2s}
+.react:hover{transform:scale(1.08)}
+.react:active{transform:scale(.9)}
+.react.me{background:var(--secondary-container);border-color:var(--primary);color:var(--on-secondary-container)}
+.embed{margin-top:8px;max-width:440px;border-radius:16px;background:var(--surface-low);padding:14px 16px;border-left:4px solid var(--tertiary)}
+.embed .site{font-size:12px;color:var(--text-variant)}
+.embed .et{font-weight:750;color:var(--primary);margin:2px 0 4px}
+.embed .ed{font-size:13px;color:var(--text-variant)}
+.img{margin-top:8px;width:320px;height:180px;border-radius:20px;
+  background:radial-gradient(120px 90px at 70% 30%,#f3b6dc 0,transparent 70%),radial-gradient(160px 120px at 25% 75%,#5865F2 0,transparent 70%),linear-gradient(135deg,#1a1a2e,#0b0b14);
+  transition:border-radius var(--dur-slow) var(--spring-slow)}
+.img:hover{border-radius:44px}
+
+.typing{display:flex;align-items:center;gap:8px;padding:2px 18px 6px;font-size:12px;color:var(--text-variant);height:24px}
+.typing .loader{width:16px;height:16px;background:var(--primary);animation:morph 2.4s var(--spring-slow) infinite, spin 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.composer{margin:0 16px 16px;display:flex;align-items:center;gap:4px;padding:6px;background:var(--surface-high);border-radius:14px;flex:none}
+.composer .tb{display:flex;gap:2px}
+.composer .input{flex:1;color:var(--text-muted);padding:0 8px}
+.send{width:40px;height:40px;display:grid;place-items:center;background:var(--primary);color:var(--on-primary);border-radius:12px;
+  transition:border-radius var(--dur-fast) var(--spring-fast),transform var(--dur-fast) var(--spring-fast)}
+.send:hover{border-radius:20px}
+.send:active{transform:scale(.88)}
+
+/* members */
+.members{background:var(--surface-low)}
+.m-role{padding:18px 16px 6px;font-size:11.5px;font-weight:750;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)}
+.mem{display:flex;align-items:center;gap:10px;margin:1px 8px;padding:6px 8px;border-radius:12px;cursor:pointer;
+  transition:background .2s, border-radius var(--dur-fast) var(--spring-fast)}
+.mem:hover{background:var(--surface-high);border-radius:24px}
+.mem .av{width:32px;height:32px;font-size:12px}
+.mem .nm{font-weight:600;line-height:1.15}
+.mem .nm small{display:block;color:var(--text-muted);font-weight:450;font-size:11.5px}
+.mem.off{opacity:.45}
+
+.only-c3,.only-c4{display:none}
+
+/* ============================================================
+   CONCEPT 1 — "Tonal Islands"
+   Pure-black canvas, every region is a floating rounded container.
+   Shapes: circle → 9-point cookie on hover/select.
+   ============================================================ */
+[data-concept="1"].app{gap:8px;padding:8px 8px 8px 0}
+[data-concept="1"] .channels,[data-concept="1"] .chat,[data-concept="1"] .members{border-radius:28px}
+[data-concept="1"] .channels{background:var(--surface-low)}
+[data-concept="1"] .members{background:var(--surface-low)}
+[data-concept="1"] .chat{background:var(--surface)}
+[data-concept="1"] .chat-head{border-bottom:0;padding:14px 20px}
+[data-concept="1"] .ch{border-radius:999px;padding:8px 14px}
+[data-concept="1"] .ch.active{background:var(--primary-container);color:var(--on-primary-container)}
+[data-concept="1"] .composer{border-radius:999px;padding:6px 6px 6px 8px}
+[data-concept="1"] .composer .send{border-radius:999px}
+[data-concept="1"] .composer .send:hover{border-radius:12px}
+[data-concept="1"] .me{margin:0 8px 8px;border-radius:999px;background:var(--surface-high);padding:8px 8px 8px 8px}
+[data-concept="1"] .voice{border-radius:24px}
+
+/* ============================================================
+   CONCEPT 2 — "Shape Library"
+   Flat midnight layout (most faithful to current), but the M3E
+   shape set does the talking: every server/avatar has its own shape,
+   it rotates + morphs to a circle when selected. Wide, heavy type.
+   ============================================================ */
+[data-concept="2"] .channels{border-radius:0}
+[data-concept="2"] .srv-head{font-size:19px;font-weight:900;font-variation-settings:"wdth" 140;letter-spacing:-.01em;padding:18px 16px}
+[data-concept="2"] .cat{font-variation-settings:"wdth" 130;font-weight:850}
+[data-concept="2"] .chat-head .title{font-size:18px;font-weight:900;font-variation-settings:"wdth" 135}
+[data-concept="2"] .srv:hover .shape{transform:rotate(30deg)}
+[data-concept="2"] .srv:hover .shape span{display:inline-block;transform:rotate(-30deg)}
+[data-concept="2"] .srv .shape span{transition:transform var(--dur-slow) var(--spring-slow)}
+[data-concept="2"] .av{clip-path:var(--av-shape);border-radius:0}
+[data-concept="2"] .status{border-radius:50%}
+[data-concept="2"] .ch.active{background:transparent;color:var(--primary)}
+[data-concept="2"] .ch.active::before{content:"";position:absolute;left:-8px;top:6px;bottom:6px;width:4px;border-radius:0 4px 4px 0;background:var(--primary)}
+[data-concept="2"] .ch.active{background:linear-gradient(90deg,rgba(191,195,255,.12),transparent)}
+[data-concept="2"] .meta b{font-variation-settings:"wdth" 120;font-weight:800}
+[data-concept="2"] .send{clip-path:var(--send-shape);border-radius:0;width:44px;height:44px;transition:clip-path var(--dur-slow) var(--spring-slow),transform var(--dur-fast) var(--spring-fast)}
+[data-concept="2"] .send:hover{clip-path:var(--send-hover);transform:rotate(45deg)}
+[data-concept="2"] .badge{clip-path:var(--badge-shape);border-radius:0;box-shadow:none;width:22px;height:22px;right:-5px;bottom:-5px}
+[data-concept="2"] .react{border-radius:8px}
+[data-concept="2"] .react:hover{border-radius:999px}
+
+/* ============================================================
+   CONCEPT 3 — "Floating Toolbar"
+   Chat as bubbles with asymmetric grouped corners, composer is a
+   floating M3E toolbar with a big FAB send. Members tucked into a
+   side sheet you open with a toggle.
+   ============================================================ */
+[data-concept="3"].app{grid-template-columns:72px 260px 1fr 0px;gap:0}
+[data-concept="3"].app.sheet{grid-template-columns:72px 260px 1fr 248px}
+[data-concept="3"] .members{border-radius:28px 0 0 28px;background:var(--surface-high)}
+[data-concept="3"] .channels{border-radius:28px 0 0 0;background:var(--surface-low)}
+[data-concept="3"] .chat{background:var(--surface-low);position:relative}
+[data-concept="3"] .chat-head{border-bottom:0}
+[data-concept="3"] .only-c3{display:revert}
+[data-concept="3"] .msg:hover{background:transparent}
+[data-concept="3"] .msg .content{background:var(--surface-high);padding:9px 14px;border-radius:6px 22px 22px 22px;display:inline-block;max-width:560px}
+[data-concept="3"] .msg.cont .content{border-radius:6px 22px 22px 6px}
+[data-concept="3"] .msg.grp-mid .content{border-radius:6px 22px 22px 6px}
+[data-concept="3"] .msg.self{flex-direction:row-reverse}
+[data-concept="3"] .msg.self .body{text-align:right}
+[data-concept="3"] .msg.self .meta{justify-content:flex-end}
+[data-concept="3"] .msg.self .content{background:var(--primary-container);color:var(--on-primary-container);border-radius:22px 6px 22px 22px;text-align:left}
+[data-concept="3"] .msg.self .reacts{justify-content:flex-end}
+[data-concept="3"] .msg.mentioned{background:transparent}
+[data-concept="3"] .msg.mentioned::before{display:none}
+[data-concept="3"] .msg.mentioned .content{background:var(--tertiary-container);color:var(--on-tertiary-container)}
+[data-concept="3"] .msg .embed,[data-concept="3"] .msg .img{display:block}
+[data-concept="3"] .reply{margin-left:56px}
+[data-concept="3"] .msgs{padding-bottom:110px}
+[data-concept="3"] .composer{
+  position:absolute;left:50%;bottom:20px;transform:translateX(-50%);width:min(720px,calc(100% - 40px));
+  margin:0;padding:8px;border-radius:999px;background:var(--surface-highest);
+  box-shadow:0 10px 30px rgba(0,0,0,.6),0 0 0 1px var(--outline);
+}
+[data-concept="3"] .composer .send{width:56px;height:56px;border-radius:18px;margin-left:6px;background:var(--tertiary);color:#3c0f33}
+[data-concept="3"] .composer .send:hover{border-radius:28px}
+[data-concept="3"] .composer .send .ms{font-size:26px}
+[data-concept="3"] .composer .tb{display:flex;gap:2px;padding:4px;border-radius:999px;background:var(--surface-high)}
+[data-concept="3"] .typing{position:absolute;bottom:92px;left:24px}
+[data-concept="3"] .me{background:var(--surface-low)}
+
+/* ============================================================
+   CONCEPT 4 — "Big Type Hero"
+   Editorial: huge variable-width channel title, connected button
+   group tabs, emphasized wavy progress for voice, members as chips.
+   ============================================================ */
+[data-concept="4"].app{gap:0}
+[data-concept="4"] .chat{background:var(--surface-lowest)}
+[data-concept="4"] .channels{background:var(--surface-low)}
+[data-concept="4"] .banner{display:block;height:96px;margin:8px 8px 0;border-radius:24px;position:relative;overflow:hidden;
+  background:radial-gradient(140px 100px at 80% 20%,rgba(243,182,220,.7),transparent 70%),radial-gradient(200px 140px at 10% 100%,rgba(88,101,242,.9),transparent 70%),#14142a}
+[data-concept="4"] .banner + .srv-head{position:relative;margin-top:-44px;color:#fff;font-size:20px;font-weight:900;font-variation-settings:"wdth" 150;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+[data-concept="4"] .banner + .srv-head .ms{color:#fff}
+[data-concept="4"] .chat-head .title,[data-concept="4"] .chat-head .topic{display:none}
+[data-concept="4"] .chat-head{border-bottom:0;padding:16px 24px 0}
+[data-concept="4"] .hero{display:block;padding:8px 24px 16px;flex:none}
+[data-concept="4"] .hero h2{margin:0;font-size:64px;line-height:.95;font-weight:900;letter-spacing:-.03em;
+  font-variation-settings:"wdth" 151,"opsz" 144;transition:font-variation-settings var(--dur-slow) var(--spring-slow), letter-spacing var(--dur-slow) var(--spring-slow)}
+[data-concept="4"] .hero h2:hover{font-variation-settings:"wdth" 25,"opsz" 144;letter-spacing:0}
+[data-concept="4"] .hero h2 .hash{color:var(--primary)}
+[data-concept="4"] .hero p{margin:6px 0 0;color:var(--text-variant);font-size:14px}
+[data-concept="4"] .tabs{display:flex;gap:2px;margin-top:14px}
+[data-concept="4"] .tabs button{padding:8px 16px;background:var(--surface-high);color:var(--text-variant);font-weight:700;border-radius:6px;font-size:13px;
+  transition:border-radius var(--dur-fast) var(--spring-fast),background .2s,color .2s, padding var(--dur-fast) var(--spring-fast)}
+[data-concept="4"] .tabs button:first-child{border-radius:999px 6px 6px 999px}
+[data-concept="4"] .tabs button:last-child{border-radius:6px 999px 999px 6px}
+[data-concept="4"] .tabs button.on{background:var(--tertiary);color:#3c0f33;border-radius:999px;padding:8px 22px}
+[data-concept="4"] .msgs{padding-top:0}
+[data-concept="4"] .ch.active{background:var(--tertiary-container);color:var(--on-tertiary-container);border-radius:999px}
+[data-concept="4"] .ch{border-radius:12px}
+[data-concept="4"] .meta b{font-size:16px;font-weight:850;font-variation-settings:"wdth" 125}
+[data-concept="4"] .only-c4{display:revert}
+[data-concept="4"] .voice{background:var(--online);color:#00391f}
+[data-concept="4"] .voice .t,[data-concept="4"] .voice .s{color:#00391f}
+[data-concept="4"] .voice .ibtn{color:#00391f}
+[data-concept="4"] .voice .wave path{stroke:#00391f}
+[data-concept="4"] .wave{height:20px}
+[data-concept="4"] .members{background:var(--surface-low)}
+[data-concept="4"] .members .list{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px}
+[data-concept="4"] .mem{margin:0;padding:4px 12px 4px 4px;border-radius:999px;background:var(--surface-high)}
+[data-concept="4"] .mem:hover{border-radius:12px;background:var(--surface-highest)}
+[data-concept="4"] .mem .av{width:26px;height:26px;font-size:10px}
+[data-concept="4"] .mem .nm small{display:none}
+[data-concept="4"] .mem .status{width:11px;height:11px;border-width:2px;border-color:var(--surface-high)}
+[data-concept="4"] .m-role{font-size:22px;font-weight:900;text-transform:none;letter-spacing:-.01em;color:var(--text);font-variation-settings:"wdth" 140}
+[data-concept="4"] .m-role span{color:var(--text-muted);font-weight:500}
+[data-concept="4"] .composer{border-radius:20px;background:var(--surface-high)}
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <h1>Midnight <span>Expressive</span></h1>
+  <div class="btn-group" id="concepts">
+    <button data-c="1" class="on">1 · Tonal Islands</button>
+    <button data-c="2">2 · Shape Library</button>
+    <button data-c="3">3 · Floating Toolbar</button>
+    <button data-c="4">4 · Big Type Hero</button>
+  </div>
+  <div class="concept-desc" id="desc"></div>
+</div>
+
+<div class="app" id="app" data-concept="1">
+  <nav class="panel rail" id="rail"></nav>
+
+  <aside class="panel channels">
+    <div class="banner"></div>
+    <div class="srv-head">Night Owls Club <span class="ms">expand_more</span></div>
+    <div class="scroll" id="chlist"></div>
+    <div class="voice">
+      <div class="voice-top">
+        <span class="ms fill" style="color:inherit">graphic_eq</span>
+        <div><div class="t">Voice Connected</div><div class="s">Lounge / Night Owls</div></div>
+        <button class="ibtn"><span class="ms">call_end</span></button>
+      </div>
+      <div class="wave"><svg width="400" height="20" viewBox="0 0 400 20"><path id="wavePath" fill="none" stroke="var(--online)" stroke-width="3" stroke-linecap="round"/></svg></div>
+    </div>
+    <div class="me">
+      <div class="av-wrap"><div class="av" style="background:#bfc3ff;width:34px;height:34px;font-size:13px">V</div><span class="status on" style="border-color:var(--surface-high)"></span></div>
+      <div class="who"><b>nova</b><small>building a theme ✦</small></div>
+      <div class="tools">
+        <button class="ibtn toggled" title="Muted"><span class="ms">mic_off</span></button>
+        <button class="ibtn"><span class="ms">headphones</span></button>
+        <button class="ibtn"><span class="ms">settings</span></button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="panel chat">
+    <div class="chat-head">
+      <div class="title"><span class="ms">tag</span>general</div>
+      <div class="topic">midnight hours only · be nice · no spoilers past ep 6</div>
+      <div class="tools">
+        <button class="ibtn"><span class="ms">forum</span></button>
+        <button class="ibtn"><span class="ms">notifications</span></button>
+        <button class="ibtn"><span class="ms">push_pin</span></button>
+        <button class="ibtn" id="sheetBtn" title="Members"><span class="ms">group</span></button>
+        <div class="search"><span class="ms" style="font-size:18px">search</span>Search</div>
+      </div>
+    </div>
+    <div class="hero">
+      <h2><span class="hash">#</span>general</h2>
+      <p>midnight hours only · be nice · no spoilers past ep 6</p>
+      <div class="tabs"><button class="on">Chat</button><button>Threads</button><button>Media</button><button>Pins</button></div>
+    </div>
+    <div class="scroll msgs" id="msgs"></div>
+    <div class="typing"><div class="loader"></div><span><b>kai</b> and <b>moth</b> are typing…</span></div>
+    <div class="composer">
+      <button class="ibtn"><span class="ms">add_circle</span></button>
+      <div class="input">Message #general</div>
+      <div class="tb">
+        <button class="ibtn"><span class="ms">gif_box</span></button>
+        <button class="ibtn"><span class="ms">sticky_note_2</span></button>
+        <button class="ibtn"><span class="ms">mood</span></button>
+      </div>
+      <button class="send"><span class="ms fill">send</span></button>
+    </div>
+  </main>
+
+  <aside class="panel members"><div class="scroll" id="members"></div></aside>
+</div>
+
+<script>
+/* ---------- M3 Expressive shape generator (all shapes share N points so they morph) ---------- */
+const N = 72;
+const shapeFns = {
+  circle:   () => 49,
+  squircle: t => 47 * Math.pow(Math.pow(Math.abs(Math.cos(t)),5) + Math.pow(Math.abs(Math.sin(t)),5), -1/5) ,
+  cookie4:  t => 44 + 5.5*Math.cos(4*t),
+  cookie6:  t => 45 + 4*Math.cos(6*t),
+  cookie9:  t => 46 + 3*Math.cos(9*t),
+  cookie12: t => 46.5 + 2.6*Math.cos(12*t),
+  clover:   t => 38 + 11*Math.pow(Math.abs(Math.cos(2*t)), .6),
+  flower:   t => 40 + 9*Math.pow(Math.abs(Math.cos(4*t)), .8),
+  pentagon: t => 44 + 4.5*Math.cos(5*t),
+  sunny:    t => 46 + 2.5*Math.cos(8*t),
+  gem:      t => 42 + 7*Math.cos(3*t),
+};
+function poly(name, rot=0){
+  const f = shapeFns[name], pts=[];
+  for(let i=0;i<N;i++){
+    const t = i/N*2*Math.PI - Math.PI/2;
+    let r = f(t + rot);
+    if(name==='squircle') r = Math.min(r, 65);
+    const x = 50 + r*Math.cos(t), y = 50 + r*Math.sin(t);
+    pts.push(`${x.toFixed(2)}% ${y.toFixed(2)}%`);
+  }
+  return `polygon(${pts.join(',')})`;
+}
+// morphing loader keyframes (M3E loading indicator style)
+const seq=['cookie9','pentagon','clover','sunny','flower','cookie4','cookie9'];
+document.head.insertAdjacentHTML('beforeend',`<style>@keyframes morph{${seq.map((s,i)=>`${(i/(seq.length-1)*100).toFixed(1)}%{clip-path:${poly(s)}}`).join('')}}
+:root{--send-shape:${poly('cookie4')};--send-hover:${poly('cookie9')};--badge-shape:${poly('sunny')}}</style>`);
+
+/* ---------- data ---------- */
+const palette=['#bfc3ff','#f3b6dc','#7ddca7','#f5c26b','#9fd4ff','#ffb59a','#d6bbff','#a8e3d8'];
+const servers=[
+  {n:'NO',active:true,shape:'cookie9'},
+  {n:'DV',unread:true,badge:3,shape:'clover'},
+  {n:'🎮',shape:'flower'},
+  {n:'AR',unread:true,shape:'pentagon'},
+  {n:'LF',shape:'cookie6'},
+  {n:'MU',shape:'gem'},
+  {n:'✦',shape:'sunny',badge:12},
+];
+const channels=[
+  {cat:'Welcome',items:[{i:'campaign',n:'announcements',unread:true},{i:'gavel',n:'rules'}]},
+  {cat:'Hangout',items:[{i:'tag',n:'general',active:true},{i:'tag',n:'late-night-thoughts',unread:true},{i:'tag',n:'memes'},{i:'forum',n:'theme-showcase'}]},
+  {cat:'Voice',items:[{i:'volume_up',n:'Lounge',users:[['kai',1],['moth',0],['nova',0]]},{i:'volume_up',n:'Study Hall'}]},
+];
+const people={kai:0,moth:1,juno:2,rhea:3,orbit:4,nova:0,pix:5,lumen:6,ash:7};
+const msgs=[
+  {day:'Today'},
+  {u:'juno',t:'11:42 PM',role:'MOD',c:'ok who else is still awake 🌙'},
+  {u:'juno',cont:true,mid:true,c:'the server is so quiet at this hour, i love it'},
+  {u:'kai',t:'11:44 PM',c:'here. debugging my css theme for the 4th hour',re:[['🫠',4,true],['☕',2]]},
+  {u:'nova',self:true,t:'11:45 PM',reply:'kai',c:'same lol — trying to make midnight feel like <b>material 3 expressive</b>. springy shapes everywhere',re:[['✨',6,true]]},
+  {u:'rhea',t:'11:47 PM',mention:true,c:'<span class="mention">@nova</span> post screenshots in #theme-showcase when it\'s done!!'},
+  {u:'orbit',t:'11:49 PM',c:'made a wallpaper for it, kinda vibes',img:true},
+  {u:'moth',t:'11:52 PM',c:'remember to override <code>--background-primary</code> and the rail vars or it\'ll flash grey',
+     embed:{site:'docs.betterdiscord.app',t:'Theme variables reference',d:'All the CSS custom properties exposed by the client, grouped by surface.'}},
+  {u:'kai',t:'11:53 PM',c:'big shapes, big type, bouncy buttons. that\'s the whole brief'},
+];
+const members=[
+  {role:'Moderators',list:[['juno','on','✦ keeping the lights low'],['rhea','idle','away']]},
+  {role:'Night Owls',list:[['kai','on','Playing VS Code'],['moth','dnd','do not disturb'],['orbit','on','Listening to lofi'],['nova','on','building a theme'],['pix','on','']]},
+  {role:'Offline',list:[['lumen','off',''],['ash','off','']]},
+];
+
+const avShapes=['cookie9','clover','flower','pentagon','cookie6','gem','sunny','cookie4'];
+const av=(u,size)=>{const i=people[u]??0;return `<div class="av" style="background:${palette[i]};--av-shape:${poly(avShapes[i])}${size?`;width:${size}px;height:${size}px`:''}">${u[0].toUpperCase()}</div>`};
+
+/* ---------- render ---------- */
+const rail=document.getElementById('rail');
+rail.innerHTML = `<div class="srv" style="--rest:${poly('squircle')};--hover:${poly('cookie12')}"><div class="shape" style="background:var(--primary-container);color:var(--on-primary-container)"><span class="ms fill">nightlight</span></div></div><div class="sep"></div>`
+ + servers.map((s,i)=>`<div class="srv ${s.active?'active':''} ${s.unread?'unread':''}" data-shape="${s.shape}"><span class="pip"></span><div class="shape" style="color:${palette[i]}"><span>${s.n}</span></div>${s.badge?`<span class="badge">${s.badge}</span>`:''}</div>`).join('')
+ + `<div class="sep"></div><div class="srv add" style="--rest:${poly('circle')};--hover:${poly('cookie4')}"><div class="shape"><span class="ms">add</span></div></div>`;
+
+document.getElementById('chlist').innerHTML = channels.map(g=>`<div class="cat"><span class="ms">expand_more</span>${g.cat}</div>`+
+  g.items.map(c=>`<div class="ch ${c.active?'active':''} ${c.unread?'unread':''}"><span class="ms">${c.i}</span>${c.n}</div>`+
+   (c.users?`<div class="vc-users">${c.users.map(([u,sp])=>`<div class="vc-user ${sp?'speaking':''}">${av(u)}${u}</div>`).join('')}</div>`:'')).join('')).join('');
+
+document.getElementById('msgs').innerHTML = msgs.map(m=>{
+  if(m.day) return `<div class="day">${m.day}</div>`;
+  const i=people[m.u];
+  return (m.reply?`<div class="reply">${av(m.reply)}<b>${m.reply}</b> debugging my css theme for the 4th hour</div>`:'')+
+  `<div class="msg ${m.cont?'cont':''} ${m.mid?'grp-mid':''} ${m.self?'self':''} ${m.mention?'mentioned':''}">
+    <div class="av-wrap">${av(m.u)}</div>
+    <div class="body">
+      ${m.cont?'':`<div class="meta"><b style="color:${palette[i]}">${m.u}</b>${m.role?`<span class="role-tag">${m.role}</span>`:''}<time>${m.t}</time></div>`}
+      <div class="content">${m.c}</div>
+      ${m.img?'<div class="img"></div>':''}
+      ${m.embed?`<div class="embed"><div class="site">${m.embed.site}</div><div class="et">${m.embed.t}</div><div class="ed">${m.embed.d}</div></div>`:''}
+      ${m.re?`<div class="reacts">${m.re.map(([e,n,me])=>`<button class="react ${me?'me':''}">${e} ${n}</button>`).join('')}<button class="react"><span class="ms" style="font-size:16px">add_reaction</span></button></div>`:''}
+    </div></div>`;
+}).join('');
+
+document.getElementById('members').innerHTML = members.map(g=>`<div class="m-role">${g.role} <span>— ${g.list.length}</span></div><div class="list">`+
+  g.list.map(([u,s,sub])=>`<div class="mem ${s==='off'?'off':''}"><div class="av-wrap">${av(u)}<span class="status ${s}"></span></div><div class="nm" style="color:${s==='off'?'inherit':palette[people[u]]}">${u}<small>${sub}</small></div></div>`).join('')+`</div>`).join('');
+
+// wavy progress path
+let d='M0 10';for(let x=0;x<=400;x+=6){d+=` L${x} ${10+4*Math.sin(x/24*2*Math.PI)}`}
+document.getElementById('wavePath').setAttribute('d',d);
+
+/* ---------- concept switching ---------- */
+const desc={
+ 1:'<b>Tonal Islands</b> — pure-black Midnight canvas; every region floats as a 28px tonal container. Pill channels, pill user dock, circle → 12-point cookie morph on server icons.',
+ 2:'<b>Shape Library</b> — keeps Midnight\'s flat layout, but every server & avatar gets its own M3E shape (clover, flower, gem…). Hover spins + morphs; selected morphs into a cookie. Extra-wide heavy type.',
+ 3:'<b>Floating Toolbar</b> — chat bubbles with grouped asymmetric corners, your messages in primary container, a floating pill toolbar with a big tertiary FAB. Members live in a side sheet (toggle the 👥 icon).',
+ 4:'<b>Big Type Hero</b> — editorial: 64px variable-width channel title (hover it — width morphs), connected button-group tabs, banner server header, loud green voice card with wavy indicator, members as chips.',
+};
+function applyShapes(c){
+  document.querySelectorAll('.srv[data-shape]').forEach(el=>{
+    const s=el.dataset.shape;
+    if(c==2){ el.style.setProperty('--rest',poly(s)); el.style.setProperty('--hover',poly('cookie9',0.2)); }
+    else if(c==3){ el.style.setProperty('--rest',poly('squircle')); el.style.setProperty('--hover',poly('cookie6')); }
+    else if(c==4){ el.style.setProperty('--rest',poly('cookie12')); el.style.setProperty('--hover',poly('flower')); }
+    else { el.style.setProperty('--rest',poly('circle')); el.style.setProperty('--hover',poly('cookie12')); }
+  });
+}
+function setConcept(c){
+  const app=document.getElementById('app');
+  app.dataset.concept=c; app.classList.remove('sheet');
+  document.querySelectorAll('#concepts button').forEach(b=>b.classList.toggle('on',b.dataset.c==c));
+  document.getElementById('desc').innerHTML=desc[c];
+  applyShapes(c);
+}
+document.getElementById('concepts').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setConcept(b.dataset.c)});
+document.getElementById('sheetBtn').addEventListener('click',()=>{const a=document.getElementById('app');if(a.dataset.concept==3)a.classList.toggle('sheet')});
+document.querySelectorAll('.srv[data-shape]').forEach(el=>el.addEventListener('click',()=>{
+  document.querySelectorAll('.srv.active').forEach(x=>x.classList.remove('active'));el.classList.add('active');}));
+document.querySelectorAll('.ch').forEach(el=>el.addEventListener('click',()=>{
+  document.querySelectorAll('.ch.active').forEach(x=>x.classList.remove('active'));el.classList.add('active');}));
+document.querySelectorAll('.tabs button').forEach(el=>el.addEventListener('click',()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));el.classList.add('on');}));
+document.querySelectorAll('.ibtn').forEach(el=>{ if(el.closest('.me')) el.addEventListener('click',()=>el.classList.toggle('toggled'))});
+setConcept(1);
+</script>
+</body>
+</html>

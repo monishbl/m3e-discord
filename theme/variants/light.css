@@ -1,0 +1,42 @@
+/**
+ * @name M3E Discord Light
+ * @description M3E Discord in daylight: neutral blue-grey surfaces with the Midnight-seeded expressive accents (light scheme). Keep Discord's own appearance on Dark; this theme repaints it.
+ */
+body {
+  /* surfaces: the dark theme's blue-grey ramp, mirrored */
+  --m3e-canvas: #d9dee6;
+  --m3e-s-low: #f7f9fc;
+  --m3e-s: #eef1f6;
+  --m3e-s-high: #e5e9f0;
+  --m3e-s-highest: #dce1ea;
+  --m3e-s-bright: #d0d6e0;
+  --m3e-on-s: #161a21;
+  --m3e-on-s-var: #4a5261;
+  --m3e-outline: #737c8c;
+  --m3e-outline-var: #c3c9d4;
+  --m3e-state: 40 48 62;
+
+  /* accents: material-color-utilities "expressive" light scheme, seed #46aec5 */
+  --m3e-primary: #00697a;        --m3e-on-primary: #effbff;
+  --m3e-primary-c: #62e2ff;      --m3e-on-primary-c: #004f5c;
+  --m3e-secondary-c: #cfe6ee;    --m3e-on-secondary-c: #0f3540;
+  --m3e-tertiary: #7c4a98;
+  --m3e-tertiary-c: #dca3f9;     --m3e-on-tertiary-c: #501f6c;
+  --m3e-error: #ac3434;          --m3e-on-error: #fff7f6;
+  --m3e-error-c: #ffdad6;        --m3e-on-error-c: #65000b;
+  --m3e-inverse-primary: #62e2ff;
+  --m3e-inverse-s: #1d2128;      --m3e-inverse-on-s: #eef1f6;
+  --m3e-on-online: #e8fff6;
+  --m3e-code-bg: #eef1f6;
+  --m3e-inline-code-bg: rgb(40 48 62 / 0.08);
+  --m3e-chip-bg: rgb(40 48 62 / 0.08);
+  --m3e-mention-fg: #004f5c;
+
+  --text-1: #10131a;
+  --text-2: #2a303b;
+  --text-3: #414958;
+  --text-4: #626b7c;
+  --text-5: #9aa2b1;
+  --online: #1f8a68;
+  --idle: #9a7a14;
+}

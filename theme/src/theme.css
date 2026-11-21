@@ -1,0 +1,982 @@
+/**
+ * @name M3E Discord (source — build with theme/build.mjs)
+ * @author monishbl
+ * @version 1.0.0
+ * @description Material 3 Expressive for Discord, layered on refact0r's Midnight: tonal islands, morphing shapes, spring motion, message bubbles.
+ */
+
+/* Midnight provides the panel layout and its many per-screen fixes; this file restyles it. */
+@import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wdth,wght,ROND@6..144,25..151,1..1000,0..100&family=Google+Sans+Code:wght@300..800&display=swap');
+
+/* ════════════════════════════════════════════════════════════════
+   SETTINGS — change these
+   ════════════════════════════════════════════════════════════════ */
+:root {
+  --m3e-bubbles: on;          /* on: message bubbles · off: classic flat messages */
+  --m3e-accent: midnight;     /* midnight (cyan, from Midnight) · blurple · lilac */
+  --m3e-shapes: on;           /* on: server icons / avatars use the M3E shape library · off: circles */
+  --m3e-chatbar: floating;    /* floating: pill chat bar island · inline */
+  --m3e-mine: right;          /* right: your messages sit on the right (needs userId in theme/config.json) · left */
+
+}
+body {
+  --gap: 8px;                 /* space between islands */
+  --m3e-island-radius: 28px;  /* corner of the big panels (M3 extraLarge) */
+  --m3e-bubble-max: 80%;      /* widest a bubble gets (share of the column) */
+  --m3e-chat-max: 1280px;     /* the message column + chat bar are centred at this width (none = full width) */
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GENERATED: shapes, springs, loader keyframes
+   ════════════════════════════════════════════════════════════════ */
+$shapes
+$springs
+$loaderframes
+
+@property --m3e-bubbles { syntax: 'on | off'; inherits: false; initial-value: on; }
+@property --m3e-accent { syntax: 'midnight | blurple | lilac'; inherits: false; initial-value: midnight; }
+@property --m3e-shapes { syntax: 'on | off'; inherits: false; initial-value: on; }
+@property --m3e-chatbar { syntax: 'floating | inline'; inherits: false; initial-value: floating; }
+@property --m3e-mine { syntax: 'right | left'; inherits: false; initial-value: right; }
+
+/* ════════════════════════════════════════════════════════════════
+   COLOUR ROLES
+   Surfaces: Midnight's blue-grey (hue 220), pulled darker so islands
+   float on the canvas. Accents: material-color-utilities "expressive"
+   scheme seeded from Midnight's accent oklch(70% .1 215).
+   ════════════════════════════════════════════════════════════════ */
+body {
+  --m3e-canvas: #08090c;
+  --m3e-s-low: #14161b;       /* islands */
+  --m3e-s: #1a1d23;           /* list segments, inputs */
+  --m3e-s-high: #21242c;      /* bubbles, cards, menus */
+  --m3e-s-highest: #292d36;   /* chat bar, hover toolbars */
+  --m3e-s-bright: #333844;
+  --m3e-on-s: #e7ebf3;
+  --m3e-on-s-var: #a4adbe;
+  --m3e-outline: #6e788a;
+  --m3e-outline-var: #353a46;
+
+  --m3e-primary: #98e6fa;        --m3e-on-primary: #00363f;
+  --m3e-primary-c: #8ad8ec;      --m3e-on-primary-c: #003a45;
+  --m3e-secondary-c: #24434c;    --m3e-on-secondary-c: #c4e7f1;
+  --m3e-tertiary: #e6b4ff;
+  --m3e-tertiary-c: #dca3f9;     --m3e-on-tertiary-c: #43155d;
+  --m3e-error: #f2879f;
+  --m3e-error-c: #6d2238;        --m3e-on-error-c: #ffd9e1;
+  --m3e-inverse-primary: #00697a;
+  --m3e-inverse-s: #e7ebf3;      --m3e-inverse-on-s: #1a1d23;   /* tooltips */
+  --m3e-on-error: #4a0018;
+  --m3e-on-online: #00382a;
+  --m3e-code-bg: #0a0b0e;        /* code blocks sit below the surface */
+  --m3e-inline-code-bg: rgb(0 0 0 / 0.32);
+  --m3e-chip-bg: rgb(255 255 255 / 0.08);
+  --m3e-mention-fg: #e6f9ff;
+  --m3e-state: 164 173 190;      /* r g b of the state-layer tint (hover/press overlays, hairlines) */
+
+  /* Midnight's inputs → our roles (Midnight maps these onto Discord's tokens) */
+  --text-0: var(--m3e-on-primary-c);
+  --text-1: #f1f4fa;
+  --text-2: #cdd4e1;
+  --text-3: #aeb6c6;
+  --text-4: #7b8598;
+  --text-5: #4a5161;
+  --bg-1: var(--m3e-s-bright);
+  --bg-2: var(--m3e-s-highest);
+  --bg-3: var(--m3e-s-high);
+  --bg-4: var(--m3e-s-low);
+  --hover: rgb(var(--m3e-state) / 0.08);
+  --active: rgb(var(--m3e-state) / 0.12);
+  --active-2: rgb(var(--m3e-state) / 0.16);
+  --message-hover: transparent;
+  --accent-1: var(--m3e-primary);
+  --accent-2: var(--m3e-primary-c);
+  --accent-3: var(--m3e-primary-c);
+  --accent-4: color-mix(in oklab, var(--m3e-primary-c), white 14%);
+  --accent-5: color-mix(in oklab, var(--m3e-primary-c), black 10%);
+  --accent-new: var(--m3e-error);
+  --mention: transparent;
+  --mention-hover: transparent;
+  --reply: transparent;
+  --reply-hover: transparent;
+  --online: #5bc4a3;
+  --idle: #c9ab56;
+  --dnd: var(--m3e-error);
+  --border-light: transparent;
+  --border: rgb(var(--m3e-state) / 0.12);
+  --border-hover: transparent;
+  --button-border: transparent;
+}
+@container root style(--m3e-accent: blurple) {
+  body {
+    --m3e-primary: #bec2ff; --m3e-on-primary: #1f2378;
+    --m3e-primary-c: #a9afff; --m3e-on-primary-c: #151b6e;
+    --m3e-secondary-c: #353863; --m3e-on-secondary-c: #dfe0ff;
+    --m3e-tertiary: #ffa9df; --m3e-tertiary-c: #ff91da; --m3e-on-tertiary-c: #640951;
+    --m3e-inverse-primary: #4954d6;
+  }
+}
+@container root style(--m3e-accent: lilac) {
+  body {
+    --m3e-primary: #e6b4ff; --m3e-on-primary: #4a1a66;
+    --m3e-primary-c: #dca3f9; --m3e-on-primary-c: #43155d;
+    --m3e-secondary-c: #3d2c4a; --m3e-on-secondary-c: #f0dbff;
+    --m3e-tertiary: #98e6fa; --m3e-tertiary-c: #8ad8ec; --m3e-on-tertiary-c: #003a45;
+    --m3e-inverse-primary: #7b43a0;
+  }
+}
+
+body {
+  /* Midnight knobs */
+  --font: 'Google Sans Flex';
+  --code-font: 'Google Sans Code';
+  --border-thickness: 0px;
+  --divider-thickness: 2px;
+  --animations: off;               /* Midnight's margin-slide hovers; we use shape/spring motion instead */
+  --custom-chatbar: separated;
+  --chatbar-height: 56px;
+  --guildbar-avatar-size: 40px;  /* Discord draws icons in a fixed 40×40 foreignObject; bigger gets cut */
+  --list-item-transition: var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+
+  /* Discord's radius tokens on the M3 shape scale */
+  --radius-xs: 6px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: var(--m3e-island-radius);
+  --radius-xl: 32px;
+  --radius-xxl: 48px;
+
+  /* everything that should follow the roles even where Midnight maps elsewhere */
+  --app-frame-background: var(--m3e-canvas);
+  --background-base-lowest: var(--m3e-canvas);
+  --mention-background: color-mix(in oklab, var(--m3e-inverse-primary) 55%, transparent);
+  --mention-foreground: var(--m3e-mention-fg);
+  --message-reacted-background-default: var(--m3e-secondary-c);
+  --message-reacted-text-default: var(--m3e-on-secondary-c);
+  --divider-color: var(--m3e-error);
+}
+.theme-dark:not(.custom-user-profile-theme):not(#m3e-x) {
+  --app-frame-background: var(--m3e-canvas);
+}
+
+/* type: Google Sans Flex, rounder + wider where it's emphasized */
+:root { --m3e-round: "ROND" 100; }
+body, input, textarea, button, select { font-feature-settings: "ss02" on; }
+h1, h2, h3,
+[class*="title_"] h1,
+.headerText_2i8Bfm .username_2i8Bfm,
+.name_yOdhm_,
+.markup_ku1OHH h1, .markup_ku1OHH h2, .markup_ku1OHH h3 {
+  font-variation-settings: var(--m3e-round);
+}
+
+/* respect reduce-motion everywhere */
+html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after {
+  transition-duration: 0s !important;
+  animation-duration: 0s !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ISLANDS — no borders, tonal surfaces on a near-black canvas
+   ════════════════════════════════════════════════════════════════ */
+.guilds_pog62O,
+.sidebarList_pog62O,
+.panels_pog62O,
+.chat_z_gUBg > .subtitleContainer_z_gUBg,
+.chatContent_z_gUBg,
+.messagesWrapper_8AE1Qq,
+.container_86es0b,
+.container_dvN-MP {
+  border: none !important;
+  border-radius: var(--m3e-island-radius);
+}
+.guilds_pog62O { background: transparent !important; }
+.bg_Fd0FEH { background: var(--m3e-canvas) !important; }
+.sidebarList_pog62O { border-top: none !important; }
+
+/* chat title bar */
+.chat_z_gUBg > .subtitleContainer_z_gUBg { border-radius: var(--m3e-island-radius); }
+.title_z_gUBg [class*="titleWrapper_"] h1,
+.title_z_gUBg h1 {
+  font-size: 18px;
+  font-weight: 650;
+  font-variation-settings: "ROND" 100, "wdth" 108;
+}
+
+/* scrollbars: thin rounded */
+[class*="scroller"]::-webkit-scrollbar-thumb,
+[class*="Scroller"]::-webkit-scrollbar-thumb {
+  border-radius: 999px !important;
+  background-color: var(--m3e-s-bright) !important;
+  border: 3px solid transparent !important;
+  background-clip: padding-box !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SERVER RAIL — shape library + morphs
+   rest: circle · hover: rounded square · selected: a cookie / flower
+   ════════════════════════════════════════════════════════════════ */
+@container root style(--m3e-shapes: on) {
+  .listItem_rwEpIL foreignObject[mask],
+  .folderGroup_RTMSuZ foreignObject[mask] {
+    mask: none !important;
+  }
+  /* fill Discord's 40×40 icon box exactly so the shape is never cut by it */
+  .listItem_rwEpIL foreignObject > div, .listItem_rwEpIL .wrapper_JJ-hgR, .listItem_rwEpIL .icon_JJ-hgR { width: 100% !important; height: 100% !important; }
+  .listItem_rwEpIL .wrapper_JJ-hgR,
+  .listItem_rwEpIL .circleIconButton_g8YUxD,
+  .folderIconWrapper_RTMSuZ {
+    border-radius: 0 !important;
+    clip-path: var(--m3e-shape-circle);
+    transition: clip-path var(--m3e-dur-effects) var(--m3e-spring-effects),
+                background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+  }
+  /* hover: 8% state layer only (no shape change) */
+  .listItem_rwEpIL:hover .wrapper_JJ-hgR:not(.selected_JJ-hgR) { filter: brightness(1.08); }
+  /* press: morph to a squircle, spring back on release (effects spring, no bounce) */
+  .listItem_rwEpIL .wrapper_JJ-hgR:active,
+  .listItem_rwEpIL .circleIconButton_g8YUxD:active,
+  .folderIconWrapper_RTMSuZ:active { clip-path: var(--m3e-shape-squircle) !important; }
+  .listItem_rwEpIL .wrapper_JJ-hgR.selected_JJ-hgR { clip-path: var(--m3e-shape-cookie9); }
+  .listItem_rwEpIL:nth-child(6n+2) .wrapper_JJ-hgR.selected_JJ-hgR { clip-path: var(--m3e-shape-cookie7); }
+  .listItem_rwEpIL:nth-child(6n+3) .wrapper_JJ-hgR.selected_JJ-hgR { clip-path: var(--m3e-shape-flower); }
+  .listItem_rwEpIL:nth-child(6n+4) .wrapper_JJ-hgR.selected_JJ-hgR { clip-path: var(--m3e-shape-cookie12); }
+  .listItem_rwEpIL:nth-child(6n+5) .wrapper_JJ-hgR.selected_JJ-hgR { clip-path: var(--m3e-shape-clover8); }
+  .listItem_rwEpIL:nth-child(6n+6) .wrapper_JJ-hgR.selected_JJ-hgR { clip-path: var(--m3e-shape-cookie6); }
+
+  /* add-server / discover: soft outline glyphs on a tonal shape */
+  .listItem_rwEpIL .circleIconButton_g8YUxD {
+    background-color: var(--m3e-s-low) !important;
+    color: var(--online);
+  }
+  [data-list-item-id="guildsnav___create-join-button"]:hover {
+    background-color: var(--online) !important; color: var(--m3e-on-online) !important;
+  }
+  [data-list-item-id="guildsnav___guild-discover-button"]:hover {
+    background-color: var(--m3e-primary-c) !important; color: var(--m3e-on-primary-c) !important;
+  }
+  [data-list-item-id^="guildsnav___"]:is([data-list-item-id$="create-join-button"], [data-list-item-id$="discover-button"]) * { color: inherit; }
+}
+
+/* the side pill */
+.item__o8_Xq {
+  background-color: var(--m3e-on-s) !important;
+  width: 6px !important;
+  border-radius: 0 6px 6px 0 !important;
+  transition: height var(--m3e-dur-fast) var(--m3e-spring-fast), translate var(--m3e-dur-fast) var(--m3e-spring-fast) !important;
+}
+.item__o8_Xq.selected__o8_Xq { background-color: var(--m3e-primary) !important; }
+
+/* folders: an open folder is a tonal pill */
+.folderGroupBackground_RTMSuZ {
+  background-color: var(--m3e-s-low) !important;
+  border-radius: 999px !important;
+}
+.folderIconWrapper_RTMSuZ, .folderButton_RTMSuZ { color: var(--m3e-tertiary); }
+
+/* unread/mention counts: the error scheme's own on-colour (Midnight's --text-0 is the primary on-colour) */
+.numberBadge_lMvXrQ { color: var(--m3e-on-error) !important; }
+
+/* badges sit on the canvas */
+.listItem_rwEpIL [class*="lowerBadge_"] [class*="numberBadge_"],
+.listItem_rwEpIL [class*="upperBadge_"] > div {
+  box-shadow: 0 0 0 3px var(--m3e-canvas);
+  font-weight: 800;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CHANNEL LIST — Expressive segmented lists
+   items 2 apart, group corners 16, inner 4; hover 12; selected 16
+   ════════════════════════════════════════════════════════════════ */
+.containerDefault_Wx6SnQ { padding-top: 0 !important; padding-bottom: 2px !important; }
+.wrapper_TNyK-N .link_TNyK-N {
+  min-height: 40px;
+  padding-inline: 10px 8px;
+  margin-inline: 4px;
+  border-radius: 4px;
+  background-color: var(--m3e-s);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects),
+              background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast),
+              color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+}
+/* group ends: first channel after a category / list start, last before the next category */
+:not(.containerDefault_Wx6SnQ) + .containerDefault_Wx6SnQ .link_TNyK-N,
+.containerDefault_Wx6SnQ:first-child .link_TNyK-N {
+  border-top-left-radius: 16px; border-top-right-radius: 16px;
+}
+.containerDefault_Wx6SnQ:not(:has(+ .containerDefault_Wx6SnQ)) .link_TNyK-N {
+  border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;
+}
+.wrapper_TNyK-N:hover .link_TNyK-N { background-color: var(--m3e-s-high); }
+.wrapper_TNyK-N .link_TNyK-N:active { border-radius: 16px; }
+.wrapper_TNyK-N.modeSelected_TNyK-N .link_TNyK-N {
+  border-radius: 16px;
+  background-color: var(--m3e-primary-c) !important;
+}
+.wrapper_TNyK-N.modeSelected_TNyK-N .name_TNyK-N,
+.wrapper_TNyK-N.modeSelected_TNyK-N .icon_TNyK-N,
+.wrapper_TNyK-N.modeSelected_TNyK-N .children_TNyK-N svg {
+  color: var(--m3e-on-primary-c) !important;
+  font-weight: 700;
+}
+.wrapper_TNyK-N.modeUnreadImportant_TNyK-N .name_TNyK-N { font-weight: 700; color: var(--m3e-on-s); }
+.wrapper_TNyK-N.modeMuted_TNyK-N .link_TNyK-N { background-color: transparent; }
+.unread_TNyK-N { background: var(--m3e-on-s) !important; border-radius: 4px !important; }
+.wrapper_TNyK-N .numberBadge_TNyK-N, .wrapper_TNyK-N [class*="numberBadge_"] { font-weight: 800; }
+/* threads under a channel stay light */
+.typeThread_TNyK-N .link_TNyK-N { background-color: transparent; }
+
+/* categories: label-medium caps */
+.name_yOdhm_ {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.containerDefault_yOdhm_ { padding-top: 14px !important; }
+.containerDefault_yOdhm_ .icon_yOdhm_ { transition: rotate var(--m3e-dur-fast) var(--m3e-spring-fast) !important; }
+
+/* top-of-list rows (Events, Members, Boosts) */
+.sidebarList_pog62O [class*="containerDefault_"]:not(.containerDefault_Wx6SnQ):not(.containerDefault_yOdhm_) > div {
+  border-radius: 999px;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+}
+
+/* DM list */
+.channel_zln_tS [class*="interactive_"] {
+  border-radius: 999px !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+}
+.channel_zln_tS [class*="selected_"][class*="interactive_"] {
+  background-color: var(--m3e-secondary-c) !important;
+  border-radius: 16px !important;
+}
+.channel_zln_tS [class*="selected_"] [class*="name_"] { color: var(--m3e-on-secondary-c) !important; }
+
+/* ════════════════════════════════════════════════════════════════
+   USER PANEL — connected button group, tonal toggles
+   ════════════════════════════════════════════════════════════════ */
+.panels_pog62O { overflow: hidden; }
+.container_g6VwXp { padding: 8px 8px 8px 8px; }
+.accountPopoutButton_g6VwXp { border-radius: 999px !important; }
+.buttons_g6VwXp { gap: 2px; }
+.buttons_g6VwXp > button,
+.buttons_g6VwXp .audioButtonParent_gKpIZP {
+  background-color: var(--m3e-s-high) !important;
+  border-radius: 8px !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+}
+.buttons_g6VwXp .audioButtonParent_gKpIZP > button { background: transparent !important; border-radius: inherit !important; }
+.buttons_g6VwXp > :first-child { border-top-left-radius: 18px !important; border-bottom-left-radius: 18px !important; }
+.buttons_g6VwXp > :last-child { border-top-right-radius: 18px !important; border-bottom-right-radius: 18px !important; }
+.buttons_g6VwXp > button:hover,
+.buttons_g6VwXp .audioButtonParent_gKpIZP:hover { background-color: var(--m3e-s-highest) !important; }
+.buttons_g6VwXp > :is(button, .audioButtonParent_gKpIZP):active { border-radius: 4px !important; }
+.buttons_g6VwXp > :first-child:active { border-radius: 18px 4px 4px 18px !important; }
+.buttons_g6VwXp > :last-child:active { border-radius: 4px 18px 18px 4px !important; }
+/* a toggled mic / headset / game: round + tertiary */
+.buttons_g6VwXp .audioButtonParent_gKpIZP:has(.redIcon_g6VwXp),
+.buttons_g6VwXp > button[aria-checked="true"] {
+  background-color: var(--m3e-error-c) !important;
+  border-radius: 18px !important;
+}
+
+/* voice connected card */
+.wrapper_9U6LUN { padding-bottom: 4px; }
+.connection_9U6LUN { border-radius: 20px; }
+.actionButtons_9U6LUN { gap: 2px !important; }
+.actionButtons_9U6LUN .button_9U6LUN {
+  border-radius: 8px !important;
+  background-color: var(--m3e-s-high) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+}
+.actionButtons_9U6LUN .button_9U6LUN:first-child { border-radius: 20px 8px 8px 20px !important; }
+.actionButtons_9U6LUN .button_9U6LUN:last-child { border-radius: 8px 20px 20px 8px !important; }
+.actionButtons_9U6LUN .button_9U6LUN:active { border-radius: 4px !important; }
+.actionButtons_9U6LUN .button_9U6LUN:first-child:active { border-radius: 20px 4px 4px 20px !important; }
+.actionButtons_9U6LUN .button_9U6LUN:last-child:active { border-radius: 4px 20px 20px 4px !important; }
+.actionButtons_9U6LUN .buttonActive_9U6LUN { background-color: var(--m3e-secondary-c) !important; border-radius: 20px !important; }
+
+/* ════════════════════════════════════════════════════════════════
+   MESSAGES — bubbles (cozy mode only; compact stays flat)
+   ════════════════════════════════════════════════════════════════ */
+@container root style(--m3e-bubbles: on) {
+  .cozy_2i8Bfm .messageContent_2i8Bfm:not(:empty) {
+    width: fit-content;
+    max-width: min(100%, var(--m3e-bubble-max));
+    box-sizing: border-box;
+    padding: 8px 14px 9px !important;
+    margin-left: 0 !important;
+    margin-top: 2px;
+    background-color: var(--m3e-s-high);
+    color: var(--m3e-on-s);
+    border-radius: 6px 22px 22px 6px;
+    overflow-wrap: anywhere;
+    transition: background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+  }
+  /* the last bubble of a group rounds off (next item is a new group, a divider or the end) */
+  /* (type-based so Chrome's :has invalidation stays cheap: rows are <li>, dividers/spacer are <div>) */
+  li.messageListItem_SY_P2T:last-of-type .cozy_2i8Bfm .messageContent_2i8Bfm,
+  li.messageListItem_SY_P2T:has(+ div, + li > .groupStart_SY_P2T) .cozy_2i8Bfm .messageContent_2i8Bfm {
+    border-bottom-left-radius: 22px;
+  }
+  .message_SY_P2T:hover .cozy_2i8Bfm .messageContent_2i8Bfm:not(:empty),
+  .cozy_2i8Bfm:hover .messageContent_2i8Bfm:not(:empty) {
+    background-color: var(--m3e-s-highest);
+  }
+  /* messages that ping you */
+  .mentioned_SY_P2T .messageContent_2i8Bfm:not(:empty) {
+    background-color: color-mix(in oklab, var(--m3e-tertiary-c) 18%, var(--m3e-s-high)) !important;
+    box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--m3e-tertiary) 65%, transparent);
+  }
+  /* emoji-only (jumbo) and system messages: no bubble */
+  .messageContent_2i8Bfm:has(> .emojiJumbo_lTEMT6),
+  .isSystemMessage_2i8Bfm .messageContent_2i8Bfm,
+  .systemMessage_SY_P2T .messageContent_2i8Bfm {
+    background: none !important;
+    box-shadow: none !important;
+    padding-inline: 0;
+  }
+  /* ephemeral ("only you can see this") */
+  .ephemeral_SY_P2T .messageContent_2i8Bfm:not(:empty) {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--m3e-outline-var);
+  }
+  /* the row itself no longer highlights; the bubble does */
+  .message_SY_P2T.mentioned_SY_P2T,
+  .message_SY_P2T.replying_SY_P2T,
+  .message_SY_P2T.selected_SY_P2T,
+  .message_SY_P2T:hover { background: transparent !important; }
+  /* a faint row highlight lives on the list row (li), which has no gaps inside it, so it never flickers
+     between bubbles; it stays on while that message's popout (react picker, menu) is open */
+  li.messageListItem_SY_P2T {
+    border-radius: 16px;
+    transition: background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+  }
+  li.messageListItem_SY_P2T:hover,
+  li.messageListItem_SY_P2T:has(> .selected_SY_P2T) {
+    background-color: color-mix(in oklab, var(--m3e-on-s) 4%, transparent);
+  }
+  .message_SY_P2T.mentioned_SY_P2T::before,
+  .message_SY_P2T.replying_SY_P2T::before { display: none; }
+  .message_SY_P2T.replying_SY_P2T .messageContent_2i8Bfm:not(:empty) {
+    box-shadow: inset 0 0 0 2px var(--m3e-primary);
+  }
+  /* editing a message: the editor becomes the bubble */
+  .cozy_2i8Bfm [class*="channelTextArea_"] { border-radius: 20px !important; }
+}
+
+/* ── no title bar, no window controls (move/close the window with your WM) ── */
+.bar_3zSH5d, .winButtons_3zSH5d { display: none !important; }
+/* the freed title-bar row becomes one --gap, so the top edge matches the bottom/left/right */
+body { --custom-app-top-bar-height: var(--gap) !important; --top-bar-height: var(--gap) !important; }
+
+/* ── the text space: one centred column (max-width + auto inline margins) ── */
+.scrollerInner_8AE1Qq,
+.form_z_gUBg {
+  width: 100%;
+  max-width: var(--m3e-chat-max);
+  margin-inline: auto !important;
+  box-sizing: border-box;
+}
+
+/* ── your messages: right side, accent bubble, mirrored corners ──
+   The (long, unrolled) "is this mine?" selector runs ONCE per message row and only sets flags; everything inside reads
+   the flags with style queries. Putting the chain in front of every descendant rule cost ~250 ms per channel switch. */
+$mine { --m3e-own: 1; }
+li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2T)) { --m3e-run-end: 1; }
+@container root style(--m3e-bubbles: on) and style(--m3e-mine: right) {
+  @container style(--m3e-own: 1) {
+    .message_SY_P2T { padding-right: 16px !important; }
+    .avatar_2i8Bfm, .avatarDecoration_2i8Bfm, .headerText_2i8Bfm { display: none !important; }
+    .header_2i8Bfm { text-align: right; justify-content: flex-end; }
+    .repliedMessage_2i8Bfm { margin-left: auto; justify-content: flex-end; }
+    .cozy_2i8Bfm .messageContent_2i8Bfm:not(:empty) {
+      margin-left: auto !important;
+      background-color: var(--m3e-primary-c);
+      color: var(--m3e-on-primary-c);
+      border-radius: 22px 6px 6px 22px;
+    }
+    .cozy_2i8Bfm.message_SY_P2T:hover .messageContent_2i8Bfm:not(:empty) {
+      background-color: color-mix(in oklab, var(--m3e-on-primary-c) 8%, var(--m3e-primary-c));
+    }
+    .messageContent_2i8Bfm a { color: inherit !important; text-decoration: underline; }
+    .messageContent_2i8Bfm code.inline { background: color-mix(in oklab, var(--m3e-on-primary-c) 14%, transparent) !important; color: inherit !important; }
+    .messageContent_2i8Bfm .timestamp_2i8Bfm, .messageContent_2i8Bfm [class*="edited_"] { color: inherit; opacity: 0.7; }
+    /* attachments, embeds, polls and reactions line up on the right too */
+    .container_YUQhib { display: flex !important; flex-direction: column; align-items: flex-end; }
+    .container_YUQhib > * { margin-left: auto; }
+    /* last bubble of your run rounds its bottom-right */
+    @container style(--m3e-run-end: 1) {
+      .cozy_2i8Bfm .messageContent_2i8Bfm:not(:empty) { border-bottom-right-radius: 22px; }
+    }
+  }
+}
+
+/* name / timestamp row */
+.cozy_2i8Bfm .header_2i8Bfm { margin-bottom: 2px; }
+.cozy_2i8Bfm .username_2i8Bfm {
+  font-weight: 650;
+  font-variation-settings: "ROND" 100, "wdth" 104;
+}
+.timestamp_2i8Bfm { font-size: 11.5px; }
+.edited_2i8Bfm { font-size: 11px; opacity: 0.7; }
+
+/* avatars: plain circles — per-message shape morphs were too expensive while scrolling */
+.cozy_2i8Bfm .avatar_2i8Bfm { border-radius: 50%; }
+
+/* replies: a quote chip above the bubble */
+.repliedMessage_2i8Bfm {
+  width: fit-content;
+  max-width: min(100%, var(--m3e-bubble-max));
+  padding: 4px 12px 4px 8px;
+  margin-bottom: 2px;
+  border-radius: 14px;
+  background-color: var(--m3e-s);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+}
+.repliedMessage_2i8Bfm::before { border-color: var(--m3e-outline-var) !important; border-top-left-radius: 10px !important; }
+
+/* hover toolbar → small floating toolbar */
+.buttons_SY_P2T .buttonsInner_SY_P2T {
+  border-radius: 999px !important;
+  padding: 2px 4px;
+  background-color: var(--m3e-s-highest) !important;
+  border: none !important;
+  box-shadow: 0 3px 12px rgb(0 0 0 / 0.5) !important;
+  animation: m3e-pop var(--m3e-dur-fast) var(--m3e-spring-fast);
+}
+.buttonsInner_SY_P2T [role="button"],
+.buttonsInner_SY_P2T button {
+  border-radius: 999px !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+}
+.buttonsInner_SY_P2T [role="button"]:active { border-radius: 8px !important; }
+@keyframes m3e-pop { from { scale: 0.85; opacity: 0; } to { scale: 1; opacity: 1; } }
+
+/* unread "NEW" line + date chips */
+.divider_4TfzT5.isUnread_4TfzT5 { border-color: var(--m3e-error) !important; }
+.unreadPill_4TfzT5 {
+  background-color: var(--m3e-error) !important;
+  color: var(--m3e-on-error) !important;
+  border-radius: 999px !important;
+  padding: 0 8px !important;
+  font-weight: 800;
+}
+.unreadPillCap_4TfzT5 { display: none; }
+.divider_4TfzT5.hasContent_4TfzT5:not(.isUnread_4TfzT5) .content_4TfzT5 {
+  padding: 3px 12px;
+  border-radius: 999px;
+  background-color: var(--m3e-s-high);
+  color: var(--m3e-on-s-var);
+  font-weight: 600;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FORMATTING inside messages
+   ════════════════════════════════════════════════════════════════ */
+.markup_ku1OHH h1 { font-size: 1.5em; font-weight: 800; font-variation-settings: "ROND" 100, "wdth" 112; letter-spacing: -0.01em; }
+.markup_ku1OHH h2 { font-size: 1.25em; font-weight: 750; font-variation-settings: "ROND" 100, "wdth" 108; }
+.markup_ku1OHH h3 { font-size: 1.06em; font-weight: 700; font-variation-settings: "ROND" 80; }
+.markup_ku1OHH small { opacity: 0.7; }
+.markup_ku1OHH strong { font-weight: 750; }
+.markup_ku1OHH u { text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+/* inline code */
+.markup_ku1OHH code.inline {
+  border-radius: 6px;
+  padding: 1px 6px;
+  background-color: var(--m3e-inline-code-bg);
+  border: none;
+  font-size: 0.86em;
+}
+/* code blocks */
+.markup_ku1OHH pre {
+  border-radius: 14px;
+  overflow: hidden;
+  border: none;
+  max-width: 100%;
+}
+.markup_ku1OHH pre > code, .markup_ku1OHH .codeContainer_ku1OHH code {
+  border: none !important;
+  border-radius: 14px;
+  background-color: var(--m3e-code-bg) !important;
+  padding: 10px 14px !important;
+  line-height: 1.5;
+}
+.codeActions_ku1OHH { border-radius: 999px; }
+.messageContent_2i8Bfm pre:first-child { margin-top: 4px; }
+
+/* quotes */
+.blockquoteDivider_ku1OHH {
+  width: 4px;
+  border-radius: 2px;
+  background-color: currentColor;
+  opacity: 0.35;
+}
+
+/* lists: squircle bullets */
+.markup_ku1OHH ul { list-style: none; padding-left: 4px; }
+.markup_ku1OHH ul > li { position: relative; padding-left: 16px; }
+.markup_ku1OHH ul > li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  background-color: currentColor;
+  opacity: 0.75;
+  clip-path: var(--m3e-shape-cookie4);
+}
+.markup_ku1OHH ol > li::marker { font-weight: 800; }
+
+/* mentions, role mentions, channel links */
+.markup_ku1OHH .mention,
+.mention[class*="wrapper_"] {
+  border-radius: 8px;
+  padding: 0 5px;
+  font-weight: 650;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+}
+
+/* timestamps <t:…> */
+.timestamp_ku1OHH {
+  border-radius: 6px;
+  padding: 0 5px;
+  background-color: var(--m3e-chip-bg);
+}
+
+/* spoilers */
+[class*="spoilerContent_"], [class*="spoilerMarkdownContent_"] {
+  border-radius: 6px !important;
+}
+
+/* links */
+.markup_ku1OHH a { font-weight: 600; }
+
+/* ════════════════════════════════════════════════════════════════
+   ATTACHMENTS, EMBEDS, POLLS, REACTIONS
+   ════════════════════════════════════════════════════════════════ */
+/* images / video mosaic */
+.mosaicItem_BwHv05,
+.container_YUQhib [class*="imageWrapper_"],
+.container_YUQhib [class*="imageContainer_"],
+.container_YUQhib video {
+  border-radius: 20px !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+}
+/* files */
+.file_-9z-XO {
+  border: none !important;
+  border-radius: 20px !important;
+  background-color: var(--m3e-s-high) !important;
+}
+/* embeds: tonal card, the embed colour stays as a rounded inner bar */
+.embedFull_XyW1ZT {
+  border-radius: 20px !important;
+  border-left-width: 4px;
+  background-color: var(--m3e-s-high) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+}
+.embedTitle_XyW1ZT, .embedTitleLink_XyW1ZT { font-weight: 700; font-variation-settings: "ROND" 100; }
+.embedImage_XyW1ZT img, .embedThumbnail_XyW1ZT img, .embedVideo_XyW1ZT { border-radius: 14px !important; }
+.embedFields_XyW1ZT { gap: 2px 8px; }
+
+/* polls: segmented answers */
+.pollContainer_YUQhib > div { border-radius: 24px !important; border: none !important; background-color: var(--m3e-s-high) !important; }
+.answersContainer_D4-WfD { gap: 2px !important; }
+.answer_D4-WfD {
+  border-radius: 4px !important;
+  border: none !important;
+  background-color: var(--m3e-s) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects) !important;
+}
+.answer_D4-WfD:first-child { border-top-left-radius: 16px !important; border-top-right-radius: 16px !important; }
+.answer_D4-WfD:last-child { border-bottom-left-radius: 16px !important; border-bottom-right-radius: 16px !important; }
+.answer_D4-WfD.selected_D4-WfD { border-radius: 16px !important; box-shadow: inset 0 0 0 2px var(--m3e-primary) !important; }
+.votePercentageBar_D4-WfD { background-color: color-mix(in oklab, var(--m3e-secondary-c) 80%, transparent) !important; }
+
+/* reactions: chips 30 high, corner 10 → pill when you reacted */
+.reaction_MmKct8 {
+  border-radius: 10px !important;
+  border: 1px solid var(--m3e-outline-var) !important;
+  background-color: var(--m3e-s-high) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects),
+              background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+}
+.reaction_MmKct8:hover { background-color: var(--m3e-s-highest) !important; }
+.reaction_MmKct8:active { border-radius: 8px !important; }
+.reaction_MmKct8.reactionMe_MmKct8 {
+  border-radius: 15px !important;
+  border-color: transparent !important;
+  background-color: var(--m3e-secondary-c) !important;
+}
+.reaction_MmKct8.reactionMe_MmKct8 .reactionCount_MmKct8 { color: var(--m3e-on-secondary-c) !important; }
+.reactionCount_MmKct8 { font-weight: 700; }
+.reactionBtn_MmKct8 { border-radius: 10px !important; }
+
+/* thread starter */
+.container_g2fiji { border-radius: 16px !important; background-color: var(--m3e-s-high) !important; border: none !important; }
+
+/* ════════════════════════════════════════════════════════════════
+   CHAT BAR — floating pill island
+   ════════════════════════════════════════════════════════════════ */
+@container root style(--m3e-chatbar: floating) {
+  #app-mount .channelTextArea_z_gUBg {
+    border-radius: 28px !important;
+    background-color: var(--m3e-s-highest) !important;
+    box-shadow: 0 3px 14px rgb(0 0 0 / 0.45);
+  }
+}
+@container root style(--m3e-chatbar: inline) {
+  #app-mount .channelTextArea_z_gUBg {
+    border-radius: 16px !important;
+    background-color: var(--m3e-s-high) !important;
+    box-shadow: none;
+  }
+}
+.channelTextArea_z_gUBg .themedBackground_2x8-Qn { background: transparent !important; }
+.attachButton_7TM4SO, .attachButton_2x8-Qn {
+  border-radius: 999px !important;
+}
+.attachWrapper_7TM4SO .attachButton_7TM4SO {
+  background-color: var(--m3e-s-bright);
+  margin-inline: 4px;
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+}
+.attachWrapper_7TM4SO .attachButton_7TM4SO:active { border-radius: 8px !important; }
+.buttons_2x8-Qn .buttonContainer_2x8-Qn [class*="button_"],
+.buttons_2x8-Qn [class*="button_"][role="button"] {
+  border-radius: 999px !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+}
+.buttons_2x8-Qn [class*="button_"]:active { border-radius: 8px !important; }
+/* the reply / upload bars above the input */
+.stackedBars_2x8-Qn, .floatingBars_2x8-Qn > * { border-radius: 20px 20px 4px 4px !important; }
+
+/* typing indicator: the M3E loading indicator instead of three dots */
+.typing_U9Tvvz .typingDots_U9Tvvz .dots_U9Tvvz { display: none; }
+.typing_U9Tvvz .typingDots_U9Tvvz::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  vertical-align: -3px;
+  background-color: var(--m3e-primary);
+  clip-path: var(--m3e-shape-cookie9);
+  animation: m3e-spin 2400ms linear infinite;
+  will-change: rotate;
+}
+.typing_U9Tvvz { font-weight: 500; }
+
+/* ════════════════════════════════════════════════════════════════
+   MEMBER LIST — segmented
+   ════════════════════════════════════════════════════════════════ */
+.member_86es0b.container_J1Adu_ {
+  margin: 0 8px 2px !important;
+  max-width: none !important;
+  background-color: var(--m3e-s);
+  border-radius: 4px !important;
+  overflow: hidden;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+}
+.member_86es0b .childContainer_J1Adu_ { border-radius: inherit !important; }
+.membersGroup_86es0b + .member_86es0b.container_J1Adu_ { border-top-left-radius: 16px !important; border-top-right-radius: 16px !important; }
+.member_86es0b.container_J1Adu_:not(:has(+ .member_86es0b)) { border-bottom-left-radius: 16px !important; border-bottom-right-radius: 16px !important; }
+.member_86es0b.container_J1Adu_:hover { background-color: var(--m3e-s-high); }
+.member_86es0b.container_J1Adu_:active { border-radius: 16px !important; }
+.member_86es0b.container_J1Adu_.selected_J1Adu_ { border-radius: 16px !important; background-color: var(--m3e-secondary-c); }
+.container_86es0b [class*="container_g7esM5"] { border-radius: 20px !important; margin-inline: 8px; }
+.membersGroup_86es0b { padding-top: 18px !important; }
+.membersGroup_86es0b h3, .membersGroupName_86es0b { font-weight: 700; letter-spacing: 0.06em; font-size: 11.5px; }
+
+/* ════════════════════════════════════════════════════════════════
+   BUTTONS — round by default, press morphs to a smaller corner
+   ════════════════════════════════════════════════════════════════ */
+.button_9OQtot:not(.lookBlank_9OQtot):not(.lookLink_9OQtot):not(.sizeIcon_9OQtot) {
+  border-radius: 999px !important;
+  font-weight: 650;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects),
+              background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+}
+.button_9OQtot:not(.lookBlank_9OQtot):not(.lookLink_9OQtot):active { border-radius: 8px !important; }
+.button_9OQtot.sizeLarge_9OQtot:not(.lookBlank_9OQtot):not(.lookLink_9OQtot):active { border-radius: 12px !important; }
+.lookFilled_9OQtot.colorBrand_9OQtot { background-color: var(--m3e-primary-c) !important; color: var(--m3e-on-primary-c) !important; }
+.lookFilled_9OQtot.colorPrimary_9OQtot { background-color: var(--m3e-secondary-c) !important; color: var(--m3e-on-secondary-c) !important; }
+.lookFilled_9OQtot.colorRed_9OQtot { background-color: var(--m3e-error-c) !important; color: var(--m3e-on-error-c) !important; }
+.lookOutlined_9OQtot { box-shadow: inset 0 0 0 1px var(--m3e-outline) !important; border: none !important; }
+/* Discord's newer button component */
+button[class*="button_"][class*="sm_"], button[class*="button_"][class*="md_"],
+button[class*="button_"][class*="lg_"] {
+  border-radius: 999px;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+}
+button[class*="button_"][class*="sm_"]:active, button[class*="button_"][class*="md_"]:active,
+button[class*="button_"][class*="lg_"]:active { border-radius: 8px; }
+
+/* ════════════════════════════════════════════════════════════════
+   MENUS, TOOLTIPS, POPOUTS, MODALS
+   ════════════════════════════════════════════════════════════════ */
+.menu_M3qk4j {
+  border-radius: 20px !important;
+  border: none !important;
+  background-color: var(--m3e-s-high) !important;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.55) !important;
+  padding: 6px !important;
+  animation: m3e-menu var(--m3e-dur-fast) var(--m3e-spring-fast);
+  transform-origin: top left;
+}
+@keyframes m3e-menu { from { scale: 0.9; opacity: 0; } to { scale: 1; opacity: 1; } }
+.menu_M3qk4j .item_M3qk4j {
+  min-height: 40px;
+  border-radius: 12px !important;
+  margin: 1px 0;
+  font-weight: 500;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+}
+.menu_M3qk4j .item_M3qk4j.focused_M3qk4j {
+  background-color: var(--m3e-tertiary-c) !important;
+  color: var(--m3e-on-tertiary-c) !important;
+}
+/* .focused_ follows the mouse in Discord menus, so it is a hover state: colour only. Press morphs the item. */
+.menu_M3qk4j .item_M3qk4j:active { border-radius: 20px !important; }
+.menu_M3qk4j .item_M3qk4j.focused_M3qk4j * { color: inherit !important; }
+.menu_M3qk4j .item_M3qk4j.colorDanger_M3qk4j.focused_M3qk4j { background-color: var(--m3e-error-c) !important; color: var(--m3e-on-error-c) !important; }
+.menu_M3qk4j [class*="separator_"] { background: none !important; height: 6px !important; margin: 0 !important; position: relative; }
+/* quick reactions: connected button group (2px gap, inner 8 → 4 pressed, pill ends) */
+.wrapper_Qi4I4L { gap: 2px !important; }
+.wrapper_Qi4I4L .button_Qi4I4L {
+  border-radius: 8px !important;
+  background-color: var(--m3e-s-highest) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+}
+.wrapper_Qi4I4L > :first-child .button_Qi4I4L { border-radius: 999px 8px 8px 999px !important; }
+.wrapper_Qi4I4L > :last-child .button_Qi4I4L { border-radius: 8px 999px 999px 8px !important; }
+.wrapper_Qi4I4L .button_Qi4I4L:hover { background-color: color-mix(in oklab, var(--m3e-on-s) 8%, var(--m3e-s-highest)) !important; }
+.wrapper_Qi4I4L .button_Qi4I4L:active { border-radius: 4px !important; }
+.wrapper_Qi4I4L > :first-child .button_Qi4I4L:active { border-radius: 999px 4px 4px 999px !important; }
+.wrapper_Qi4I4L > :last-child .button_Qi4I4L:active { border-radius: 4px 999px 999px 4px !important; }
+.menu_M3qk4j [class*="separator_"]::after { content: ""; position: absolute; left: 12px; right: 12px; top: 2px; height: 2px; border-radius: 1px; background: var(--m3e-canvas); }
+
+/* tooltips: inverse, rounded, no arrow */
+.tooltip_3_v8qp, .tooltip_ZDdyhE {
+  background-color: var(--m3e-inverse-s) !important;
+  color: var(--m3e-inverse-on-s) !important;
+  border-radius: 10px !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.4) !important;
+  font-weight: 600;
+}
+.tooltip_3_v8qp *, .tooltip_ZDdyhE * { color: inherit !important; }
+.tooltipPointer_3_v8qp, .tooltipPointerBg_3_v8qp, .caretIcon_ZDdyhE { display: none !important; }
+
+/* popouts & modals: dialog corner 28 */
+[role="dialog"] > [class*="root_"],
+[class*="userPopoutOuter_"],
+[class*="userProfileOuter_"],
+.container_dvN-MP {
+  border-radius: 28px !important;
+}
+
+/* inputs: filled field look */
+input[class*="input_"], [class*="inputWrapper_"] input, [class*="searchBar_"], .search_ * > [class*="searchBar_"] {
+  border-radius: 14px;
+}
+[class*="searchBar_"] { border-radius: 999px !important; }
+
+/* ════════════════════════════════════════════════════════════════
+   SETTINGS — nav as pills
+   ════════════════════════════════════════════════════════════════ */
+.side_6zZYhF .item_6zZYhF {
+  border-radius: 999px !important;
+  padding-inline: 14px !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+}
+.side_6zZYhF .item_6zZYhF.selected_6zZYhF {
+  background-color: var(--m3e-secondary-c) !important;
+  color: var(--m3e-on-secondary-c) !important;
+  font-weight: 700;
+}
+
+/* new settings modal nav */
+.item_xyJHva {
+  border-radius: 999px !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+}
+.item_xyJHva.active_xyJHva {
+  background-color: var(--m3e-secondary-c) !important;
+  color: var(--m3e-on-secondary-c) !important;
+}
+.item_xyJHva.active_xyJHva * { color: inherit !important; font-weight: 700; }
+
+/* ════════════════════════════════════════════════════════════════
+   SWITCHES — M3 switch: track 52×32, handle 16 off / 24 on / 28 pressed
+   ════════════════════════════════════════════════════════════════ */
+.switchIndicator_9AraPt {
+  position: relative;
+  width: 52px !important;
+  height: 32px !important;
+  border: none !important;
+  border-radius: 16px !important;
+  background-color: var(--m3e-s-highest) !important;
+  box-shadow: inset 0 0 0 2px var(--m3e-outline);
+  transition: background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast), box-shadow var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+}
+.switchIndicator_9AraPt .thumb_9AraPt { opacity: 0 !important; }
+.switchIndicator_9AraPt::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--m3e-outline);
+  translate: -50% -50%;
+  transition: left var(--m3e-dur-fast) var(--m3e-spring-fast), width var(--m3e-dur-fast) var(--m3e-spring-fast),
+              height var(--m3e-dur-fast) var(--m3e-spring-fast), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+}
+.container_9AraPt:has(input:checked) .switchIndicator_9AraPt {
+  background-color: var(--m3e-primary) !important;
+  box-shadow: none;
+}
+.container_9AraPt:has(input:checked) .switchIndicator_9AraPt::after {
+  left: 36px; width: 24px; height: 24px; background-color: var(--m3e-on-primary);
+}
+.container_9AraPt:active .switchIndicator_9AraPt::after { width: 28px; height: 28px; }
+.container_9AraPt:has(input:disabled) { opacity: 0.38; }
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  body { --gap: 6px; --m3e-island-radius: 22px; --m3e-bubble-max: 100%; }
+  /* header: keep the channel name readable, let the search pill shrink */
+  .upperContainer_ybUK7Z .children_ybUK7Z { min-width: 110px !important; }
+  .upperContainer_ybUK7Z .toolbar_ybUK7Z { min-width: 0; }
+  .toolbar_ybUK7Z .search_bWCaDq { flex: 0 1 160px !important; min-width: 44px !important; }
+  .toolbar_ybUK7Z .search_bWCaDq > * { width: 100% !important; min-width: 0 !important; }
+  /* member list collapses into an avatar rail so the chat keeps its width */
+  .container_86es0b,
+  .container_86es0b .membersWrap_86es0b,
+  .container_86es0b .members_86es0b { width: 72px !important; min-width: 72px !important; }
+  .container_86es0b .member_86es0b.container_J1Adu_ { margin: 0 6px 2px !important; padding: 0 !important; }
+  .container_86es0b .member_86es0b .content_J1Adu_,
+  .container_86es0b [class*="container_g7esM5"],
+  .container_86es0b .membersGroupHeader_86es0b > :not(:first-child) { display: none !important; }
+  .container_86es0b .memberInner_Iy0c7A, .container_86es0b .layout_J1Adu_ { justify-content: center; padding: 6px 0 !important; }
+  .container_86es0b .avatar_J1Adu_ { margin: 0 !important; }
+  .container_86es0b .membersGroup_86es0b { font-size: 0 !important; height: 14px !important; padding: 8px 0 0 !important; }
+  .container_86es0b .membersGroup_86es0b * { display: none !important; }
+}
+@media (max-height: 640px) {
+  body { --chatbar-height: 48px; }
+}

@@ -1,0 +1,14 @@
+/**
+ * @name M3E Discord Classic
+ * @description M3E Discord with a stock-Discord layout: flat messages instead of bubbles, an inline chat bar and tighter spacing; colours and motion unchanged.
+ */
+:root {
+  --m3e-bubbles: off;
+  --m3e-chatbar: inline;
+  --m3e-mine: left;
+}
+body {
+  --gap: 6px;
+  --m3e-island-radius: 20px;
+  --chatbar-height: 48px;
+}

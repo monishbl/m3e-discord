@@ -1,0 +1,7 @@
+# personal / local only
+theme/config.json
+dist/dev.css
+shots/
+ref/
+node_modules/
+*.log
