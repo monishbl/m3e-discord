@@ -8,4 +8,5 @@ ws.onmessage = e => { const m = JSON.parse(e.data); if (m.id && pend.has(m.id)) 
 await new Promise(r => ws.onopen = r);
 const send = (method, params = {}) => new Promise(r => { const i = ++id; pend.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });
 const r = await send('Page.captureScreenshot', { format: 'png', clip: { x: +x, y: +y, width: +w, height: +h, scale: +scale } });
+if (!r.result) { console.error('capture failed:', JSON.stringify(r.error)); process.exit(1); }
 fs.writeFileSync(out, Buffer.from(r.result.data, 'base64')); console.log('saved', out); ws.close(); process.exit(0);
