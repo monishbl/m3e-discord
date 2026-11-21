@@ -1,55 +1,55 @@
 <h1 align="center">M3E Discord</h1>
 
-<h3 align="center">Material. But expressive.</h3>
+<h3 align="center">Discord, with a little more personality.</h3>
 
 <p align="center">
-Discord in Material 3 Expressive: shapes that morph, springs that settle, bubbles that know which side you're on.<br>
-A <a href="https://vencord.dev">Vencord</a> theme on top of refact0r's <a href="https://github.com/refact0r/midnight-discord">Midnight</a>, in four looks.
+Rounded panels, shapes that change when you click them, and chat bubbles that put you on the right. Literally.<br>
+Inspired by Google's newest Material design, the playful one on new Android phones. Four looks, one install.
 </p>
 
 <p align="center">
-<a href="#one-link-ten-seconds"><b>Install</b></a> &nbsp;·&nbsp;
+<a href="#install-in-under-a-minute"><b>Install</b></a> &nbsp;·&nbsp;
 <a href="https://monishbl.github.io/m3e-discord/"><b>Setup page</b></a> &nbsp;·&nbsp;
-<a href="#four-looks-one-theme"><b>The looks</b></a> &nbsp;·&nbsp;
+<a href="#four-looks-pick-a-mood"><b>The looks</b></a> &nbsp;·&nbsp;
 <a href="#questions"><b>Questions</b></a>
 </p>
 
 <p align="center">
-<img src="docs/img/midnight.png" alt="M3E Discord: Midnight cyan on night blue-grey, with message bubbles, your own messages on the right, and a cookie-shaped selected server.">
+<img src="docs/img/midnight.png" alt="M3E Discord: deep blue-grey panels with a cyan glow, chat bubbles, your own messages on the right, and a cookie-shaped icon for the server you're in.">
 </p>
-<p align="center"><sub>The default look. Every screenshot here is the real theme in a demo server; names and avatars are placeholders.</sub></p>
+<p align="center"><sub>The real thing, in a demo server. The names and faces are made up; the friendships are not.</sub></p>
 
 <br>
 
-## Four looks. One theme.
+## Four looks. Pick a mood.
 
-Same shapes, same motion. Pick the light you're in.
+Same theme, four moods. Choose the one that matches your room's lighting.
 
 <table>
 <tr>
-<td width="50%"><img src="docs/img/midnight.png" alt="Midnight look"><br><b>M3E Discord.</b> Midnight's cyan, seeded into a full expressive scheme, on night blue-grey.</td>
-<td width="50%"><img src="docs/img/amoled.png" alt="AMOLED look"><br><b>AMOLED.</b> A pure black canvas, every surface one step darker. Made for OLED at 2 am.</td>
+<td width="50%"><img src="docs/img/midnight.png" alt="Midnight look"><br><b>Midnight.</b> The default. Deep blue-grey with a cyan glow.</td>
+<td width="50%"><img src="docs/img/amoled.png" alt="AMOLED look"><br><b>AMOLED.</b> True black. Your OLED screen says thanks.</td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/img/light.png" alt="Light look"><br><b>Light.</b> Neutral daylight surfaces with the light expressive accents, with text checked for contrast.</td>
-<td width="50%"><img src="docs/img/classic.png" alt="Classic look"><br><b>Classic.</b> Flat messages and an inline chat bar, the way Discord lays it out. The motion stays.</td>
+<td width="50%"><img src="docs/img/light.png" alt="Light look"><br><b>Light.</b> For sunny rooms and brave souls.</td>
+<td width="50%"><img src="docs/img/classic.png" alt="Classic look"><br><b>Classic.</b> Discord's familiar layout, just better dressed.</td>
 </tr>
 </table>
 
 <br>
 
-## Shapes that mean something.
+## Shapes with a sense of occasion.
 
 <table>
 <tr>
-<td width="42%"><img src="docs/img/rail.png" alt="The server rail with a cookie-shaped selected server, and a segmented channel list with a pill for the selected channel."></td>
+<td width="42%"><img src="docs/img/rail.png" alt="The server list with a cookie-shaped icon for the current server, and a channel list where the open channel is a soft pill."></td>
 <td>
 
-**The server you're in is a cookie.** Every other one is a circle. The shapes come from Material's own shape library (cookies, flowers, clovers), traced into outlines at build time.
+**The server you're in gets a cookie.** A cookie shape, anyway. The others stay round and wait their turn.
 
-**Lists in segments.** Channels and members sit in tight groups, two pixels apart, with rounded ends. The one you're on becomes a pill.
+**Channels stack up neatly.** Little rounded groups, and the one you're reading turns into a soft pill.
 
-**Buttons that join up.** Mute, deafen and settings form one connected group. The one you press tightens toward its neighbours.
+**Your buttons stick together.** Mic, headphones and settings sit side by side like they planned it.
 
 </td>
 </tr>
@@ -57,89 +57,108 @@ Same shapes, same motion. Pick the light you're in.
 
 <br>
 
-## Yours on the right.
+## You're right. Literally.
 
-<p align="center"><img src="docs/img/bubbles.png" alt="A conversation: other people's grey bubbles on the left, your cyan bubbles on the right, a lilac ring around a message that mentions you, a reply, a list and a spoiler."></p>
+<p align="center"><img src="docs/img/bubbles.png" alt="A chat: other people's grey bubbles on the left, your cyan bubbles on the right, and a soft outline around a message that mentions you."></p>
 
-Other people's messages on the left, yours on the right in your accent, like a messaging app. Runs of messages round off at the ends. A ping gets a soft ring. Code, quotes, lists, spoilers, embeds, polls and reactions are all restyled to match.
+Your messages sit on the right and everyone else's on the left, like your texting app. When someone mentions you, their message gets a soft outline so it doesn't slip past. Pictures, videos, links, files, polls, code and spoilers all get the same rounded treatment.
 
-Discord doesn't say who sent a follow-up message, so the theme recognises you by your user ID.
-**[Get your snippet on the setup page](https://monishbl.github.io/m3e-discord/).** It runs in your browser and nothing is sent anywhere.
+Discord doesn't tell themes who wrote which message, so you introduce yourself once. It takes ten seconds on the **[setup page](https://monishbl.github.io/m3e-discord/)**, and nothing leaves your browser.
 
 <br>
 
-## Press. Don't hover.
+## Bring the whole group chat.
 
 <table>
 <tr>
+<td width="44%"><img src="docs/img/media.png" alt="A YouTube video, a poll with one answer ticked, and a text file with a preview, all in rounded cards."></td>
 <td>
 
-**Hover is a tint.** Point at something and it lightens, 8%, the way Material does it. Nothing changes shape under a passing mouse.
+**Photos and videos** get rounded frames that match everything else. Even Big Buck Bunny looks better with soft corners.
 
-**Press is a shape.** Round buttons square off, list items round out, and connected buttons pinch their inner corners, then spring back when you let go.
+**Polls** look like proper buttons, and your pick gets a tick.
 
-**Springs, not curves.** Material's own expressive spring values, from Jetpack Compose, compiled into CSS. Shapes settle without a bounce. Only things that move (the server pill, switches, a menu opening) are allowed to overshoot.
+**Files** show a little preview, so the snack list can be judged before anyone opens it.
+
+**Links** turn into tidy cards instead of walls of text.
 
 </td>
-<td width="34%"><img src="docs/img/menu.png" alt="A right-click menu: rounded, quick reactions as a connected button group, and the focused item as a lilac pill."></td>
 </tr>
 </table>
 
 <br>
 
-## Light on its feet.
+## It moves when you mean it.
 
-The "is this mine?" check runs once per message, not once per element, and nothing heavy happens on hover. In testing, hovering a message or switching channels costs the same as Midnight alone.
+<table>
+<tr>
+<td>
+
+**Point at something** and it lights up a little. That's it. No jumping around while your mouse is just passing through.
+
+**Click it** and it changes shape: round buttons go a bit square, list items round out. Let go and it settles back, smooth and calm.
+
+**Menus open with a little spring,** and the item you're pointing at turns into a pill.
+
+</td>
+<td width="34%"><img src="docs/img/menu.png" alt="A rounded right-click menu, with quick reactions in a joined row and the highlighted item as a lilac pill."></td>
+</tr>
+</table>
 
 <br>
 
-## And everything you'd expect.
+## Pretty, but not slow.
 
-- A floating chat bar, and a spinning Material cookie as the typing indicator
-- Material 3 switches, pill buttons, rounded menus, light tooltips without arrows
-- The chat centred in one column at wide sizes, and no title bar
-- A member list that folds into an avatar rail on narrow windows
-- Badges that stay whole, channel names centred in their pills
-- Every colour as a Material role, so all four looks come from the same file
+It's as quick as the theme it's built on. Hovering, scrolling and switching channels were all measured, more than once, by someone who really cares about lag.
 
 <br>
 
-## One link. Ten seconds.
+## Also in the box.
 
-1. **Open Vencord's themes.** Settings → **Themes** → **Online Themes**.
+- A floating message box, and a little spinning cookie when someone's typing
+- Proper toggle switches, pill-shaped buttons and rounded menus
+- On a big screen, the chat stays centred so your eyes don't have to travel
+- On a small window, the member list shrinks to just faces
+- No title bar, just your chats
+- Unread badges that stay whole and names that sit straight
+
+<br>
+
+## Install in under a minute.
+
+You'll need [Vencord](https://vencord.dev) (or Vesktop).
+
+1. **Open the theme settings.** In Discord: Settings → **Themes** → **Online Themes**.
 2. **Paste one link.**
 
    | Look | Link |
    |---|---|
-   | M3E Discord | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-midnight.theme.css` |
+   | Midnight | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-midnight.theme.css` |
    | AMOLED | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-amoled.theme.css` |
    | Light | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-light.theme.css` |
    | Classic | `https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/m3e-classic.theme.css` |
 
-3. **Put yourself on the right** (optional). Paste your user ID into the [setup page](https://monishbl.github.io/m3e-discord/) and
-   copy what it gives you into **QuickCSS**.
+3. **Want to be on the right?** Get your snippet from the [setup page](https://monishbl.github.io/m3e-discord/) and paste it into **QuickCSS**, just below Themes in the same settings.
 
-Turn on one look only, and not Midnight too: each one already includes it. Keep Discord's own appearance on **Dark** (the Light look repaints it). Works in Vencord and Vesktop.
+One look at a time: they don't share the stage well. And keep Discord itself on **Dark**, even for the Light look, which does its own repainting.
 
 <br>
 
 ## Make it yours.
 
-Change any of these in **QuickCSS**, so updates never overwrite them:
+Paste this into **QuickCSS** and change the words after the colons:
 
 ```css
 :root {
-  --m3e-bubbles: on;        /* off: flat messages */
-  --m3e-accent: midnight;   /* blurple · lilac (dark looks) */
-  --m3e-shapes: on;         /* off: plain circles for servers */
-  --m3e-chatbar: floating;  /* inline */
-  --m3e-mine: right;        /* left: keep your messages on the left */
+  --m3e-bubbles: on;        /* off: plain messages, no bubbles */
+  --m3e-accent: midnight;   /* or blurple, or lilac */
+  --m3e-shapes: on;         /* off: round server icons only */
+  --m3e-chatbar: floating;  /* or inline */
+  --m3e-mine: right;        /* left: your messages stay on the left */
 }
 body {
   --gap: 8px;               /* space between panels */
-  --m3e-island-radius: 28px;
-  --m3e-bubble-max: 80%;    /* widest a bubble gets */
-  --m3e-chat-max: 1280px;   /* width of the centred chat column; none = full width */
+  --m3e-chat-max: 1280px;   /* how wide the chat gets; none for edge to edge */
 }
 ```
 
@@ -148,50 +167,42 @@ body {
 ## Questions.
 
 <details>
-<summary><b>My messages aren't on the right.</b></summary>
+<summary><b>My messages are still on the left.</b></summary>
 <br>
-Add the snippet from the <a href="https://monishbl.github.io/m3e-discord/">setup page</a> to QuickCSS. It needs a custom avatar, because Discord's default avatars don't contain your ID. After about 24 messages in a row from you, the rest fall back to the left.
+Grab your snippet from the <a href="https://monishbl.github.io/m3e-discord/">setup page</a> and paste it into QuickCSS. It needs a profile picture, because Discord's default avatars don't carry your name tag. And if you send more than about 24 messages in a row, the rest drift back to the left. Maybe let someone else talk.
 </details>
 
 <details>
-<summary><b>Something looks off after a Discord update.</b></summary>
+<summary><b>Discord updated and something looks off.</b></summary>
 <br>
-Discord's class names change with its builds, and some selectors may need refreshing. Midnight's part updates itself.
-<a href="https://github.com/monishbl/m3e-discord/issues">Open an issue</a> with a screenshot.
+Discord renames its building blocks now and then, and a few pieces of the theme can lose track. <a href="https://github.com/monishbl/m3e-discord/issues">Open an issue</a> with a screenshot and it'll get fixed.
 </details>
 
 <details>
-<summary><b>Does it slow Discord down?</b></summary>
+<summary><b>Will it slow my Discord down?</b></summary>
 <br>
-It shouldn't. Hovering a message and switching channels measured the same as Midnight alone. If you have
-<code>prefers-reduced-motion</code> on, the animations switch off.
+No: it's as quick as the theme it's built on. If your system asks for less motion, the animations politely stand down.
 </details>
 
 <details>
 <summary><b>The Light look has dark patches.</b></summary>
 <br>
-Set Discord's own appearance to Dark. The Light look repaints the dark palette, and Discord's light mode fights it.
+Set Discord's own appearance to Dark. The Light look repaints the dark one; Discord's light mode argues with it.
 </details>
 
 <details>
 <summary><b>Does it work with BetterDiscord?</b></summary>
 <br>
-It's made and tested for Vencord and Vesktop. BetterDiscord reads the same kind of file, but it's untested there.
+It's made for Vencord and Vesktop. BetterDiscord might be fine, but nobody's tried it yet. Be the first.
 </details>
 
 <details>
-<summary><b>I want to change the theme itself.</b></summary>
+<summary><b>I want to tinker.</b></summary>
 <br>
 
-The source is `theme/src/theme.css`, one override file per look is in `theme/variants/`, and `node theme/build.mjs` writes `dist/`. Add `--install` to copy the built themes into Vencord's themes folder; with your ID in `theme/config.json` (see `config.example.json`) you won't need the snippet.
+The theme lives in `theme/src/theme.css`, each look's tweaks are in `theme/variants/`, and `node theme/build.mjs` builds them all into `dist/`. Add `--install` to drop them straight into Vencord. Put your ID in `theme/config.json` (copy `config.example.json`) and you won't need the snippet.
 
-To test live, start Discord with `--remote-debugging-port=9222`:
-- `node tools/cdp.mjs css dist/dev.css` puts your build on screen.
-- `tools/matched.mjs` shows which rules win.
-- `tools/navbench.mjs` measures page switches.
-- `tools/contrast.js` finds text under 4.5:1.
-
-`mockups/` holds the early HTML concepts the theme grew from. They aren't the theme.
+To watch changes live, start Discord with `--remote-debugging-port=9222`. Then `node tools/cdp.mjs css dist/dev.css` puts your build on screen. The `tools/` folder also has a lag meter and a contrast checker. `mockups/` holds the early sketches this grew from.
 </details>
 
 <br>
@@ -199,5 +210,5 @@ To test live, start Discord with `--remote-debugging-port=9222`:
 ---
 
 <sub>
-By <a href="https://github.com/monishbl">monishbl</a> · MIT. Built on <a href="https://github.com/refact0r/midnight-discord">Midnight</a> by refact0r (MIT). Colour schemes from Google's material-color-utilities (Apache-2.0). Google Sans Flex comes from Google Fonts; the mockups bundle it under the SIL Open Font License. Not affiliated with Discord or Google.
+Made by <a href="https://github.com/monishbl">monishbl</a> · MIT license. Built on <a href="https://github.com/refact0r/midnight-discord">Midnight</a> by refact0r, which does a lot of the heavy lifting. Colours come from Google's Material colour tools; the font is Google Sans Flex. Not affiliated with Discord or Google. They just make nice things.
 </sub>

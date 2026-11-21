@@ -72,16 +72,16 @@
 <main>
   <section class="island">
     <h1>M3E <span>Discord</span></h1>
-    <p>Material 3 Expressive for Discord, layered on refact0r's Midnight. Install a variant with Vencord, then optionally
-    put <strong>your own messages on the right</strong> with the snippet below.</p>
+    <p>Discord with rounded panels, playful shapes and chat bubbles. Pick a look and paste its link into Vencord.
+    Then, if you like, use the box below to put <strong>your own messages on the right</strong>.</p>
     <div class="variants" id="variants"></div>
-    <p class="note" style="margin-top:14px">Vencord → Settings → <strong>Themes</strong> → <strong>Online Themes</strong>: paste one link. (Or download the file into Vencord's themes folder.)</p>
+    <p class="note" style="margin-top:14px">In Discord: Settings → <strong>Themes</strong> → <strong>Online Themes</strong>, then paste one link. One look at a time.</p>
   </section>
 
   <section class="island">
     <h2>Your messages on the right</h2>
-    <p>Discord doesn't mark who sent a message, so the theme finds yours by your user ID (it's part of your avatar's URL).
-    Everything happens in this page; nothing is sent anywhere.</p>
+    <p>Discord doesn't tell themes who wrote what, so introduce yourself once with your user ID.
+    Everything happens on this page; nothing gets sent anywhere.</p>
     <ol>
       <li>Discord → Settings → Advanced → turn on <strong>Developer Mode</strong>.</li>
       <li>Right-click your own name → <strong>Copy User ID</strong>, paste it here.</li>
@@ -94,8 +94,7 @@
     </div>
     <p class="msg" id="msg" role="status"></p>
     <textarea id="out" readonly aria-label="Generated QuickCSS snippet" placeholder="The snippet appears here."></textarea>
-    <p class="note">Needs a custom avatar (default Discord avatars don't contain your ID). Runs of more than 24 messages in a row fall back to the left.
-    To turn it off again, delete the snippet or add <code>:root { --m3e-mine: left; }</code>.</p>
+    <p class="note">You'll need a profile picture (Discord's default ones don't carry your ID). Changed your mind? Just delete the snippet.</p>
   </section>
 
   <footer>MIT · <a href="https://github.com/monishbl/m3e-discord">github.com/monishbl/m3e-discord</a> · built on <a href="https://github.com/refact0r/midnight-discord">Midnight</a> by refact0r</footer>
@@ -103,10 +102,10 @@
 <script>
   const RAW = 'https://raw.githubusercontent.com/monishbl/m3e-discord/main/dist/';
   const VARIANTS = [
-    ['m3e-midnight', 'M3E Discord', 'Midnight cyan on night blue-grey'],
-    ['m3e-amoled', 'AMOLED', 'Pure black canvas'],
-    ['m3e-light', 'Light', 'Daylight surfaces'],
-    ['m3e-classic', 'Classic', 'Flat messages, tighter layout'],
+    ['m3e-midnight', 'Midnight', 'Deep blue-grey, cyan glow'],
+    ['m3e-amoled', 'AMOLED', 'True black, for OLED screens'],
+    ['m3e-light', 'Light', 'For sunny rooms'],
+    ['m3e-classic', 'Classic', 'The familiar layout, better dressed'],
   ];
   document.getElementById('variants').innerHTML = VARIANTS.map(([f, n, d]) =>
     `<div class="variant"><b>${n}</b><small>${d}</small><a href="${RAW}${f}.theme.css">${f}.theme.css</a></div>`).join('');
