@@ -337,6 +337,9 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
               background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast),
               color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
 }
+/* Discord lays links out as a row or a column; auto block margins centre the content vertically in both */
+.wrapper_TNyK-N .link_TNyK-N > * { margin-block: auto !important; }
+.wrapper_TNyK-N .link_TNyK-N > .linkBottom_TNyK-N { margin-block: 0 !important; }  /* voice channels: an (often empty) second row */
 /* group ends: first channel after a category / list start, last before the next category */
 :not(.containerDefault_Wx6SnQ) + .containerDefault_Wx6SnQ .link_TNyK-N,
 .containerDefault_Wx6SnQ:first-child .link_TNyK-N {
@@ -529,6 +532,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
     .avatar_2i8Bfm, .avatarDecoration_2i8Bfm, .headerText_2i8Bfm { display: none !important; }
     .header_2i8Bfm { text-align: right; justify-content: flex-end; }
     .repliedMessage_2i8Bfm { margin-left: auto; justify-content: flex-end; }
+    .repliedMessage_2i8Bfm::before, .repliedMessageClickableSpine_2i8Bfm { display: none !important; }  /* the spine points at an avatar we hide */
     .cozy_2i8Bfm .messageContent_2i8Bfm:not(:empty) {
       margin-left: auto !important;
       background-color: var(--m3e-primary-c);
@@ -574,6 +578,11 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
   transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
 }
 .repliedMessage_2i8Bfm::before { border-color: var(--m3e-outline-var) !important; border-top-left-radius: 10px !important; }
+.cozy_2i8Bfm .repliedMessage_2i8Bfm .repliedTextContent_2i8Bfm.messageContent_2i8Bfm:not(:empty) {
+  /* the quoted text reuses .messageContent_ — keep it plain text, not a bubble */
+  background: none !important; padding: 0 !important; margin: 0 !important; border-radius: 0 !important;
+  width: auto !important; max-width: none !important; box-shadow: none !important; color: var(--m3e-on-s-var) !important;
+}
 
 /* hover toolbar → small floating toolbar */
 .buttons_SY_P2T .buttonsInner_SY_P2T {
@@ -1054,3 +1063,5 @@ body {
   --online: #1f8a68;
   --idle: #9a7a14;
 }
+/* Discord's code text colour is tuned for dark backgrounds */
+.markup_ku1OHH pre code.hljs, .markup_ku1OHH code.inline { color: var(--m3e-on-s) !important; }

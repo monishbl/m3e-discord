@@ -34,6 +34,8 @@ else if (cmd === 'css') {
 else if (cmd === 'shot') {
   if (b) await send('Emulation.setDeviceMetricsOverride', { width: +b, height: +c, deviceScaleFactor: 1, mobile: false });
   await new Promise(r => setTimeout(r, b ? 900 : 200));
+  // PRE_JS=file.js: run after the resize, right before capturing (e.g. to scroll into position)
+  if (process.env.PRE_JS) { await evaluate(fs.readFileSync(process.env.PRE_JS, 'utf8')); await new Promise(r => setTimeout(r, 400)); }
   const r = await send('Page.captureScreenshot', { format: 'png' });
   fs.writeFileSync(a, Buffer.from(r.result.data, 'base64'));
   if (b) await send('Emulation.clearDeviceMetricsOverride');

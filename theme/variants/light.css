@@ -40,3 +40,5 @@ body {
   --online: #1f8a68;
   --idle: #9a7a14;
 }
+/* Discord's code text colour is tuned for dark backgrounds */
+.markup_ku1OHH pre code.hljs, .markup_ku1OHH code.inline { color: var(--m3e-on-s) !important; }

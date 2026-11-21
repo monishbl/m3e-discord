@@ -4,8 +4,13 @@
 [refact0r's Midnight](https://github.com/refact0r/midnight-discord): tonal islands, morphing M3E shapes, spring
 motion, message bubbles with your own messages on the right, and a centred chat column.
 
-![M3E Discord: design mockup](docs/img/hero.png)
-<sub>Design mockup (`mockups/tonal-islands-v3.html`, shown with the blurple accent). The shipped default accent is Midnight cyan.</sub>
+![M3E Discord](docs/img/midnight.png)
+
+| AMOLED | Light | Classic |
+|---|---|---|
+| ![AMOLED](docs/img/amoled.png) | ![Light](docs/img/light.png) | ![Classic](docs/img/classic.png) |
+
+<sub>Real screenshots of the installed theme in a demo server (names and avatars are placeholders).</sub>
 
 ## Install
 
@@ -28,8 +33,6 @@ Discord doesn't mark who sent a message, so the theme finds yours by your user I
 Open the **[setup page](https://monishbl.github.io/m3e-discord/)**, paste your ID (Developer Mode → right-click yourself →
 *Copy User ID*), and copy the snippet it generates into **QuickCSS**. It runs entirely in your browser.
 It needs a custom avatar, and a run of more than 24 messages in a row falls back to the left.
-
-![Classic layout mockup](docs/img/classic.png)
 
 ## Settings
 
@@ -87,11 +90,19 @@ Start Discord with `discord --remote-debugging-port=9222`, then:
 - `node tools/matched.mjs "<selector>"` shows which rules win, like DevTools' Styles pane.
 - `NAV_A=… NAV_B=… node tools/navbench.mjs` measures the style/layout cost of switching pages.
 - `node tools/cdp.mjs evalfile tools/contrast.js` lists visible text under 4.5:1 contrast.
+- README screenshots come from a throwaway demo server: webhook messages for the other people, your account for
+  yours. Then `node tools/cdp.mjs evalfile tools/demo-shot.js` swaps your name, avatar and other servers' icons in the
+  page (nothing is sent; reload to undo), and `PRE_JS=… node tools/cdp.mjs shot out.png 1600 1000` captures it.
 
 Notes from building it:
 - Never put `[class*="…"]` inside `:has()`, and never prefix many rules with a long selector. Compute a flag once
   (`--m3e-own`) and read it with `@container style(…)`. Both mistakes cost 90–250 ms per interaction.
 - Discord's class names are build hashes (`_SY_P2T`…). When Discord updates, some selectors need refreshing.
+
+## Mockups
+
+`mockups/` holds the early HTML design concepts the theme grew out of. They are not the theme itself: open them in a
+browser to compare layouts (`tonal-islands-v3.html?layout=classic`).
 
 ## Credits & licence
 
