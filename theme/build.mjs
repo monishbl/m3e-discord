@@ -22,7 +22,11 @@ function spring(z, k) {
 // values verified against androidx compose material3 tokens/ExpressiveMotionTokens.kt:
 //   spatial (position/size, may overshoot): fast .6/800, default .8/380, slow .8/200
 //   effects (colour + SHAPE morphs — Button.kt uses DefaultEffects "to prevent any bounce"): default 1/1600, fast 1/3800
-const SPRINGS = { fast: [0.6, 800], default: [0.8, 380], slow: [0.8, 200], effects: [1, 1600], effectsFast: [1, 3800], loader: [0.6, 200] };
+// plus two from iRice's Material look (shell/common/Theme.qml, Qt SpringAnimation values converted with
+// k = spring·62.5, ζ = damping·62.5 / 2√k):
+//   press: springPress 7.5 / 0.3 → ζ .43, k 469: a pressed control swells, then springs back past its size
+//   rise:  QSRise 12.8 / 0.38    → ζ .42, k 800: panels and their pieces rise into place with a clear overshoot
+const SPRINGS = { fast: [0.6, 800], default: [0.8, 380], slow: [0.8, 200], effects: [1, 1600], effectsFast: [1, 3800], loader: [0.6, 200], press: [0.43, 469], rise: [0.42, 800] };
 
 /* ---------- shapes: iRice MaterialShapes.js params / materialshape.frag fields ---------- */
 const SH = {

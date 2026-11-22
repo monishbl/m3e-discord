@@ -19,6 +19,9 @@
   --m3e-shapes: on;           /* on: server icons / avatars use the M3E shape library · off: circles */
   --m3e-chatbar: floating;    /* floating: pill chat bar island · inline */
   --m3e-mine: right;          /* right: your messages sit on the right (needs userId in theme/config.json) · left */
+  --m3e-motion: expressive;   /* expressive: presses swell and bounce, panels rise in (iRice's Material look) · calm: no bounce */
+  --m3e-titlebar: off;        /* off: no title bar, the top edge is one --gap · on: Discord's title bar */
+  --m3e-wincontrols: on;      /* on: minimise / maximise / close at the top right · off: use your window manager */
 
 }
 body {
@@ -55,6 +58,10 @@ body {
   --m3e-dur-effectsFast: 117ms;
   --m3e-spring-loader: linear(0,0.012,0.045,0.094,0.156,0.226,0.302,0.381,0.461,0.539,0.614,0.685,0.751,0.811,0.866,0.913,0.955,0.99,1.019,1.043,1.062,1.076,1.085,1.091,1.094,1.095,1.093,1.089,1.084,1.077,1.07,1.063,1.055,1.048,1.041,1.034,1.027,1.021,1.016,1.011,1);
   --m3e-dur-loader: 452ms;
+  --m3e-spring-press: linear(0,0.036,0.13,0.264,0.42,0.582,0.739,0.88,0.999,1.093,1.161,1.203,1.222,1.222,1.206,1.18,1.147,1.111,1.075,1.041,1.012,0.988,0.971,0.958,0.952,0.95,0.952,0.957,0.963,0.971,0.979,0.987,0.994,1,1.005,1.008,1.01,1.011,1.011,1.01,1);
+  --m3e-dur-press: 515ms;
+  --m3e-spring-rise: linear(0,0.037,0.136,0.275,0.437,0.605,0.765,0.908,1.027,1.119,1.183,1.22,1.233,1.227,1.206,1.175,1.137,1.098,1.06,1.026,0.997,0.975,0.959,0.949,0.946,0.946,0.951,0.958,0.967,0.976,0.985,0.993,1,1.005,1.009,1.012,1.013,1.013,1.012,1.01,1);
+  --m3e-dur-rise: 403ms;
 }
 @keyframes m3e-loader {
   0.00% { clip-path: polygon(50.0% 6.5%,54.4% 5.6%,59.2% 3.6%,64.5% 2.3%,68.5% 5.2%,71.5% 9.8%,74.3% 13.7%,77.9% 16.1%,82.6% 17.4%,87.9% 18.9%,91.1% 22.5%,91.2% 28.0%,90.9% 33.1%,91.7% 37.4%,94.2% 41.2%,97.7% 45.3%,100.0% 50.0%,97.7% 54.7%,94.2% 58.8%,91.7% 62.6%,90.9% 66.9%,91.2% 72.0%,91.1% 77.5%,87.9% 81.1%,82.6% 82.6%,77.9% 83.9%,74.3% 86.3%,71.5% 90.2%,68.5% 94.8%,64.5% 97.7%,59.2% 96.4%,54.4% 94.4%,50.0% 93.5%,45.6% 94.4%,40.8% 96.4%,35.5% 97.7%,31.5% 94.8%,28.5% 90.2%,25.7% 86.3%,22.1% 83.9%,17.4% 82.6%,12.1% 81.1%,8.9% 77.5%,8.8% 72.0%,9.1% 66.9%,8.3% 62.6%,5.8% 58.8%,2.3% 54.7%,-0.0% 50.0%,2.3% 45.3%,5.8% 41.2%,8.3% 37.4%,9.1% 33.1%,8.8% 28.0%,8.9% 22.5%,12.1% 18.9%,17.4% 17.4%,22.1% 16.1%,25.7% 13.7%,28.5% 9.8%,31.5% 5.2%,35.5% 2.3%,40.8% 3.6%,45.6% 5.6%); animation-timing-function: linear(0,0.012,0.045,0.094,0.156,0.226,0.302,0.381,0.461,0.539,0.614,0.685,0.751,0.811,0.866,0.913,0.955,0.99,1.019,1.043,1.062,1.076,1.085,1.091,1.094,1.095,1.093,1.089,1.084,1.077,1.07,1.063,1.055,1.048,1.041,1.034,1.027,1.021,1.016,1.011,1); }
@@ -72,7 +79,10 @@ body {
 @property --m3e-accent { syntax: 'midnight | blurple | lilac'; inherits: false; initial-value: midnight; }
 @property --m3e-shapes { syntax: 'on | off'; inherits: false; initial-value: on; }
 @property --m3e-chatbar { syntax: 'floating | inline'; inherits: false; initial-value: floating; }
+@property --m3e-motion { syntax: 'calm | expressive'; inherits: false; initial-value: expressive; }
 @property --m3e-mine { syntax: 'right | left'; inherits: false; initial-value: right; }
+@property --m3e-titlebar { syntax: 'on | off'; inherits: false; initial-value: off; }
+@property --m3e-wincontrols { syntax: 'on | off'; inherits: false; initial-value: on; }
 
 /* ════════════════════════════════════════════════════════════════
    COLOUR ROLES
@@ -92,16 +102,18 @@ body {
   --m3e-outline: #6e788a;
   --m3e-outline-var: #353a46;
 
-  --m3e-primary: #98e6fa;        --m3e-on-primary: #00363f;
-  --m3e-primary-c: #8ad8ec;      --m3e-on-primary-c: #003a45;
-  --m3e-secondary-c: #24434c;    --m3e-on-secondary-c: #c4e7f1;
-  --m3e-tertiary: #e6b4ff;
-  --m3e-tertiary-c: #dca3f9;     --m3e-on-tertiary-c: #43155d;
-  --m3e-error: #f2879f;
-  --m3e-error-c: #6d2238;        --m3e-on-error-c: #ffd9e1;
-  --m3e-inverse-primary: #00697a;
+  /* accents sit at Midnight's own depth (its accent is oklch(.75 .1 215)) with a little more colour: Material's
+     dark-scheme pastels (tone 80–90) read washed out on Midnight's surfaces */
+  --m3e-primary: oklch(0.82 0.12 215);     --m3e-on-primary: oklch(0.24 0.05 215);
+  --m3e-primary-c: oklch(0.75 0.13 215);   --m3e-on-primary-c: oklch(0.22 0.06 215);
+  --m3e-secondary-c: oklch(0.35 0.06 215); --m3e-on-secondary-c: oklch(0.93 0.035 215);
+  --m3e-tertiary: oklch(0.80 0.14 310);
+  --m3e-tertiary-c: oklch(0.73 0.17 310);  --m3e-on-tertiary-c: oklch(0.22 0.08 310);
+  --m3e-error: oklch(0.72 0.17 10);
+  --m3e-error-c: oklch(0.40 0.12 10);      --m3e-on-error-c: oklch(0.94 0.035 10);
+  --m3e-inverse-primary: oklch(0.52 0.11 215);
   --m3e-inverse-s: #e7ebf3;      --m3e-inverse-on-s: #1a1d23;   /* tooltips */
-  --m3e-on-error: #4a0018;
+  --m3e-on-error: oklch(0.22 0.07 10);
   --m3e-on-online: #00382a;
   --m3e-code-bg: #0a0b0e;        /* code blocks sit below the surface */
   --m3e-inline-code-bg: rgb(0 0 0 / 0.32);
@@ -144,20 +156,20 @@ body {
 }
 @container root style(--m3e-accent: blurple) {
   body {
-    --m3e-primary: #bec2ff; --m3e-on-primary: #1f2378;
-    --m3e-primary-c: #a9afff; --m3e-on-primary-c: #151b6e;
-    --m3e-secondary-c: #353863; --m3e-on-secondary-c: #dfe0ff;
-    --m3e-tertiary: #ffa9df; --m3e-tertiary-c: #ff91da; --m3e-on-tertiary-c: #640951;
-    --m3e-inverse-primary: #4954d6;
+    --m3e-primary: oklch(0.80 0.12 278); --m3e-on-primary: oklch(0.25 0.09 278);
+    --m3e-primary-c: oklch(0.72 0.15 278); --m3e-on-primary-c: oklch(0.20 0.09 278);
+    --m3e-secondary-c: oklch(0.35 0.07 278); --m3e-on-secondary-c: oklch(0.93 0.035 278);
+    --m3e-tertiary: oklch(0.82 0.12 345); --m3e-tertiary-c: oklch(0.74 0.16 345); --m3e-on-tertiary-c: oklch(0.24 0.09 345);
+    --m3e-inverse-primary: oklch(0.52 0.16 278);
   }
 }
 @container root style(--m3e-accent: lilac) {
   body {
-    --m3e-primary: #e6b4ff; --m3e-on-primary: #4a1a66;
-    --m3e-primary-c: #dca3f9; --m3e-on-primary-c: #43155d;
-    --m3e-secondary-c: #3d2c4a; --m3e-on-secondary-c: #f0dbff;
-    --m3e-tertiary: #98e6fa; --m3e-tertiary-c: #8ad8ec; --m3e-on-tertiary-c: #003a45;
-    --m3e-inverse-primary: #7b43a0;
+    --m3e-primary: oklch(0.80 0.14 310); --m3e-on-primary: oklch(0.24 0.09 310);
+    --m3e-primary-c: oklch(0.73 0.17 310); --m3e-on-primary-c: oklch(0.22 0.08 310);
+    --m3e-secondary-c: oklch(0.35 0.07 310); --m3e-on-secondary-c: oklch(0.93 0.035 310);
+    --m3e-tertiary: oklch(0.82 0.12 215); --m3e-tertiary-c: oklch(0.75 0.13 215); --m3e-on-tertiary-c: oklch(0.22 0.06 215);
+    --m3e-inverse-primary: oklch(0.52 0.15 310);
   }
 }
 
@@ -266,7 +278,7 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
   .folderIconWrapper_RTMSuZ {
     border-radius: 0 !important;
     clip-path: var(--m3e-shape-circle);
-    transition: clip-path var(--m3e-dur-effects) var(--m3e-spring-effects),
+    transition: clip-path var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press),
                 background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
   }
   /* hover: 8% state layer only (no shape change) */
@@ -333,7 +345,7 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
   margin-inline: 4px;
   border-radius: 4px;
   background-color: var(--m3e-s);
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects),
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press),
               background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast),
               color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
 }
@@ -380,13 +392,13 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 /* top-of-list rows (Events, Members, Boosts) */
 .sidebarList_pog62O [class*="containerDefault_"]:not(.containerDefault_Wx6SnQ):not(.containerDefault_yOdhm_) > div {
   border-radius: 999px;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press);
 }
 
 /* DM list */
 .channel_zln_tS [class*="interactive_"] {
   border-radius: 999px !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
 }
 .channel_zln_tS [class*="selected_"][class*="interactive_"] {
   background-color: var(--m3e-secondary-c) !important;
@@ -405,8 +417,10 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 .buttons_g6VwXp .audioButtonParent_gKpIZP {
   background-color: var(--m3e-s-high) !important;
   border-radius: 8px !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), min-width var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
+.buttons_g6VwXp > button { min-width: 32px; }
+.buttons_g6VwXp > .audioButtonParent_gKpIZP { min-width: 49px; }
 .buttons_g6VwXp .audioButtonParent_gKpIZP > button { background: transparent !important; border-radius: inherit !important; }
 .buttons_g6VwXp > :first-child { border-top-left-radius: 18px !important; border-bottom-left-radius: 18px !important; }
 .buttons_g6VwXp > :last-child { border-top-right-radius: 18px !important; border-bottom-right-radius: 18px !important; }
@@ -415,12 +429,18 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 .buttons_g6VwXp > :is(button, .audioButtonParent_gKpIZP):active { border-radius: 4px !important; }
 .buttons_g6VwXp > :first-child:active { border-radius: 18px 4px 4px 18px !important; }
 .buttons_g6VwXp > :last-child:active { border-radius: 4px 18px 18px 4px !important; }
-/* a toggled mic / headset / game: round + tertiary */
-.buttons_g6VwXp .audioButtonParent_gKpIZP:has(.redIcon_g6VwXp),
+/* a toggled mic / headset / game: like a QS tile switching on, it expands
+   and rounds into a pill; switched off, it collapses back to its corners */
+.buttons_g6VwXp .audioButtonParent_gKpIZP:has(> [role="switch"][aria-checked="true"]),
 .buttons_g6VwXp > button[aria-checked="true"] {
   background-color: var(--m3e-error-c) !important;
-  border-radius: 18px !important;
+  border-radius: 16px !important;
 }
+.buttons_g6VwXp > .audioButtonParent_gKpIZP:has(> [role="switch"][aria-checked="true"]) { min-width: 61px; }
+.buttons_g6VwXp > button[aria-checked="true"] { min-width: 44px; }
+/* pressed while on: a little squarer than the pill (×0.7), not square */
+.buttons_g6VwXp .audioButtonParent_gKpIZP:has(> [role="switch"][aria-checked="true"]):active,
+.buttons_g6VwXp > button[aria-checked="true"]:active { border-radius: 11px !important; }
 
 /* voice connected card */
 .wrapper_9U6LUN { padding-bottom: 4px; }
@@ -429,14 +449,37 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 .actionButtons_9U6LUN .button_9U6LUN {
   border-radius: 8px !important;
   background-color: var(--m3e-s-high) !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
 .actionButtons_9U6LUN .button_9U6LUN:first-child { border-radius: 20px 8px 8px 20px !important; }
 .actionButtons_9U6LUN .button_9U6LUN:last-child { border-radius: 8px 20px 20px 8px !important; }
 .actionButtons_9U6LUN .button_9U6LUN:active { border-radius: 4px !important; }
 .actionButtons_9U6LUN .button_9U6LUN:first-child:active { border-radius: 20px 4px 4px 20px !important; }
 .actionButtons_9U6LUN .button_9U6LUN:last-child:active { border-radius: 4px 20px 20px 4px !important; }
-.actionButtons_9U6LUN .buttonActive_9U6LUN { background-color: var(--m3e-secondary-c) !important; border-radius: 20px !important; }
+.actionButtons_9U6LUN .button_9U6LUN { transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), flex-grow var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important; }
+.actionButtons_9U6LUN .buttonActive_9U6LUN { background-color: var(--m3e-secondary-c) !important; border-radius: 20px !important; flex-grow: 1.6 !important; }
+.actionButtons_9U6LUN .buttonActive_9U6LUN:active { border-radius: 14px !important; }
+
+/* channel header toggles (members, threads, pins, inbox): off, a round icon
+   button; on, it expands into a secondary pill, as a QS tile does */
+.toolbar_ybUK7Z .iconWrapper_ybUK7Z.clickable_ybUK7Z {
+  min-width: 32px; height: 32px; margin: 0 !important; border-radius: 16px;
+  transition: min-width var(--m3e-dur-effects) var(--m3e-spring-effects), border-radius var(--m3e-dur-effects) var(--m3e-spring-effects),
+              scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast),
+              color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+}
+.toolbar_ybUK7Z .iconWrapper_ybUK7Z.clickable_ybUK7Z:hover { background-color: color-mix(in oklab, var(--m3e-on-s) 8%, transparent); }
+.toolbar_ybUK7Z .iconWrapper_ybUK7Z.clickable_ybUK7Z:active { border-radius: 8px; }
+.toolbar_ybUK7Z .iconWrapper_ybUK7Z.clickable_ybUK7Z:is(.selected_ybUK7Z, [aria-expanded="true"]) {
+  min-width: 52px;
+  background-color: var(--m3e-secondary-c);
+  color: var(--m3e-on-secondary-c) !important;
+}
+.toolbar_ybUK7Z .iconWrapper_ybUK7Z.clickable_ybUK7Z:is(.selected_ybUK7Z, [aria-expanded="true"]):hover {
+  background-color: color-mix(in oklab, var(--m3e-on-secondary-c) 8%, var(--m3e-secondary-c));
+}
+.toolbar_ybUK7Z .iconWrapper_ybUK7Z.clickable_ybUK7Z:is(.selected_ybUK7Z, [aria-expanded="true"]):active { border-radius: 11px; }
+.toolbar_ybUK7Z .iconWrapper_ybUK7Z.clickable_ybUK7Z:is(.selected_ybUK7Z, [aria-expanded="true"]) svg { color: inherit !important; }
 
 /* ════════════════════════════════════════════════════════════════
    MESSAGES — bubbles (cozy mode only; compact stays flat)
@@ -507,10 +550,25 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
   .cozy_2i8Bfm [class*="channelTextArea_"] { border-radius: 20px !important; }
 }
 
-/* ── no title bar, no window controls (move/close the window with your WM) ── */
-.bar_3zSH5d, .winButtons_3zSH5d { display: none !important; }
-/* the freed title-bar row becomes one --gap, so the top edge matches the bottom/left/right */
-body { --custom-app-top-bar-height: var(--gap) !important; --top-bar-height: var(--gap) !important; }
+/* ── title bar and window controls (flags: --m3e-titlebar, --m3e-wincontrols) ──
+   Midnight already moves the bar's buttons (inbox, window controls) into the
+   channel header's right end and pads the header for them; these only shrink
+   the bar or take the controls out. */
+@container root style(--m3e-titlebar: off) {
+  /* the freed title-bar row becomes one --gap (still a strip to drag the window by),
+     so the top edge matches the bottom/left/right */
+  body { --custom-app-top-bar-height: var(--gap) !important; --top-bar-height: var(--gap) !important; }
+  .bar_3zSH5d > :not(.trailing_3zSH5d) { visibility: hidden; }
+}
+@container root style(--m3e-wincontrols: off) {
+  .winButtons_3zSH5d { display: none !important; }
+  /* the header keeps room only for the bar's buttons, not the controls */
+  #app-mount, .base_pog62O { --top-bar-right-margin: calc(32px * var(--button-count, 0) + var(--button-count, 0) * var(--space-xs)) !important; }
+}
+@container root style(--m3e-titlebar: off) and style(--m3e-wincontrols: off) {
+  .bar_3zSH5d { display: none !important; }
+  #app-mount, .base_pog62O { --top-bar-right-margin: 0px !important; }
+}
 
 /* ── the text space: one centred column (max-width + auto inline margins) ── */
 .scrollerInner_8AE1Qq,
@@ -575,7 +633,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
   margin-bottom: 2px;
   border-radius: 14px;
   background-color: var(--m3e-s);
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press);
 }
 .repliedMessage_2i8Bfm::before { border-color: var(--m3e-outline-var) !important; border-top-left-radius: 10px !important; }
 .cozy_2i8Bfm .repliedMessage_2i8Bfm .repliedTextContent_2i8Bfm.messageContent_2i8Bfm:not(:empty) {
@@ -596,7 +654,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
 .buttonsInner_SY_P2T [role="button"],
 .buttonsInner_SY_P2T button {
   border-radius: 999px !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
 }
 .buttonsInner_SY_P2T [role="button"]:active { border-radius: 8px !important; }
 @keyframes m3e-pop { from { scale: 0.85; opacity: 0; } to { scale: 1; opacity: 1; } }
@@ -684,7 +742,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
   border-radius: 8px;
   padding: 0 5px;
   font-weight: 650;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
 }
 
 /* timestamps <t:…> */
@@ -711,7 +769,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
 .container_YUQhib [class*="imageContainer_"],
 .container_YUQhib video {
   border-radius: 20px !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press);
 }
 /* files */
 .file_-9z-XO {
@@ -724,7 +782,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
   border-radius: 20px !important;
   border-left-width: 4px;
   background-color: var(--m3e-s-high) !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press);
 }
 .embedTitle_XyW1ZT, .embedTitleLink_XyW1ZT { font-weight: 700; font-variation-settings: "ROND" 100; }
 .embedImage_XyW1ZT img, .embedThumbnail_XyW1ZT img, .embedVideo_XyW1ZT { border-radius: 14px !important; }
@@ -737,7 +795,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
   border-radius: 4px !important;
   border: none !important;
   background-color: var(--m3e-s) !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press) !important;
 }
 .answer_D4-WfD:first-child { border-top-left-radius: 16px !important; border-top-right-radius: 16px !important; }
 .answer_D4-WfD:last-child { border-bottom-left-radius: 16px !important; border-bottom-right-radius: 16px !important; }
@@ -749,7 +807,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
   border-radius: 10px !important;
   border: 1px solid var(--m3e-outline-var) !important;
   background-color: var(--m3e-s-high) !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects),
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press),
               background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
 .reaction_MmKct8:hover { background-color: var(--m3e-s-highest) !important; }
@@ -792,13 +850,13 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
   margin-inline: 4px;
   width: 40px; height: 40px;
   display: grid; place-items: center;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press);
 }
 .attachWrapper_7TM4SO .attachButton_7TM4SO:active { border-radius: 8px !important; }
 .buttons_2x8-Qn .buttonContainer_2x8-Qn [class*="button_"],
 .buttons_2x8-Qn [class*="button_"][role="button"] {
   border-radius: 999px !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
 }
 .buttons_2x8-Qn [class*="button_"]:active { border-radius: 8px !important; }
 /* the reply / upload bars above the input */
@@ -829,7 +887,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
   background-color: var(--m3e-s);
   border-radius: 4px !important;
   overflow: hidden;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
 .member_86es0b .childContainer_J1Adu_ { border-radius: inherit !important; }
 .membersGroup_86es0b + .member_86es0b.container_J1Adu_ { border-top-left-radius: 16px !important; border-top-right-radius: 16px !important; }
@@ -847,7 +905,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
 .button_9OQtot:not(.lookBlank_9OQtot):not(.lookLink_9OQtot):not(.sizeIcon_9OQtot) {
   border-radius: 999px !important;
   font-weight: 650;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects),
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press),
               background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
 .button_9OQtot:not(.lookBlank_9OQtot):not(.lookLink_9OQtot):active { border-radius: 8px !important; }
@@ -860,7 +918,7 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
 button[class*="button_"][class*="sm_"], button[class*="button_"][class*="md_"],
 button[class*="button_"][class*="lg_"] {
   border-radius: 999px;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press);
 }
 button[class*="button_"][class*="sm_"]:active, button[class*="button_"][class*="md_"]:active,
 button[class*="button_"][class*="lg_"]:active { border-radius: 8px; }
@@ -883,7 +941,7 @@ button[class*="button_"][class*="lg_"]:active { border-radius: 8px; }
   border-radius: 12px !important;
   margin: 1px 0;
   font-weight: 500;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
 .menu_M3qk4j .item_M3qk4j.focused_M3qk4j {
   background-color: var(--m3e-tertiary-c) !important;
@@ -899,7 +957,7 @@ button[class*="button_"][class*="lg_"]:active { border-radius: 8px; }
 .wrapper_Qi4I4L .button_Qi4I4L {
   border-radius: 8px !important;
   background-color: var(--m3e-s-highest) !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
 }
 .wrapper_Qi4I4L > :first-child .button_Qi4I4L { border-radius: 999px 8px 8px 999px !important; }
 .wrapper_Qi4I4L > :last-child .button_Qi4I4L { border-radius: 8px 999px 999px 8px !important; }
@@ -941,7 +999,7 @@ input[class*="input_"], [class*="inputWrapper_"] input, [class*="searchBar_"], .
 .side_6zZYhF .item_6zZYhF {
   border-radius: 999px !important;
   padding-inline: 14px !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
 .side_6zZYhF .item_6zZYhF.selected_6zZYhF {
   background-color: var(--m3e-secondary-c) !important;
@@ -952,7 +1010,7 @@ input[class*="input_"], [class*="inputWrapper_"] input, [class*="searchBar_"], .
 /* new settings modal nav */
 .item_xyJHva {
   border-radius: 999px !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
 .item_xyJHva.active_xyJHva {
   background-color: var(--m3e-secondary-c) !important;
@@ -996,6 +1054,64 @@ input[class*="input_"], [class*="inputWrapper_"] input, [class*="searchBar_"], .
 }
 .container_9AraPt:active .switchIndicator_9AraPt::after { width: 28px; height: 28px; }
 .container_9AraPt:has(input:disabled) { opacity: 0.38; }
+
+/* ════════════════════════════════════════════════════════════════
+   EXPRESSIVE MOTION — iRice's Material look, in CSS (on by default;
+   :root { --m3e-motion: calm; } turns the bounce off)
+   · hover: a colour tint only, nothing moves
+   · press: the control swells ~6% (≤ ~10 px), its corners square off to 70%,
+     both on the press spring; on release it springs back past its size and settles
+   · opening: panels and menus rise from 86% and fade in on the rise spring, their
+     items staggered one after another
+   · groups: the pressed button widens, its neighbours make room
+   · the typing indicator is Material's morphing loading shape
+   ════════════════════════════════════════════════════════════════ */
+@keyframes m3e-rise { from { scale: 0.86; opacity: 0; } }
+@keyframes m3e-rise-item { from { scale: 0.92; opacity: 0; translate: 0 -4px; } }
+@keyframes m3e-msg-in { from { translate: 0 12px; scale: 0.96; opacity: 0; } }
+@container root style(--m3e-motion: expressive) {
+  /* shape changes (press morphs, selections) on the press spring: a small bounce */
+  body { --m3e-spring-effects: var(--m3e-spring-press); --m3e-dur-effects: var(--m3e-dur-press); }
+
+  /* ── press: swell + bounce ── */
+  .button_9OQtot:not(.lookBlank_9OQtot):not(.lookLink_9OQtot):active,
+  button[class*="button_"][class*="sm_"]:active, button[class*="button_"][class*="md_"]:active, button[class*="button_"][class*="lg_"]:active { scale: 1.05; }
+  .buttons_2x8-Qn [class*="button_"]:active, .attachWrapper_7TM4SO .attachButton_7TM4SO:active,
+  .buttonsInner_SY_P2T [role="button"]:active, .toolbar_ybUK7Z .clickable_ybUK7Z:active,
+  .wrapper_Qi4I4L .button_Qi4I4L:active, .reaction_MmKct8:active { scale: 1.1; }
+  .listItem_rwEpIL .blobContainer_IaPwK5 { transition: scale var(--m3e-dur-press) var(--m3e-spring-press); }
+  .listItem_rwEpIL .blobContainer_IaPwK5:active { scale: 1.08; }
+  .wrapper_TNyK-N .link_TNyK-N:active, .member_86es0b.container_J1Adu_:active,
+  .item_xyJHva:active, .side_6zZYhF .item_6zZYhF:active, .menu_M3qk4j .item_M3qk4j:active { scale: 1.03; }
+
+  /* ── button group: the pressed one widens, the rest make room ── */
+  .buttons_g6VwXp > button:active { min-width: 38px; }
+  .buttons_g6VwXp > .audioButtonParent_gKpIZP:active { min-width: 57px; }
+  .buttons_g6VwXp > button[aria-checked="true"]:active { min-width: 50px; }
+  .buttons_g6VwXp > .audioButtonParent_gKpIZP:has(> [role="switch"][aria-checked="true"]):active { min-width: 67px; }
+
+  /* ── opening: rise in, items one after another ── */
+  .layer_VVADeK > *, .focusLock__KoJTP, .menu_M3qk4j { animation: m3e-rise var(--m3e-dur-rise) var(--m3e-spring-rise) both; transform-origin: top center; }
+  .layer_VVADeK > .menu_M3qk4j, .layer_VVADeK > * .menu_M3qk4j { animation: none; }
+  .menu_M3qk4j .item_M3qk4j, .menu_M3qk4j .wrapper_Qi4I4L {
+    animation: m3e-rise-item var(--m3e-dur-rise) var(--m3e-spring-rise) backwards;
+    animation-delay: calc(min(sibling-index(), 12) * 14ms);
+  }
+  .tooltip_3_v8qp, .tooltip_ZDdyhE { animation: m3e-rise var(--m3e-dur-press) var(--m3e-spring-press); transform-origin: bottom center; }
+
+  /* the newest message rises in (only the last row, so opening a channel animates once) */
+  li.messageListItem_SY_P2T:last-of-type > .message_SY_P2T { animation: m3e-msg-in var(--m3e-dur-rise) var(--m3e-spring-rise) both; transform-origin: left bottom; }
+  @container style(--m3e-own: 1) { li.messageListItem_SY_P2T:last-of-type > .message_SY_P2T { transform-origin: right bottom; } }
+  /* your reactions pop in */
+  .reactionMe_MmKct8 { animation: m3e-rise var(--m3e-dur-press) var(--m3e-spring-press); }
+
+  /* ── selection: emphasized type (one step heavier) ── */
+  .link_TNyK-N [class*="name_"] { font-variation-settings: "wght" 500, "ROND" 100; transition: font-variation-settings var(--m3e-dur-fast) var(--m3e-spring-fast); }
+  .modeSelected_TNyK-N .link_TNyK-N [class*="name_"] { font-variation-settings: "wght" 650, "ROND" 100; }
+
+  /* ── Material's loading indicator for "is typing" ── */
+  .typing_U9Tvvz .typingDots_U9Tvvz::before { animation: m3e-loader 4550ms infinite, m3e-spin 4666ms linear infinite; }
+}
 
 /* ════════════════════════════════════════════════════════════════
    RESPONSIVE

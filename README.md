@@ -15,7 +15,7 @@ Inspired by Google's newest Material design, the playful one on new Android phon
 </p>
 
 <p align="center">
-<img src="docs/img/midnight.png" alt="M3E Discord: deep blue-grey panels with a cyan glow, chat bubbles, your own messages on the right, and a cookie-shaped icon for the server you're in.">
+<img src="docs/img/hero.png" alt="M3E Discord: deep blue-grey panels with a cyan glow, chat bubbles, your own messages on the right, and a cookie-shaped icon for the server you're in.">
 </p>
 <p align="center"><sub>The real thing, in a demo server. The names and faces are made up; the friendships are not.</sub></p>
 
@@ -74,6 +74,9 @@ Paste this into **QuickCSS** and change the words after the colons:
   --m3e-shapes: on;         /* off: round server icons only */
   --m3e-chatbar: floating;  /* or inline */
   --m3e-mine: right;        /* left: your messages stay on the left */
+  --m3e-motion: expressive; /* calm: no bounce, nothing swells */
+  --m3e-titlebar: off;      /* on: bring back Discord's title bar */
+  --m3e-wincontrols: on;    /* off: no minimise / maximise / close buttons */
 }
 body {
   --gap: 8px;               /* space between panels */

@@ -18,13 +18,13 @@ body {
 
   /* accents: material-color-utilities "expressive" light scheme, seed #46aec5 */
   --m3e-primary: #00697a;        --m3e-on-primary: #effbff;
-  --m3e-primary-c: #62e2ff;      --m3e-on-primary-c: #004f5c;
-  --m3e-secondary-c: #cfe6ee;    --m3e-on-secondary-c: #0f3540;
+  --m3e-primary-c: oklch(0.80 0.13 215);   --m3e-on-primary-c: oklch(0.27 0.06 215);
+  --m3e-secondary-c: oklch(0.89 0.05 215);  --m3e-on-secondary-c: oklch(0.27 0.05 215);
   --m3e-tertiary: #7c4a98;
-  --m3e-tertiary-c: #dca3f9;     --m3e-on-tertiary-c: #501f6c;
+  --m3e-tertiary-c: oklch(0.78 0.15 310);   --m3e-on-tertiary-c: oklch(0.25 0.09 310);
   --m3e-error: #ac3434;          --m3e-on-error: #fff7f6;
-  --m3e-error-c: #ffdad6;        --m3e-on-error-c: #65000b;
-  --m3e-inverse-primary: #62e2ff;
+  --m3e-error-c: oklch(0.88 0.07 20);       --m3e-on-error-c: oklch(0.32 0.12 20);
+  --m3e-inverse-primary: oklch(0.80 0.13 215);
   --m3e-inverse-s: #1d2128;      --m3e-inverse-on-s: #eef1f6;
   --m3e-on-online: #e8fff6;
   --m3e-code-bg: #eef1f6;
@@ -42,3 +42,5 @@ body {
 }
 /* Discord's code text colour is tuned for dark backgrounds */
 .markup_ku1OHH pre code.hljs, .markup_ku1OHH code.inline { color: var(--m3e-on-s) !important; }
+/* text-file previews use a light grey meant for dark backgrounds */
+pre, pre code { color: var(--m3e-on-s) !important; }

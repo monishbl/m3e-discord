@@ -18,10 +18,10 @@ body {
 
   /* Frost + Aurora: the flavour's --blue / --purple / --red ramps */
   --m3e-primary: hsl(193, 43%, 72%);   --m3e-on-primary: #272b35;
-  --m3e-primary-c: #88c0d0;            --m3e-on-primary-c: #272b35;
-  --m3e-secondary-c: color-mix(in srgb, #88c0d0 24%, #2e3440);  --m3e-on-secondary-c: #e5e9f0;
+  --m3e-primary-c: hsl(193, 43%, 62%);  --m3e-on-primary-c: #272b35;   /* Midnight (nord) --blue-4: its accent buttons, hovered */
+  --m3e-secondary-c: color-mix(in srgb, #88c0d0 30%, #2e3440);  --m3e-on-secondary-c: #e5e9f0;
   --m3e-tertiary: hsl(311, 20%, 68%);
-  --m3e-tertiary-c: #b48ead;           --m3e-on-tertiary-c: #272b35;
+  --m3e-tertiary-c: hsl(311, 20%, 58%); --m3e-on-tertiary-c: #272b35;  /* --purple-4 */
   --m3e-error: #bf616a;                --m3e-on-error: #eceff4;
   --m3e-error-c: color-mix(in srgb, #bf616a 38%, #2e3440);       --m3e-on-error-c: #eceff4;
   --m3e-inverse-primary: hsl(193, 43%, 57%);
