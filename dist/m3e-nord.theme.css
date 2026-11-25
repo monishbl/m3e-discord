@@ -2,7 +2,7 @@
  * @name M3E Discord Nord
  * @description M3E Discord in Nord: the exact colours of refact0r's Midnight (nord) flavour (Polar Night panels, Snow Storm text, Frost accent, Aurora highlights).
  * @author monishbl
- * @version 1.0.0
+ * @version 1.1.0
  * @source https://github.com/monishbl/m3e-discord
  */
 
@@ -15,7 +15,8 @@
    ════════════════════════════════════════════════════════════════ */
 :root {
   --m3e-bubbles: on;          /* on: message bubbles · off: classic flat messages */
-  --m3e-accent: midnight;     /* midnight (cyan, from Midnight) · blurple · lilac */
+  --m3e-accent: auto;         /* auto: the look's own accent · any colour (#5865f2, #e0a3ff, …): every accent role is built
+                                 from its hue at fixed, contrast-checked lightness, so text always stays readable */
   --m3e-shapes: on;           /* on: server icons / avatars use the M3E shape library · off: circles */
   --m3e-chatbar: floating;    /* floating: pill chat bar island · inline */
   --m3e-mine: right;          /* right: your messages sit on the right (needs userId in theme/config.json) · left */
@@ -28,7 +29,7 @@ body {
   --gap: 8px;                 /* space between islands */
   --m3e-island-radius: 28px;  /* corner of the big panels (M3 extraLarge) */
   --m3e-bubble-max: 80%;      /* widest a bubble gets (share of the column) */
-  --m3e-chat-max: 1280px;     /* the message column + chat bar are centred at this width (none = full width) */
+  --m3e-chat-max: 1280px;     /* the message column is centred at this width (none = full width); the chat bar spans the island */
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -48,10 +49,6 @@ body {
 :root {
   --m3e-spring-fast: linear(0,0.012,0.047,0.098,0.162,0.234,0.313,0.394,0.475,0.554,0.63,0.702,0.768,0.828,0.881,0.928,0.968,1.002,1.029,1.052,1.068,1.081,1.089,1.093,1.095,1.094,1.091,1.086,1.08,1.073,1.065,1.058,1.05,1.043,1.035,1.029,1.022,1.017,1.011,1.007,1);
   --m3e-dur-fast: 231ms;
-  --m3e-spring-default: linear(0,0.012,0.045,0.092,0.15,0.214,0.282,0.351,0.42,0.486,0.549,0.608,0.663,0.713,0.758,0.799,0.835,0.866,0.894,0.917,0.937,0.954,0.968,0.98,0.989,0.997,1.003,1.007,1.01,1.013,1.014,1.015,1.015,1.015,1.015,1.014,1.013,1.012,1.011,1.01,1);
-  --m3e-dur-default: 335ms;
-  --m3e-spring-slow: linear(0,0.012,0.044,0.091,0.148,0.212,0.28,0.348,0.417,0.483,0.545,0.605,0.659,0.709,0.755,0.795,0.831,0.863,0.891,0.915,0.935,0.952,0.967,0.978,0.988,0.996,1.002,1.007,1.01,1.012,1.014,1.015,1.015,1.015,1.015,1.014,1.013,1.012,1.011,1.01,1);
-  --m3e-dur-slow: 459ms;
   --m3e-spring-effects: linear(0,0.014,0.049,0.098,0.156,0.218,0.283,0.346,0.408,0.467,0.522,0.573,0.62,0.663,0.702,0.737,0.769,0.797,0.822,0.844,0.864,0.881,0.897,0.91,0.922,0.932,0.941,0.949,0.956,0.962,0.967,0.972,0.976,0.979,0.982,0.984,0.987,0.988,0.99,0.991,1);
   --m3e-dur-effects: 175ms;
   --m3e-spring-effectsFast: linear(0,0.014,0.051,0.103,0.163,0.228,0.294,0.36,0.423,0.482,0.538,0.589,0.636,0.679,0.718,0.752,0.783,0.81,0.835,0.856,0.875,0.891,0.906,0.919,0.93,0.939,0.948,0.955,0.961,0.967,0.971,0.975,0.979,0.982,0.984,0.987,0.989,0.99,0.992,0.993,1);
@@ -76,7 +73,7 @@ body {
 @keyframes m3e-spin { to { rotate: 360deg; } }
 
 @property --m3e-bubbles { syntax: 'on | off'; inherits: false; initial-value: on; }
-@property --m3e-accent { syntax: 'midnight | blurple | lilac'; inherits: false; initial-value: midnight; }
+@property --m3e-accent { syntax: '<color> | auto'; inherits: true; initial-value: auto; }
 @property --m3e-shapes { syntax: 'on | off'; inherits: false; initial-value: on; }
 @property --m3e-chatbar { syntax: 'floating | inline'; inherits: false; initial-value: floating; }
 @property --m3e-motion { syntax: 'calm | expressive'; inherits: false; initial-value: expressive; }
@@ -112,7 +109,6 @@ body {
   --m3e-error: oklch(0.72 0.17 10);
   --m3e-error-c: oklch(0.40 0.12 10);      --m3e-on-error-c: oklch(0.94 0.035 10);
   --m3e-inverse-primary: oklch(0.52 0.11 215);
-  --m3e-inverse-s: #e7ebf3;      --m3e-inverse-on-s: #1a1d23;   /* tooltips */
   --m3e-on-error: oklch(0.22 0.07 10);
   --m3e-on-online: #00382a;
   --m3e-code-bg: #0a0b0e;        /* code blocks sit below the surface */
@@ -154,22 +150,36 @@ body {
   --border-hover: transparent;
   --button-border: transparent;
 }
-@container root style(--m3e-accent: blurple) {
-  body {
-    --m3e-primary: oklch(0.80 0.12 278); --m3e-on-primary: oklch(0.25 0.09 278);
-    --m3e-primary-c: oklch(0.72 0.15 278); --m3e-on-primary-c: oklch(0.20 0.09 278);
-    --m3e-secondary-c: oklch(0.35 0.07 278); --m3e-on-secondary-c: oklch(0.93 0.035 278);
-    --m3e-tertiary: oklch(0.82 0.12 345); --m3e-tertiary-c: oklch(0.74 0.16 345); --m3e-on-tertiary-c: oklch(0.24 0.09 345);
-    --m3e-inverse-primary: oklch(0.52 0.16 278);
-  }
+/* ── a custom accent: --m3e-accent: #hex ──
+   Material's way: the seed gives the hue (and how colourful it may get); each role keeps its own fixed
+   lightness (tone) with the chroma capped, so a pale or dark seed still lands on readable pairs. A grey
+   seed (say, the panels' own colour) has no hue to give: below ~0.02 chroma the roles fall back to the
+   look's accent, blending in up to 0.06. Tones are per look (light.css flips them). tools/accent-check.mjs sweeps
+   every hue and a grey seed through these tables and checks WCAG contrast after sRGB clipping. */
+body {
+  --m3e-t-primary-l: 0.82; --m3e-t-primary-ch: 0.12;   --m3e-t-on-primary-l: 0.24; --m3e-t-on-primary-ch: 0.05;
+  --m3e-t-primary-c-l: 0.75; --m3e-t-primary-c-ch: 0.13; --m3e-t-on-primary-c-l: 0.22; --m3e-t-on-primary-c-ch: 0.06;
+  --m3e-t-secondary-c-l: 0.35; --m3e-t-secondary-c-ch: 0.06; --m3e-t-on-secondary-c-l: 0.93; --m3e-t-on-secondary-c-ch: 0.035;
+  --m3e-t-tertiary-l: 0.80; --m3e-t-tertiary-ch: 0.14;  --m3e-t-tertiary-c-l: 0.73; --m3e-t-tertiary-c-ch: 0.17; --m3e-t-on-tertiary-c-l: 0.22; --m3e-t-on-tertiary-c-ch: 0.08;
+  --m3e-t-hue: 215;            /* the look's own accent hue: a grey or near-grey seed falls back towards it */
+  --m3e-t-inverse-primary-l: 0.52; --m3e-t-inverse-primary-ch: 0.11; --m3e-t-mention-l: 0.97; --m3e-t-mention-ch: 0.03;
 }
-@container root style(--m3e-accent: lilac) {
-  body {
-    --m3e-primary: oklch(0.80 0.14 310); --m3e-on-primary: oklch(0.24 0.09 310);
-    --m3e-primary-c: oklch(0.73 0.17 310); --m3e-on-primary-c: oklch(0.22 0.08 310);
-    --m3e-secondary-c: oklch(0.35 0.07 310); --m3e-on-secondary-c: oklch(0.93 0.035 310);
-    --m3e-tertiary: oklch(0.82 0.12 215); --m3e-tertiary-c: oklch(0.75 0.13 215); --m3e-on-tertiary-c: oklch(0.22 0.06 215);
-    --m3e-inverse-primary: oklch(0.52 0.15 310);
+@container root not style(--m3e-accent: auto) {
+  html body {
+    /* the seed, normalised once: l carries the blend weight w (0 for a grey seed, c < 0.02 → 1 from c 0.06),
+       c the seed's own chroma (kept above 0 so its hue survives), h the seed's hue blended towards the look's */
+    --m3e-seed: oklch(from var(--m3e-accent) clamp(0, (c - 0.02) / 0.04, 1) max(c, 0.001) calc(h * clamp(0, (c - 0.02) / 0.04, 1) + var(--m3e-t-hue) * (1 - clamp(0, (c - 0.02) / 0.04, 1))));
+    --m3e-primary: oklch(from var(--m3e-seed) var(--m3e-t-primary-l) calc(min(c, var(--m3e-t-primary-ch)) * l + var(--m3e-t-primary-ch) * (1 - l)) h);
+    --m3e-on-primary: oklch(from var(--m3e-seed) var(--m3e-t-on-primary-l) calc(min(c, var(--m3e-t-on-primary-ch)) * l + var(--m3e-t-on-primary-ch) * (1 - l)) h);
+    --m3e-primary-c: oklch(from var(--m3e-seed) var(--m3e-t-primary-c-l) calc(min(c, var(--m3e-t-primary-c-ch)) * l + var(--m3e-t-primary-c-ch) * (1 - l)) h);
+    --m3e-on-primary-c: oklch(from var(--m3e-seed) var(--m3e-t-on-primary-c-l) calc(min(c, var(--m3e-t-on-primary-c-ch)) * l + var(--m3e-t-on-primary-c-ch) * (1 - l)) h);
+    --m3e-secondary-c: oklch(from var(--m3e-seed) var(--m3e-t-secondary-c-l) calc(min(c, var(--m3e-t-secondary-c-ch)) * l + var(--m3e-t-secondary-c-ch) * (1 - l)) h);
+    --m3e-on-secondary-c: oklch(from var(--m3e-seed) var(--m3e-t-on-secondary-c-l) calc(min(c, var(--m3e-t-on-secondary-c-ch)) * l + var(--m3e-t-on-secondary-c-ch) * (1 - l)) h);
+    --m3e-tertiary: oklch(from var(--m3e-seed) var(--m3e-t-tertiary-l) calc(min(c, var(--m3e-t-tertiary-ch)) * l + var(--m3e-t-tertiary-ch) * (1 - l)) calc(h + 95));
+    --m3e-tertiary-c: oklch(from var(--m3e-seed) var(--m3e-t-tertiary-c-l) calc(min(c, var(--m3e-t-tertiary-c-ch)) * l + var(--m3e-t-tertiary-c-ch) * (1 - l)) calc(h + 95));
+    --m3e-on-tertiary-c: oklch(from var(--m3e-seed) var(--m3e-t-on-tertiary-c-l) calc(min(c, var(--m3e-t-on-tertiary-c-ch)) * l + var(--m3e-t-on-tertiary-c-ch) * (1 - l)) calc(h + 95));
+    --m3e-inverse-primary: oklch(from var(--m3e-seed) var(--m3e-t-inverse-primary-l) calc(min(c, var(--m3e-t-inverse-primary-ch)) * l + var(--m3e-t-inverse-primary-ch) * (1 - l)) h);
+    --m3e-mention-fg: oklch(from var(--m3e-seed) var(--m3e-t-mention-l) calc(min(c, var(--m3e-t-mention-ch)) * l + var(--m3e-t-mention-ch) * (1 - l)) h);
   }
 }
 
@@ -245,7 +255,6 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 .sidebarList_pog62O { border-top: none !important; }
 
 /* chat title bar */
-.chat_z_gUBg > .subtitleContainer_z_gUBg { border-radius: var(--m3e-island-radius); }
 .title_z_gUBg [class*="titleWrapper_"] h1,
 .title_z_gUBg h1 {
   font-size: 18px;
@@ -339,6 +348,8 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
    items 2 apart, group corners 16, inner 4; hover 12; selected 16
    ════════════════════════════════════════════════════════════════ */
 .containerDefault_Wx6SnQ { padding-top: 0 !important; padding-bottom: 2px !important; }
+/* the lists end with the same breathing room as the island's sides */
+#channels, .scroller_Bce46W, .members_86es0b { padding-bottom: 8px !important; box-sizing: border-box; }
 .wrapper_TNyK-N .link_TNyK-N {
   min-height: 40px;
   padding-inline: 10px 8px;
@@ -410,7 +421,7 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
    USER PANEL — connected button group, tonal toggles
    ════════════════════════════════════════════════════════════════ */
 .panels_pog62O { overflow: hidden; }
-.container_g6VwXp { padding: 8px 8px 8px 8px; }
+.container_g6VwXp { padding: 8px; }
 .accountPopoutButton_g6VwXp { border-radius: 999px !important; }
 .buttons_g6VwXp { gap: 2px; }
 .buttons_g6VwXp > button,
@@ -449,14 +460,14 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 .actionButtons_9U6LUN .button_9U6LUN {
   border-radius: 8px !important;
   background-color: var(--m3e-s-high) !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), scale var(--m3e-dur-press) var(--m3e-spring-press), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), flex-grow var(--m3e-dur-effects) var(--m3e-spring-effects),
+              background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
 .actionButtons_9U6LUN .button_9U6LUN:first-child { border-radius: 20px 8px 8px 20px !important; }
 .actionButtons_9U6LUN .button_9U6LUN:last-child { border-radius: 8px 20px 20px 8px !important; }
 .actionButtons_9U6LUN .button_9U6LUN:active { border-radius: 4px !important; }
 .actionButtons_9U6LUN .button_9U6LUN:first-child:active { border-radius: 20px 4px 4px 20px !important; }
 .actionButtons_9U6LUN .button_9U6LUN:last-child:active { border-radius: 4px 20px 20px 4px !important; }
-.actionButtons_9U6LUN .button_9U6LUN { transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), flex-grow var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important; }
 .actionButtons_9U6LUN .buttonActive_9U6LUN { background-color: var(--m3e-secondary-c) !important; border-radius: 20px !important; flex-grow: 1.6 !important; }
 .actionButtons_9U6LUN .buttonActive_9U6LUN:active { border-radius: 14px !important; }
 
@@ -498,13 +509,10 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
     overflow-wrap: anywhere;
     transition: background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast);
   }
-  /* the last bubble of a group rounds off (next item is a new group, a divider or the end) */
-  /* (type-based so Chrome's :has invalidation stays cheap: rows are <li>, dividers/spacer are <div>) */
-  li.messageListItem_SY_P2T:last-of-type .cozy_2i8Bfm .messageContent_2i8Bfm,
-  li.messageListItem_SY_P2T:has(+ div, + li > .groupStart_SY_P2T) .cozy_2i8Bfm .messageContent_2i8Bfm {
-    border-bottom-left-radius: 22px;
+  /* the last bubble of a group rounds off (flag set on the row, see --m3e-run-end below) */
+  @container style(--m3e-run-end: 1) {
+    .cozy_2i8Bfm .messageContent_2i8Bfm:not(:empty) { border-bottom-left-radius: 22px; }
   }
-  .message_SY_P2T:hover .cozy_2i8Bfm .messageContent_2i8Bfm:not(:empty),
   .cozy_2i8Bfm:hover .messageContent_2i8Bfm:not(:empty) {
     background-color: var(--m3e-s-highest);
   }
@@ -570,19 +578,31 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
   #app-mount, .base_pog62O { --top-bar-right-margin: 0px !important; }
 }
 
-/* ── the text space: one centred column (max-width + auto inline margins) ── */
-.scrollerInner_8AE1Qq,
-.form_z_gUBg {
+/* ── the text space: one centred column (max-width + auto inline margins) ──
+   only the messages; the chat bar spans the same width as the messages island above it */
+.scrollerInner_8AE1Qq {
   width: 100%;
   max-width: var(--m3e-chat-max);
   margin-inline: auto !important;
   box-sizing: border-box;
 }
 
+/* ── DM / group calls above the chat ──
+   one island: nothing lighter behind its rounded corners, no line along the resize handle */
+.wrapper_hbKzX7:not(.fullScreen_hbKzX7) { background: transparent !important; box-shadow: none !important; border: 0 !important; }
+.wrapper_hbKzX7:not(.fullScreen_hbKzX7) .callContainer_hbKzX7 { border: 0 !important; border-radius: var(--m3e-island-radius) !important; overflow: hidden; }
+.resizeHandle_hbKzX7 { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+/* dragged tall, the call still leaves the chat bar its room (more with a file attached) */
+.chat_z_gUBg .wrapper_hbKzX7:not(.fullScreen_hbKzX7) { max-height: calc(100% - 200px); }
+.chat_z_gUBg:has(.channelAttachmentArea_iH8bsl) .wrapper_hbKzX7:not(.fullScreen_hbKzX7) { max-height: calc(100% - 400px); }
+.form_z_gUBg { flex-shrink: 0; }
+
 /* ── your messages: right side, accent bubble, mirrored corners ──
    The (long, unrolled) "is this mine?" selector runs ONCE per message row and only sets flags; everything inside reads
    the flags with style queries. Putting the chain in front of every descendant rule cost ~250 ms per channel switch. */
 :not(*) { --m3e-own: 1; }
+/* last row of a run: the next item is a new group, a divider or the end (type-based so :has invalidation stays cheap:
+   rows are <li>, dividers/spacer are <div>) */
 li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2T)) { --m3e-run-end: 1; }
 @container root style(--m3e-bubbles: on) and style(--m3e-mine: right) {
   @container style(--m3e-own: 1) {
@@ -601,6 +621,8 @@ li.messageListItem_SY_P2T:is(:last-of-type, :has(+ div, + li > .groupStart_SY_P2
       background-color: color-mix(in oklab, var(--m3e-on-primary-c) 8%, var(--m3e-primary-c));
     }
     .messageContent_2i8Bfm a { color: inherit !important; text-decoration: underline; }
+    /* markdown (headings, bold, lists, quotes, -# small text) takes the bubble's ink, not Discord's light heading colour */
+    .messageContent_2i8Bfm :is(h1, h2, h3, strong, em, u, s, ul, ol, li, blockquote, small) { color: inherit !important; }
     .messageContent_2i8Bfm code.inline { background: color-mix(in oklab, var(--m3e-on-primary-c) 14%, transparent) !important; color: inherit !important; }
     .messageContent_2i8Bfm .timestamp_2i8Bfm, .messageContent_2i8Bfm [class*="edited_"] { color: inherit; opacity: 0.7; }
     /* attachments, embeds, polls and reactions line up on the right too */
@@ -952,6 +974,7 @@ button[class*="button_"][class*="lg_"]:active { border-radius: 8px; }
 .menu_M3qk4j .item_M3qk4j.focused_M3qk4j * { color: inherit !important; }
 .menu_M3qk4j .item_M3qk4j.colorDanger_M3qk4j.focused_M3qk4j { background-color: var(--m3e-error-c) !important; color: var(--m3e-on-error-c) !important; }
 .menu_M3qk4j [class*="separator_"] { background: none !important; height: 6px !important; margin: 0 !important; position: relative; }
+.menu_M3qk4j [class*="separator_"]::after { content: ""; position: absolute; left: 12px; right: 12px; top: 2px; height: 2px; border-radius: 1px; background: var(--m3e-canvas); }
 /* quick reactions: connected button group (2px gap, inner 8 → 4 pressed, pill ends) */
 .wrapper_Qi4I4L { gap: 2px !important; }
 .wrapper_Qi4I4L .button_Qi4I4L {
@@ -965,12 +988,11 @@ button[class*="button_"][class*="lg_"]:active { border-radius: 8px; }
 .wrapper_Qi4I4L .button_Qi4I4L:active { border-radius: 4px !important; }
 .wrapper_Qi4I4L > :first-child .button_Qi4I4L:active { border-radius: 999px 4px 4px 999px !important; }
 .wrapper_Qi4I4L > :last-child .button_Qi4I4L:active { border-radius: 4px 999px 999px 4px !important; }
-.menu_M3qk4j [class*="separator_"]::after { content: ""; position: absolute; left: 12px; right: 12px; top: 2px; height: 2px; border-radius: 1px; background: var(--m3e-canvas); }
 
-/* tooltips: inverse, rounded, no arrow */
+/* tooltips: a raised tonal surface in the look's own colours (not M3's inverse white), rounded, no arrow */
 .tooltip_3_v8qp, .tooltip_ZDdyhE {
-  background-color: var(--m3e-inverse-s) !important;
-  color: var(--m3e-inverse-on-s) !important;
+  background-color: var(--m3e-s-bright) !important;
+  color: var(--m3e-on-s) !important;
   border-radius: 10px !important;
   border: none !important;
   box-shadow: 0 4px 14px rgb(0 0 0 / 0.4) !important;
@@ -988,9 +1010,7 @@ button[class*="button_"][class*="lg_"]:active { border-radius: 8px; }
 }
 
 /* inputs: filled field look */
-input[class*="input_"], [class*="inputWrapper_"] input, [class*="searchBar_"], .search_ * > [class*="searchBar_"] {
-  border-radius: 14px;
-}
+input[class*="input_"], [class*="inputWrapper_"] input { border-radius: 14px; }
 [class*="searchBar_"] { border-radius: 999px !important; }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1106,8 +1126,7 @@ input[class*="input_"], [class*="inputWrapper_"] input, [class*="searchBar_"], .
   .reactionMe_MmKct8 { animation: m3e-rise var(--m3e-dur-press) var(--m3e-spring-press); }
 
   /* ── selection: emphasized type (one step heavier) ── */
-  .link_TNyK-N [class*="name_"] { font-variation-settings: "wght" 500, "ROND" 100; transition: font-variation-settings var(--m3e-dur-fast) var(--m3e-spring-fast); }
-  .modeSelected_TNyK-N .link_TNyK-N [class*="name_"] { font-variation-settings: "wght" 650, "ROND" 100; }
+  .link_TNyK-N [class*="name_"] { transition: font-weight var(--m3e-dur-fast) var(--m3e-spring-fast); }
 
   /* ── Material's loading indicator for "is typing" ── */
   .typing_U9Tvvz .typingDots_U9Tvvz::before { animation: m3e-loader 4550ms infinite, m3e-spin 4666ms linear infinite; }
@@ -1156,6 +1175,7 @@ body {
   --m3e-state: 102 115 153;      /* hsl(220 20% 50%), the flavour's hover/active tint */
 
   /* Frost + Aurora: the flavour's --blue / --purple / --red ramps */
+  --m3e-t-hue: 220;   /* custom-accent fallback: Frost */
   --m3e-primary: hsl(193, 43%, 72%);   --m3e-on-primary: #272b35;
   --m3e-primary-c: hsl(193, 43%, 62%);  --m3e-on-primary-c: #272b35;   /* Midnight (nord) --blue-4: its accent buttons, hovered */
   --m3e-secondary-c: color-mix(in srgb, #88c0d0 30%, #2e3440);  --m3e-on-secondary-c: #e5e9f0;
@@ -1164,7 +1184,6 @@ body {
   --m3e-error: #bf616a;                --m3e-on-error: #eceff4;
   --m3e-error-c: color-mix(in srgb, #bf616a 38%, #2e3440);       --m3e-on-error-c: #eceff4;
   --m3e-inverse-primary: hsl(193, 43%, 57%);
-  --m3e-inverse-s: #eceff4;            --m3e-inverse-on-s: #2e3440;
   --m3e-on-online: #272b35;
   --m3e-code-bg: #272b35;
   --m3e-inline-code-bg: hsla(220, 20%, 50%, 0.2);
@@ -1172,7 +1191,6 @@ body {
   --m3e-mention-fg: #eceff4;
 
   /* Midnight (nord)'s own text + state values, verbatim */
-  --text-0: #272b35;
   --text-1: #eceff4;
   --text-2: #e5e9f0;
   --text-3: #d8dee9;

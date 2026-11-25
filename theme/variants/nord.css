@@ -17,6 +17,7 @@ body {
   --m3e-state: 102 115 153;      /* hsl(220 20% 50%), the flavour's hover/active tint */
 
   /* Frost + Aurora: the flavour's --blue / --purple / --red ramps */
+  --m3e-t-hue: 220;   /* custom-accent fallback: Frost */
   --m3e-primary: hsl(193, 43%, 72%);   --m3e-on-primary: #272b35;
   --m3e-primary-c: hsl(193, 43%, 62%);  --m3e-on-primary-c: #272b35;   /* Midnight (nord) --blue-4: its accent buttons, hovered */
   --m3e-secondary-c: color-mix(in srgb, #88c0d0 30%, #2e3440);  --m3e-on-secondary-c: #e5e9f0;
@@ -25,7 +26,6 @@ body {
   --m3e-error: #bf616a;                --m3e-on-error: #eceff4;
   --m3e-error-c: color-mix(in srgb, #bf616a 38%, #2e3440);       --m3e-on-error-c: #eceff4;
   --m3e-inverse-primary: hsl(193, 43%, 57%);
-  --m3e-inverse-s: #eceff4;            --m3e-inverse-on-s: #2e3440;
   --m3e-on-online: #272b35;
   --m3e-code-bg: #272b35;
   --m3e-inline-code-bg: hsla(220, 20%, 50%, 0.2);
@@ -33,7 +33,6 @@ body {
   --m3e-mention-fg: #eceff4;
 
   /* Midnight (nord)'s own text + state values, verbatim */
-  --text-0: #272b35;
   --text-1: #eceff4;
   --text-2: #e5e9f0;
   --text-3: #d8dee9;

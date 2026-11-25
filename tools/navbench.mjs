@@ -1,14 +1,10 @@
 // NAV_A=/channels/<guild>/<channel> NAV_B=/channels/@me/<dm> node tools/navbench.mjs [label]
 //   -> style/layout/script ms for switching between two pages + opening Settings (forced restyle; works with a hidden window)
+import { connect } from './cdp-lib.mjs';
 const label = process.argv[2] || '';
 const A = process.env.NAV_A, B = process.env.NAV_B;
 if (!A || !B) { console.error('set NAV_A and NAV_B to two Discord paths, e.g. /channels/<guild>/<channel>'); process.exit(1); }
-const list = await (await fetch('http://127.0.0.1:9222/json/list')).json();
-const page = list.find(t => t.type === 'page' && /discord\.com/.test(t.url));
-const ws = new WebSocket(page.webSocketDebuggerUrl); let id = 0; const pend = new Map();
-ws.onmessage = e => { const m = JSON.parse(e.data); if (m.id && pend.has(m.id)) { pend.get(m.id)(m); pend.delete(m.id); } };
-await new Promise(r => ws.onopen = r);
-const send = (method, params = {}) => new Promise(r => { const i = ++id; pend.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });
+const { send, close } = await connect();
 const ev = expr => send('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true });
 await send('Performance.enable');
 const m = async () => Object.fromEntries((await send('Performance.getMetrics')).result.metrics.map(x => [x.name, x.value]));
@@ -27,4 +23,4 @@ for (let i = 0; i < 2; i++) {
   out.push(await step('close settings', `Vencord.Webpack.Common.FluxDispatcher.dispatch({type:'LAYER_POP'})`));
 }
 console.log(`== ${label}\n` + out.join('\n'));
-ws.close(); process.exit(0);
+close(); process.exit(0);

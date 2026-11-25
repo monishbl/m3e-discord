@@ -7,20 +7,8 @@
 //   node cdp.mjs shot out.png [width height]       -> screenshot (optionally emulating a window size)
 //   SIZE=940x600 node cdp.mjs <cmd> …              -> any command at an emulated window size
 import fs from 'node:fs';
-const PORT = process.env.CDP_PORT || 9222;
-const list = await (await fetch(`http://127.0.0.1:${PORT}/json/list`)).json();
-const page = list.find(t => t.type === 'page' && /discord\.com\/(channels|app|login)|discord\.com/.test(t.url) && !/devtools/.test(t.url)) || list.find(t => t.type === 'page');
-if (!page) { console.error('no page target'); process.exit(1); }
-const ws = new WebSocket(page.webSocketDebuggerUrl);
-let id = 0; const pend = new Map();
-ws.onmessage = e => { const m = JSON.parse(e.data); if (m.id && pend.has(m.id)) { pend.get(m.id)(m); pend.delete(m.id); } };
-await new Promise(r => ws.onopen = r);
-const send = (method, params = {}) => new Promise(r => { const i = ++id; pend.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });
-async function evaluate(expr) {
-  const r = await send('Runtime.evaluate', { expression: expr, returnByValue: true, awaitPromise: true });
-  if (r.result?.exceptionDetails) return { error: r.result.exceptionDetails.exception?.description || r.result.exceptionDetails.text };
-  return r.result?.result?.value;
-}
+import { connect } from './cdp-lib.mjs';
+const { send, evaluate, close } = await connect();
 const [cmd, a, b, c] = process.argv.slice(2);
 // SIZE=940x600 node cdp.mjs <cmd> ...  -> run any command with the window emulated at that size
 if (process.env.SIZE) { const [w, h] = process.env.SIZE.split('x').map(Number); await send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile: false }); await new Promise(r => setTimeout(r, 900)); }
@@ -56,4 +44,4 @@ else if (cmd === 'mouse') {
   await send('Input.dispatchKeyEvent', { type: 'keyUp', key: a, code: a, windowsVirtualKeyCode: a === 'Escape' ? 27 : 0 });
   out('ok');
 }
-ws.close(); process.exit(0);
+close(); process.exit(0);

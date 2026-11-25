@@ -1,4 +1,4 @@
-// Build Midnight Expressive.
+// Build M3E Discord.
 //   node theme/build.mjs            -> dist/m3e-<variant>.theme.css for every variants/*.css (+ dist/dev.css for live injection)
 //   node theme/build.mjs --install  -> also writes them into ~/.config/Vencord/themes/, with your user ID from config.json
 // The source (src/theme.css) uses three macros the build expands:
@@ -20,13 +20,13 @@ function spring(z, k) {
   pts[40] = 1; return { css: `linear(${pts.join(',')})`, ms: Math.round(T * 1000) };
 }
 // values verified against androidx compose material3 tokens/ExpressiveMotionTokens.kt:
-//   spatial (position/size, may overshoot): fast .6/800, default .8/380, slow .8/200
+//   spatial (position/size, may overshoot): fast .6/800 (default .8/380 and slow .8/200 aren't used by the theme)
 //   effects (colour + SHAPE morphs — Button.kt uses DefaultEffects "to prevent any bounce"): default 1/1600, fast 1/3800
 // plus two from iRice's Material look (shell/common/Theme.qml, Qt SpringAnimation values converted with
 // k = spring·62.5, ζ = damping·62.5 / 2√k):
 //   press: springPress 7.5 / 0.3 → ζ .43, k 469: a pressed control swells, then springs back past its size
 //   rise:  QSRise 12.8 / 0.38    → ζ .42, k 800: panels and their pieces rise into place with a clear overshoot
-const SPRINGS = { fast: [0.6, 800], default: [0.8, 380], slow: [0.8, 200], effects: [1, 1600], effectsFast: [1, 3800], loader: [0.6, 200], press: [0.43, 469], rise: [0.42, 800] };
+const SPRINGS = { fast: [0.6, 800], effects: [1, 1600], effectsFast: [1, 3800], loader: [0.6, 200], press: [0.43, 469], rise: [0.42, 800] };
 
 /* ---------- shapes: iRice MaterialShapes.js params / materialshape.frag fields ---------- */
 const SH = {
@@ -89,6 +89,7 @@ const build = (vfile, mine) => {
 const dist = path.join(here, '..', 'dist'); fs.mkdirSync(dist, { recursive: true });
 for (const f of fs.readdirSync(dist)) if (f.endsWith('.theme.css')) fs.rmSync(path.join(dist, f));
 const install = process.argv.includes('--install'), themesDir = path.join(os.homedir(), '.config/Vencord/themes');
+if (install) fs.mkdirSync(themesDir, { recursive: true });
 for (const vf of variants) {
   const name = `m3e-${vf.replace('.css', '')}.theme.css`, css = build(vf);
   fs.writeFileSync(path.join(dist, name), css);

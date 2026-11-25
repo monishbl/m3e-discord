@@ -16,6 +16,13 @@ body {
   --m3e-outline-var: #c3c9d4;
   --m3e-state: 40 48 62;
 
+  /* custom accent (--m3e-accent: #hex): the light scheme's tones */
+  --m3e-t-primary-l: 0.47; --m3e-t-primary-ch: 0.09;     --m3e-t-on-primary-l: 0.98; --m3e-t-on-primary-ch: 0.015;
+  --m3e-t-primary-c-l: 0.80; --m3e-t-primary-c-ch: 0.13; --m3e-t-on-primary-c-l: 0.27; --m3e-t-on-primary-c-ch: 0.06;
+  --m3e-t-secondary-c-l: 0.89; --m3e-t-secondary-c-ch: 0.05; --m3e-t-on-secondary-c-l: 0.27; --m3e-t-on-secondary-c-ch: 0.05;
+  --m3e-t-tertiary-l: 0.48; --m3e-t-tertiary-ch: 0.13; --m3e-t-tertiary-c-l: 0.78; --m3e-t-tertiary-c-ch: 0.15; --m3e-t-on-tertiary-c-l: 0.25; --m3e-t-on-tertiary-c-ch: 0.09;
+  --m3e-t-inverse-primary-l: 0.80; --m3e-t-inverse-primary-ch: 0.13; --m3e-t-mention-l: 0.40; --m3e-t-mention-ch: 0.08;
+
   /* accents: material-color-utilities "expressive" light scheme, seed #46aec5 */
   --m3e-primary: #00697a;        --m3e-on-primary: #effbff;
   --m3e-primary-c: oklch(0.80 0.13 215);   --m3e-on-primary-c: oklch(0.27 0.06 215);
@@ -25,7 +32,6 @@ body {
   --m3e-error: #ac3434;          --m3e-on-error: #fff7f6;
   --m3e-error-c: oklch(0.88 0.07 20);       --m3e-on-error-c: oklch(0.32 0.12 20);
   --m3e-inverse-primary: oklch(0.80 0.13 215);
-  --m3e-inverse-s: #1d2128;      --m3e-inverse-on-s: #eef1f6;
   --m3e-on-online: #e8fff6;
   --m3e-code-bg: #eef1f6;
   --m3e-inline-code-bg: rgb(40 48 62 / 0.08);
@@ -40,7 +46,5 @@ body {
   --online: #1f8a68;
   --idle: #9a7a14;
 }
-/* Discord's code text colour is tuned for dark backgrounds */
-.markup_ku1OHH pre code.hljs, .markup_ku1OHH code.inline { color: var(--m3e-on-s) !important; }
-/* text-file previews use a light grey meant for dark backgrounds */
-pre, pre code { color: var(--m3e-on-s) !important; }
+/* Discord's code and text-file preview colours are tuned for dark backgrounds (hljs token colours stay) */
+pre, pre code, .markup_ku1OHH code.inline { color: var(--m3e-on-s) !important; }

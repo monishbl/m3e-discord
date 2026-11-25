@@ -70,7 +70,7 @@ Paste this into **QuickCSS** and change the words after the colons:
 ```css
 :root {
   --m3e-bubbles: on;        /* off: plain messages, no bubbles */
-  --m3e-accent: midnight;   /* or blurple, or lilac */
+  --m3e-accent: auto;       /* or any colour, like #5865f2: text stays readable whatever you pick */
   --m3e-shapes: on;         /* off: round server icons only */
   --m3e-chatbar: floating;  /* or inline */
   --m3e-mine: right;        /* left: your messages stay on the left */
@@ -80,7 +80,7 @@ Paste this into **QuickCSS** and change the words after the colons:
 }
 body {
   --gap: 8px;               /* space between panels */
-  --m3e-chat-max: 1280px;   /* how wide the chat gets; none for edge to edge */
+  --m3e-chat-max: 1280px;   /* how wide the messages get; none for edge to edge */
 }
 ```
 
@@ -92,6 +92,18 @@ body {
 <summary><b>My messages are still on the left.</b></summary>
 <br>
 Grab your snippet from the <a href="https://monishbl.github.io/m3e-discord/">setup page</a> and paste it into QuickCSS. It needs a profile picture, because Discord's default avatars don't carry your name tag. And if you send more than about 24 messages in a row, the rest drift back to the left. Maybe let someone else talk.
+</details>
+
+<details>
+<summary><b>Can I pick my own colour?</b></summary>
+<br>
+Any colour you like: <code>:root { --m3e-accent: #5865f2; }</code> in QuickCSS. The theme keeps your colour's hue and sets how light each part is itself, so text stays readable on every look, even Light. Picked a grey, or the exact colour of the panels? There's no hue to work with, so it quietly falls back to the look's own accent. Back to the original: <code>auto</code>.
+</details>
+
+<details>
+<summary><b>Nothing bounces.</b></summary>
+<br>
+The theme turns its animations off when your computer asks for less motion. On Windows that's Settings → Accessibility → Visual effects → <b>Animation effects</b>; in Discord, Settings → Accessibility → <b>Reduced Motion</b>. Turn those back on and the bounce returns. Prefer it still? <code>--m3e-motion: calm</code> keeps the shapes but drops the bounce.
 </details>
 
 <details>
@@ -124,7 +136,7 @@ It's made for Vencord and Vesktop. BetterDiscord might be fine, but nobody's tri
 
 The theme lives in `theme/src/theme.css`, each look's tweaks are in `theme/variants/`, and `node theme/build.mjs` builds them all into `dist/`. Add `--install` to drop them straight into Vencord. Put your ID in `theme/config.json` (copy `config.example.json`) and you won't need the snippet.
 
-To watch changes live, start Discord with `--remote-debugging-port=9222`. Then `node tools/cdp.mjs css dist/dev.css` puts your build on screen. The `tools/` folder also has a lag meter and a contrast checker. `mockups/` holds the early sketches this grew from.
+To watch changes live, start Discord with `--remote-debugging-port=9222`. Then `node tools/cdp.mjs css dist/dev.css` puts your build on screen. The `tools/` folder also has a lag meter, a contrast checker, and `accent-check.mjs`, which runs every possible accent colour through the theme and checks it stays readable. `mockups/` holds the early sketches this grew from.
 </details>
 
 <br>
