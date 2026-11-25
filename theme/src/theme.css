@@ -419,23 +419,35 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 .buttons_g6VwXp .audioButtonParent_gKpIZP:has(> [role="switch"][aria-checked="true"]):active,
 .buttons_g6VwXp > button[aria-checked="true"]:active { border-radius: 11px !important; }
 
-/* voice connected card */
+/* voice connected card: a connected button group. Discord wraps each button in its own element (so :first-child
+   is the wrapper's), paints the colour on an inner .buttonColor_ and marks "on" there, and lays them out in a grid;
+   flex lets the active one widen. */
 .wrapper_9U6LUN { padding-bottom: 4px; }
 .connection_9U6LUN { border-radius: 20px; }
-.actionButtons_9U6LUN { gap: 2px !important; }
+.actionButtons_9U6LUN { display: flex !important; gap: 2px !important; }
+.actionButtons_9U6LUN > * {
+  flex: 1 1 0; min-width: 0;
+  transition: flex-grow var(--m3e-dur-effects) var(--m3e-spring-effects);
+}
+.actionButtons_9U6LUN > :has(.buttonActive_9U6LUN), .actionButtons_9U6LUN > .buttonActive_9U6LUN { flex-grow: 1.6; }
 .actionButtons_9U6LUN .button_9U6LUN {
+  width: 100%;
   border-radius: 8px !important;
   background-color: var(--m3e-s-high) !important;
-  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), flex-grow var(--m3e-dur-effects) var(--m3e-spring-effects),
-              background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
+  transition: border-radius var(--m3e-dur-effects) var(--m3e-spring-effects), background-color var(--m3e-dur-effectsFast) var(--m3e-spring-effectsFast) !important;
 }
-.actionButtons_9U6LUN .button_9U6LUN:first-child { border-radius: 20px 8px 8px 20px !important; }
-.actionButtons_9U6LUN .button_9U6LUN:last-child { border-radius: 8px 20px 20px 8px !important; }
+.actionButtons_9U6LUN .button_9U6LUN .buttonColor_9U6LUN { background: transparent !important; border: 0 !important; border-radius: inherit !important; color: inherit !important; }
+.actionButtons_9U6LUN .button_9U6LUN:hover { background-color: var(--m3e-s-highest) !important; }
+.actionButtons_9U6LUN > :first-child:is(.button_9U6LUN), .actionButtons_9U6LUN > :first-child .button_9U6LUN { border-radius: 20px 8px 8px 20px !important; }
+.actionButtons_9U6LUN > :last-child:is(.button_9U6LUN), .actionButtons_9U6LUN > :last-child .button_9U6LUN { border-radius: 8px 20px 20px 8px !important; }
 .actionButtons_9U6LUN .button_9U6LUN:active { border-radius: 4px !important; }
-.actionButtons_9U6LUN .button_9U6LUN:first-child:active { border-radius: 20px 4px 4px 20px !important; }
-.actionButtons_9U6LUN .button_9U6LUN:last-child:active { border-radius: 4px 20px 20px 4px !important; }
-.actionButtons_9U6LUN .buttonActive_9U6LUN { background-color: var(--m3e-secondary-c) !important; border-radius: 20px !important; flex-grow: 1.6 !important; }
-.actionButtons_9U6LUN .buttonActive_9U6LUN:active { border-radius: 14px !important; }
+.actionButtons_9U6LUN > :first-child:is(.button_9U6LUN):active, .actionButtons_9U6LUN > :first-child .button_9U6LUN:active { border-radius: 20px 4px 4px 20px !important; }
+.actionButtons_9U6LUN > :last-child:is(.button_9U6LUN):active, .actionButtons_9U6LUN > :last-child .button_9U6LUN:active { border-radius: 4px 20px 20px 4px !important; }
+/* on (camera, screen share, activity): expands into a secondary pill */
+.actionButtons_9U6LUN .button_9U6LUN:is(.buttonActive_9U6LUN, :has(> .buttonActive_9U6LUN)) {
+  background-color: var(--m3e-secondary-c) !important; color: var(--m3e-on-secondary-c) !important; border-radius: 20px !important;
+}
+.actionButtons_9U6LUN .button_9U6LUN:is(.buttonActive_9U6LUN, :has(> .buttonActive_9U6LUN)):active { border-radius: 14px !important; }
 
 /* channel header toggles (members, threads, pins, inbox): off, a round icon
    button; on, it expands into a secondary pill, as a QS tile does */
@@ -559,8 +571,10 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 .wrapper_hbKzX7:not(.fullScreen_hbKzX7) .callContainer_hbKzX7 { border: 0 !important; border-radius: var(--m3e-island-radius) !important; overflow: hidden; }
 .resizeHandle_hbKzX7 { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 /* dragged tall, the call still leaves the chat bar its room (more with a file attached) */
-.chat_z_gUBg .wrapper_hbKzX7:not(.fullScreen_hbKzX7) { max-height: calc(100% - 200px); }
-.chat_z_gUBg:has(.channelAttachmentArea_iH8bsl) .wrapper_hbKzX7:not(.fullScreen_hbKzX7) { max-height: calc(100% - 400px); }
+/* (only a call sitting above a chat: Discord's noChat / sidebarOpen / fullScreen / popout modes are whole pages,
+   e.g. a server voice channel, and must keep their full height) */
+.chat_z_gUBg .wrapper_hbKzX7:not(.fullScreen_hbKzX7, .noChat_hbKzX7, .sidebarOpen_hbKzX7, .popout_hbKzX7) { max-height: calc(100% - 200px); }
+.chat_z_gUBg:has(.channelAttachmentArea_iH8bsl) .wrapper_hbKzX7:not(.fullScreen_hbKzX7, .noChat_hbKzX7, .sidebarOpen_hbKzX7, .popout_hbKzX7) { max-height: calc(100% - 400px); }
 .form_z_gUBg { flex-shrink: 0; }
 
 /* ── your messages: right side, accent bubble, mirrored corners ──
@@ -1077,7 +1091,9 @@ input[class*="input_"], [class*="inputWrapper_"] input { border-radius: 14px; }
   .buttons_g6VwXp > .audioButtonParent_gKpIZP:has(> [role="switch"][aria-checked="true"]):active { min-width: 67px; }
 
   /* ── opening: rise in, items one after another ── */
-  .layer_VVADeK > *, .focusLock__KoJTP, .menu_M3qk4j { animation: m3e-rise var(--m3e-dur-rise) var(--m3e-spring-rise) both; transform-origin: top center; }
+  /* (fill: backwards only. A transform still applied after the animation would make the element the positioning box
+     of fixed children: the image viewer, whose wrapper is a zero-size box, collapsed around the screen centre) */
+  .layer_VVADeK > *, .focusLock__KoJTP:not(:has(> .carouselModal_7QK1F9)), .menu_M3qk4j { animation: m3e-rise var(--m3e-dur-rise) var(--m3e-spring-rise) backwards; transform-origin: top center; }
   .layer_VVADeK > .menu_M3qk4j, .layer_VVADeK > * .menu_M3qk4j { animation: none; }
   .menu_M3qk4j .item_M3qk4j, .menu_M3qk4j .wrapper_Qi4I4L {
     animation: m3e-rise-item var(--m3e-dur-rise) var(--m3e-spring-rise) backwards;
@@ -1086,7 +1102,7 @@ input[class*="input_"], [class*="inputWrapper_"] input { border-radius: 14px; }
   .tooltip_3_v8qp, .tooltip_ZDdyhE { animation: m3e-rise var(--m3e-dur-press) var(--m3e-spring-press); transform-origin: bottom center; }
 
   /* the newest message rises in (only the last row, so opening a channel animates once) */
-  li.messageListItem_SY_P2T:last-of-type > .message_SY_P2T { animation: m3e-msg-in var(--m3e-dur-rise) var(--m3e-spring-rise) both; transform-origin: left bottom; }
+  li.messageListItem_SY_P2T:last-of-type > .message_SY_P2T { animation: m3e-msg-in var(--m3e-dur-rise) var(--m3e-spring-rise) backwards; transform-origin: left bottom; }
   @container style(--m3e-own: 1) { li.messageListItem_SY_P2T:last-of-type > .message_SY_P2T { transform-origin: right bottom; } }
   /* your reactions pop in */
   .reactionMe_MmKct8 { animation: m3e-rise var(--m3e-dur-press) var(--m3e-spring-press); }
