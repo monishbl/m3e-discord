@@ -350,6 +350,9 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 .containerDefault_Wx6SnQ { padding-top: 0 !important; padding-bottom: 2px !important; }
 /* the lists end with the same breathing room as the island's sides */
 #channels, .scroller_Bce46W, .members_86es0b { padding-bottom: 8px !important; box-sizing: border-box; }
+/* the channel list is virtualised: Discord sizes the <ul> from its own row estimate and our taller rows spill past it,
+   so the scroller's padding lands inside the spill. A spacer after the last row is in flow, after wherever it ends. */
+#channels > ul::after { content: ""; display: block; height: 8px; }
 .wrapper_TNyK-N .link_TNyK-N {
   min-height: 40px;
   padding-inline: 10px 8px;
@@ -605,10 +608,10 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
 .wrapper_hbKzX7:not(.fullScreen_hbKzX7) .callContainer_hbKzX7 { border: 0 !important; border-radius: var(--m3e-island-radius) !important; overflow: hidden; }
 .resizeHandle_hbKzX7 { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 /* dragged tall, the call still leaves the chat bar its room (more with a file attached) */
-/* (only a call sitting above a chat: Discord's noChat / sidebarOpen / fullScreen / popout modes are whole pages,
-   e.g. a server voice channel, and must keep their full height) */
-.chat_z_gUBg .wrapper_hbKzX7:not(.fullScreen_hbKzX7, .noChat_hbKzX7, .sidebarOpen_hbKzX7, .popout_hbKzX7) { max-height: calc(100% - 200px); }
-.chat_z_gUBg:has(.channelAttachmentArea_iH8bsl) .wrapper_hbKzX7:not(.fullScreen_hbKzX7, .noChat_hbKzX7, .sidebarOpen_hbKzX7, .popout_hbKzX7) { max-height: calc(100% - 400px); }
+/* (only when a chat really sits under the call, as in a DM. A server voice channel page has an empty box there and
+   must keep its full height in every mode, connected or not) */
+.chat_z_gUBg .wrapper_hbKzX7:not(.fullScreen_hbKzX7):has(~ .content_z_gUBg > .chatContent_z_gUBg) { max-height: calc(100% - 200px); }
+.chat_z_gUBg:has(.channelAttachmentArea_iH8bsl) .wrapper_hbKzX7:not(.fullScreen_hbKzX7):has(~ .content_z_gUBg > .chatContent_z_gUBg) { max-height: calc(100% - 400px); }
 .form_z_gUBg { flex-shrink: 0; }
 
 /* ── your messages: right side, accent bubble, mirrored corners ──
